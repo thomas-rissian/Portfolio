@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <link rel="stylesheet" href="{{ SITEURL }}/{{ THEME_STATIC_DIR }}/{{CSS_FILE}}" />    
+        <meta charset="utf-8">
+        <title>{{SITENAME}}</title>
+    </head>
+    
+    <body>
+        <header>
+            <nav class ="navigation">                
+                    <ul>
+                        {% for lien, titre  in MENU %}
+                        <li><a href = "#{{lien}}" >{{titre}}</a></li>
+                        {% endfor %}
+                    </ul>            
+            </nav>
+        </header>                 
+                 
+        <section id="accueil">
+            <div class="accueil_filtre"></div>
+            <div class="accueil_intro">
+                <h1 >{{AUTHOR}}</h1>
+                <h1 >{{CLASSE}}</h1>
+            </div>
+        </section>
+        
+         {% include "about.html" %}
+
+         <section id= "competences" >
+            <h1 class ="catégorie">{{TITRE_SECTION[1]}}</h1>
+
+            <div class="competencesGroup">
+                {% for competence_list in COMPETENCES %}
+                    <article>
+                        <h2>{{ competence_list[0] }}</h2>
+                        <ul>
+                            {% for ref, competence, eval, contribution in competence_list[1] %}
+                                <div>
+                                    <button class="bouton" onclick="toggleListe(this)"> {{competence}} <span class="fleche"></span></button>
+            
+                                    <article class="liste-deroulante" id="{{ ref }}" style = "display:none;">
+                                        <ul>
+                                            {% for contrib in contribution %}
+                                                <li><button class="button" onclick="changerZIndex('{{ contrib[0] }}')">{{ contrib[1] }}</button></li>
+                                            {% endfor %}
+                                        </ul>
+                                    </article> 
+                                </div>
+                            {% endfor %}
+                        </ul>
+                    </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <section id="contributions">
+            {% if articles %}
+            <div class ="contributions">
+                <h1 class ="catégorie">{{TITRE_SECTION[2]}}</h1>
+                
+                <div class = "contributionGroupe">
+                    {% for article in articles_page.object_list %}
+                    <button class = "button" onclick="changerZIndex('{{article.slug}}')">
+                
+                        <div>
+                            <h2>{{article.title}}</h2>
+                        </div>
+                    
+                </button>
+                    {% endfor %}
+                </div>
+                
+            </div>
+
+            {% for article in articles_page.object_list %}
+            <div class ="contributionBackground" id ="{{article.slug}}">
+                <div class ="contributionBackground2">
+                    
+                    <button class="retour"><i class="gg-close"></i></button>
+                    <h2 >{{article.title}}</h2>
+                    {{article.content}}
+                </div>
+    
+            </div>
+            {% endfor %}
+            <div id="fullscreen">
+                <img id="fullscreen-image">
+            </div>
+            
+            {% endif %}
+            
+        </section>
+        <script>
+            const images = document.querySelectorAll('.contributionBackground2>p>img');
+            const grandFormat = document.getElementById('fullscreen');
+            const imageGrandFormat = document.getElementById('fullscreen-image');
+            const bouton = document.querySelectorAll('.retour');
+
+            function toggleListe(button) {
+                var parentDiv = button.parentNode;
+                var listeDeroulante = parentDiv.querySelector('.liste-deroulante');
+                var fleche = button.querySelector('.fleche');
+
+                if (listeDeroulante.style.display === 'none') {
+                    listeDeroulante.style.display = 'block';
+                    fleche.style.transform = 'rotate(0deg)';
+                } else {
+                    listeDeroulante.style.display = 'none';
+                    fleche.style.transform = 'rotate(90deg)';
+                }
+            }   
+            bouton.forEach(bouton => {
+                bouton.addEventListener('click', () => {
+                    // Sélectionner tous les éléments avec la classe 'element-a-changer'
+                    const elementsAChanger = document.querySelectorAll('.contributionBackground');
+                    
+                    // Changer le z-index de chaque élément
+                    elementsAChanger.forEach(element => {
+                        element.style.zIndex = '-5'; // Nouvelle valeur de z-index
+                        element.style.opacity = '0';
+                    });
+                });
+            });
+            images.forEach(image => {
+                image.addEventListener('click', () => {
+                            imageGrandFormat.src = image.src;
+                            grandFormat.style.display = 'flex'; // Afficher l'image en grand format
+                        });
+                    });
+
+            // Pour désactiver l'image en grand format en cliquant dessus
+            grandFormat.addEventListener('click', () => {
+                grandFormat.style.display = 'none'; // Masquer l'image en grand format
+            });
+            contrib2.forEach(contrib =>{
+                contrib2.addEventListener('click', () => {
+                    contrib2.style.display = 'none'; // Masquer l'image en grand format
+            });
+            })
+    function changerZIndex(idDiv) {
+        // Sélectionner l'élément avec l'ID spécifié
+        const elementAChanger = document.getElementById(idDiv);
+        
+        // Changer le z-index de l'élément spécifique
+        elementAChanger.style.zIndex = '10'; // Nouvelle valeur de z-index
+        elementAChanger.style.opacity = '1';
+    }
+            
+        </script>
+        <section id="contact">
+            <h1 class ="catégorie">{{TITRE_SECTION[3]}}</h1>
+            <div>
+                <article class ="contact">
+                    {% for titre, info in CHAMPS_CONTACT %}
+                    <h2> {{titre}}: </h2>
+                    <h3>{{info}}</h3>
+               
+                    {% endfor %}
+                </article>
+            </div>
+            
+        </section>
+
+        
+        {% include "footer.html" %}
+    </body>
+    
+</html>
