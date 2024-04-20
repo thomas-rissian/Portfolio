@@ -31,7 +31,7 @@ Pour pouvoir réaliser le devis il nous a fallu calculer les distances nécessai
 
 Nous avons utilisé des câbles de catégorie récentes permettant un changement plus tardif si nécessaire et un grand nombre de prise(rj45 et électrique) pour permettre une évolution du nombre d'équipement.
 
-- **B1.2.2 : Répondre aux incidents et aux demandes d’assistance et d’évolution**
+- **B1.2.2 : Traiter des demandes concernant les services réseau et système, applicatifs**
 
 Nous avons réalisé les plans de la salle comme demander en respectant le contrat demander.
 

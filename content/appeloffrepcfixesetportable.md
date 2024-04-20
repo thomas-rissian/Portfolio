@@ -33,6 +33,6 @@ Un oral final a eu lieu pour expliquer nos choix pour chaque composant.
 
 la gestion de composant compatible entre eux et conforme aux normes actuelles.
 
-- **B1.2.2 : Répondre aux incidents et aux demandes d’assistance et d’évolution**
+- **B1.2.2 : Traiter des demandes concernant les services réseau et système, applicatifs**
 
 Nous avons pu faire le choix de 3 ordinateurs qui était conforme à la demande tout en ayant un rapport qualité prix assez correcte.

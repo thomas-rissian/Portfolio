@@ -40,7 +40,7 @@ Utilisation de GLPI afin de réaliser des tickets à l'aide de l'interface web, 
 
 ![Mon image](./theme/images/article/glpi/glpi.png)
 
-- **B1.2.2 : Traiter des demandes concernant les services réseau et système, applicatifs**
+- **B1.2.2 : Traiter des demandes concernant les services réseau et système, applicatifs, applicatifs**
 
 Réalisation de ticket sur GLPI que nous avons résolue en donnant les informations nécessaires à la correction (différentes manipulation)
 

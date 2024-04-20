@@ -90,7 +90,7 @@ COMPETENCES = (
                 ("glpi","OCS Inventory et GLPI"),
              )
              ),
-             ('B1.2.2','B1.2.2 : Répondre aux incidents et aux demandes d’assistance et d’évolution','acquis',
+             ('B1.2.2','B1.2.2 : Traiter des demandes concernant les services réseau et système, applicatifs','acquis',
               (
                 ("appeloffrepcfixesetportable","appel d'offres pc fixes et portables"),   
                 ("preparationmiseenreseausalle","préparation mise en réseau d'une salle"),
