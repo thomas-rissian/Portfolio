@@ -1,0 +1,482 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,200;0,400;1,300&family=Roboto:ital@1&display=swap');
+/* !Initialisation */
+:root
+{
+    --orangeBackground : rgba(158, 161, 254, 0.18);
+}
+html{
+    scroll-behavior: smooth;
+}
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+}
+.underscore{
+    display: block;
+    background-color: #0746a4;
+    height: 1px;
+    margin: 10px auto 40px auto;
+    width: 150px;
+}
+h1,.catégorie{
+    text-align: center;
+    margin: 0;
+}
+/* !Barre de navigation */
+.navigation
+{
+    z-index: 2;
+    top:0;
+    position: fixed;
+    padding: 0;
+    background-color: rgb(255, 255, 255);
+    box-shadow: 0px 0px 5px rgb(198, 198, 198);
+    display: flex;
+    justify-content: center;
+    height: 4em;
+    width: 100%;
+}
+.navigation>ul
+{
+    background-color: white;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0;
+    list-style: none;
+    width: 60%;
+
+}
+.navigation>ul>li>a
+{
+    text-decoration: none;
+    color: rgb(20, 0, 78);
+    font-weight: 700;
+    font-size: 1.3em;
+    font-family: 'Poppins', sans-serif;
+}
+.navigation>ul>li:last-child >a
+{
+    color:rgb(218, 76, 0);
+}
+.navigation>ul>li>a:hover
+{
+    text-decoration: underline;
+}
+
+#competences, #contributions, #contact
+{
+    padding-top: 100px;
+}
+/* !Page d'accueil */
+#accueil
+{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    height: 100vh;
+    width: 100%;
+    background-image: url("images/theme/desk-593327.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed ;
+    background-size: cover;
+}
+.accueil_filtre
+{
+    position: absolute;
+    background-color: rgba(33, 47, 60, 0.554);
+    height: 100vh;
+    left: 0;
+    top: 0;
+    width: 100%;
+    z-index: 0;
+    filter: brightness(0.3);
+}
+.accueil_intro
+{
+    display: grid;
+    position: absolute;
+    top:35%;    
+    width: 30%;
+    min-width: 325px;
+}
+.accueil_intro:before,
+.accueil_intro:after
+{
+  position: absolute;
+  content: "";
+}
+.accueil_intro:before
+{
+    border-top: 10px solid rgb(255, 255, 255);
+    border-left: 10px solid rgb(255, 255, 255);
+    width: 25%;
+    height: 43%;
+    top: -20px;
+    left:-20px;
+}
+.accueil_intro::after
+{
+    border-bottom: 10px solid rgb(255, 255, 255);
+    border-right: 10px solid rgb(255, 255, 255);
+    width: 25%;
+    height: 43%;
+    bottom:-20px;
+    right: -20px;
+}
+.accueil_intro>h1
+{
+    color: white;
+    font-size: 50px;
+    margin: 7% 3%;
+}
+/*! PROPOS */
+#propos
+{
+    padding: 100px 0;
+    text-align: center;
+    width: 100%;
+    line-height: 30px;
+    
+}
+#propos>p
+{
+    font-size: 30px;
+    width: 60%;
+    margin-left: 20%;
+    color:rgb(41, 43, 72) ;
+}
+section>h1,.contributions>h1
+{
+    padding-bottom: 50px;
+    font-size: 3em;
+    color: #03036c;
+}
+/*!compétences*/
+#competences
+{
+    background-color: var(--orangeBackground);
+
+}
+.competencesGroup
+{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-around;
+    
+    
+}
+.competencesGroup>article
+{
+    margin: 2% 4%;
+    width: 30%;
+    min-width: 470px;
+    background-color: white;
+    box-shadow: 2px 5px 10px rgb(213, 213, 213);
+    border-radius: 5px;
+}
+.competencesGroup>article>h2
+{
+    color:#01014f;
+    margin: 5% 0 0 5%;
+}
+.competencesUl
+{
+    font-size: 1.3em;
+    
+}
+.liste-deroulante>ul{
+    list-style: none;
+}
+.liste-deroulante>ul>li>button{
+    transition: transform 0.3s ease;
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+.liste-deroulante>ul>li>button:hover
+{
+    transform: translateX(20px);
+    color:rgb(218, 76, 0);
+    
+}
+.liste-deroulante>ul {
+    border-left: 2px solid black;
+    margin: 2%;
+}
+.liste-deroulante {
+    display: none;
+    margin-top: 10px; /* Marge en haut pour espacer du bouton */
+}
+
+
+/* Style du bouton */
+.bouton:hover {
+    background-color: #e6e6e6; /* Nouvelle couleur de fond au survol */
+    color: rgb(0, 0, 0); /* Nouvelle couleur de texte au survol */
+}
+
+.bouton {
+    padding: 5px 30px 5px 10px;
+    background-color: #f8f8f8;
+    color: rgb(0, 0, 0);
+    border: none;
+    cursor: pointer;
+    position: relative;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    width: 95%;
+    margin-bottom: 20px;
+    font-size: 1.3em;
+}
+
+/* Style de la flèche */
+.fleche {
+    position: absolute; /* Position absolue pour placer la flèche à droite */
+    top: 50%; /* Positionner la flèche verticalement au milieu du bouton */
+    right: 10px; /* Positionner la flèche à droite */
+    transform: rotate(90deg); /* Inverser la flèche */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid rgb(0, 0, 0);
+    transition: transform 0.3s ease;
+    transform-origin: center;
+}
+
+
+.contributionGroupe
+{
+    user-select: none;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+}
+.contributionGroupe>button
+{
+    border:#ffffff solid;
+    text-decoration: none;
+    box-shadow: 0 16px 10px 0 #cdccf9;
+    margin: 5%;
+}
+.contributionGroupe>button:hover
+{
+    border:rgb(29, 22, 133) solid;
+    transform: scale(1.05);
+    cursor: pointer;
+}
+.contributionGroupe>button>div
+{
+    display: flex;
+    width: 250px;
+    height: 250px;
+    background-color: #ffffff;
+    align-items: center;
+    text-align: center;
+    color:white;
+}
+.contributionGroupe>button>div>h2
+    {
+        color:#363697;
+        font-family: Poppins;
+        text-align: center;
+        width: 100%;
+        font-size: 1.3em;
+    }
+.contributionGroupe>button>div>h3 
+{
+        font-family: Poppins;
+        color:grey;
+        font-size: 1em;
+        text-align: center;
+        width: 100%;
+}
+.contributionBackground
+{
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    
+    opacity: 0;
+    z-index: -1;
+}    
+.contributionBackground:target
+{
+    opacity: 1;
+    z-index: 10;
+    pointer-events: auto;
+}
+.contributionBackground2
+{
+    background: #ffffff;
+    margin: 1% 20% 7% 20%;
+    box-shadow: 0px 16px 100px  rgb(0, 0, 0);
+    height: 90%;
+    border-radius: 5px;
+    padding: 1%;
+    overflow-y: auto;
+}
+.contributionBackground2>p>img
+{
+    width: 30%;
+    cursor: pointer;
+}
+.button,.retour {
+    padding: 0;
+    margin: 0;
+    border: none;
+    background: none;
+    outline: none;
+    cursor: pointer;
+}
+#fullscreen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+#fullscreen img {
+    max-width: 100%;
+    max-height: 100%;
+    cursor: pointer; /* Afficher un curseur pour indiquer qu'il est possible de cliquer pour quitter le plein écran */
+}
+.contributionBackground2>h2
+{
+    text-align: center;
+    color:rgb(204, 74, 4);
+}
+.contributionBackground2>h3
+{
+    font-size: 1.5em;
+    color:#050577;
+}
+.contributionBackground2 li
+{
+    list-style: square;
+}
+.contributionBackground2 strong 
+{
+    color:rgb(173, 0, 0);
+}
+.retour
+{
+    float: right;
+    font-size: 1.2em;
+    text-decoration: none;
+    margin: 2%;
+    color:#19199a;
+}
+.retour:hover
+{
+    color:red;
+}
+#contact
+{
+    padding:2% ;
+    background-color: rgb(26, 24, 57);
+    font-family: Poppins;
+}
+#contact>h1 
+    {
+       
+        color:rgb(255, 89, 0);
+        padding: 0;
+    }
+    #contact>div 
+    {
+        display: flex;
+        justify-content: center;
+    }
+
+.contact
+{
+    color:white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+    .contact>h2{
+        user-select: none;
+    }
+
+footer
+{
+    text-align: center;
+    user-select: none;
+    color:#030343;
+    padding: 1% 0;
+    background-color: var(--orangeBackground);
+}
+
+
+/* ICON */
+
+.gg-close {
+    box-sizing: border-box;
+    position: fixed;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 22px;
+    height: 22px;
+    border: 2px solid transparent;
+    border-radius: 40px
+   }
+   
+   .gg-close::after,
+   .gg-close::before {
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 16px;
+    height: 2px;
+    background: currentColor;
+    transform: rotate(45deg);
+    border-radius: 5px;
+    top: 8px;
+    left: 1px
+   }
+   
+   .gg-close::after {
+    transform: rotate(-45deg)
+   } 
+
+   .gg-close:hover {
+    box-sizing: border-box;
+    position: fixed;
+    display: block;
+    transform: scale(var(--ggs,1));
+    width: 22px;
+    height: 22px;
+    border: 2px solid;
+    border-radius: 40px
+}
+.gg-close:after,
+.gg-close::before :hover{
+    content: "";
+    display: block;
+    box-sizing: border-box;
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    background: currentColor;
+    transform: rotate(45deg);
+    border-radius: 5px;
+    top: 8px;
+    left: 3px
+}
+.gg-close:hover:after {
+    transform: rotate(-45deg)
+}

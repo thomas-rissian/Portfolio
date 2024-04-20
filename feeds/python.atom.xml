@@ -1,0 +1,598 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Mon ePortfolio - Python</title><link href="/eportfolio/bookworm/rissian-thomas/" rel="alternate"></link><link href="/eportfolio/bookworm/rissian-thomas/feeds/python.atom.xml" rel="self"></link><id>/eportfolio/bookworm/rissian-thomas/</id><updated>2024-02-16T14:21:00+01:00</updated><entry><title>Mission 2nd stage : Création modèle PDF dolibarr</title><link href="/eportfolio/bookworm/rissian-thomas/pdfDolibarr.html" rel="alternate"></link><published>2024-02-16T14:21:00+01:00</published><updated>2024-02-16T14:21:00+01:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2024-02-16:/eportfolio/bookworm/rissian-thomas/pdfDolibarr.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;J'ai travaillé chez l'entreprise Yansys, sur leur ERP, il s'agit d'un ERP open source et gratuit développé en PHP, nommé dolibarr.
+J'avais comme tâche de modifier et créer des modèles de fichier PDF.&lt;/p&gt;
+&lt;p&gt;Le modèle est entièrement créé en PHP grâce à la librairie TCPDF intégré dans l'ERP. 
+Pour …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;J'ai travaillé chez l'entreprise Yansys, sur leur ERP, il s'agit d'un ERP open source et gratuit développé en PHP, nommé dolibarr.
+J'avais comme tâche de modifier et créer des modèles de fichier PDF.&lt;/p&gt;
+&lt;p&gt;Le modèle est entièrement créé en PHP grâce à la librairie TCPDF intégré dans l'ERP. 
+Pour créer de nouveau modèle il faut exploiter ceux déjà existant afin de pouvoir l'intégrer dans dolibarr.&lt;/p&gt;
+&lt;p&gt;Les modèles PDF créés sont composés d'un tableau, le tableau peut possiblement changer de page si besoin. 
+Les données du tableau sont insérés par ligne et lors de l'insertion de la ligne on traite chacune des colonnes de la gauche vers la droite.&lt;/p&gt;
+&lt;p&gt;Nativement, quand une ligne est insérée, il vérifie si le texte insérer dans la colonne de gauche a changé de page et si c'est le cas, tous le reste du texte continue sur le page d'après.&lt;/p&gt;
+&lt;p&gt;Le code du modèle PDF est assez complexe et une évolution a été réalisé pour une simplicité d'utilisation.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/pdfDolibarr/dolibarr.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Firefox &lt;/li&gt;
+&lt;li&gt;Visual Studio Code&lt;/li&gt;
+&lt;li&gt;MySql Workbench&lt;/li&gt;
+&lt;li&gt;NotePad ++&lt;/li&gt;
+&lt;li&gt;PHP&lt;/li&gt;
+&lt;li&gt;Github&lt;/li&gt;
+&lt;li&gt;Filezilla&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétences mobilisées :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.3 : Traiter des demandes concernant les applications&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;J'ai dû modifier et créer plusieurs modèles PDF de l'ERP, cela consistait à changer le thème actuel, modifiant les colonnes, certains encadrés. &lt;/p&gt;
+&lt;p&gt;J'ai pu commencer par regarder le fonctionnement des modèles PDF sur l'ERP, un fichier PHP est créé, composé de 1000 lignes de codes afin de créer le fichier pdf.
+Mon problème a été de gérer comment réaliser un tableau en multipage. 
+Le tableau insert les valeurs déjà par ligne puis par colonne et quand un changement de page est possible, il vérifie seulement si la colonne de gauche changé de page, et dans ce cas tous le reste de la ligne changer.
+Pour palier à ce problème j'ai dû entièrement calculer toutes les colonnes de ma ligne pour savoir si ça allait changer de page et quelle ligne était la plus grande afin qu’elle puisse imposer la taille maximum.
+Grâce à cette méthode, toutes les lignes pouvaient être si besoin sur 2 pages en simultané.&lt;/p&gt;
+&lt;p&gt;J'ai pu par la suite modifier le modèle du PDF afin de factoriser et minimiser le code que le développeur devra lire en réalisant une classe contenant le modèle et des méthodes placer à des emplacements clé, chacune de ces méthodes contrôlera une partie du PDF. Et pour créer un nouveau modèle il faudra hériter de cette classe.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/pdfDolibarr/diagramme_pdf.png"&gt;
+&lt;img alt="Mon image" src="./theme/images/article/pdfDolibarr/pdf.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.5.2 : Déployer un service&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;J'ai pu mettre mon projet réaliser en production.
+Tout d'abord j'ai dû déposer mon code sur github afin que l'entreprise possède une un historique de mes modifications. Puis j'ai dû manuellement intégrer mes fichiers à partir de filezilla sur le serveur de l'ERP.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>OCS Inventory et GLPI</title><link href="/eportfolio/bookworm/rissian-thomas/glpi.html" rel="alternate"></link><published>2023-12-22T14:21:00+01:00</published><updated>2023-12-22T14:21:00+01:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-12-22:/eportfolio/bookworm/rissian-thomas/glpi.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Nous étions en duo pour cet atelier. &lt;/p&gt;
+&lt;p&gt;Il y avait comme objectif de mettre en place une plateforme de ticket (GLPI), et de pouvoir récupérer des informations logicielles avec OCS Inventory.
+L'OCS inventory et GLPI sur un serveur fedora et une version cliente d'OCS Inventory afin de récupérer les …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Nous étions en duo pour cet atelier. &lt;/p&gt;
+&lt;p&gt;Il y avait comme objectif de mettre en place une plateforme de ticket (GLPI), et de pouvoir récupérer des informations logicielles avec OCS Inventory.
+L'OCS inventory et GLPI sur un serveur fedora et une version cliente d'OCS Inventory afin de récupérer les informations liées à la machine.&lt;/p&gt;
+&lt;p&gt;Notre rôle était de fournir un tutoriel d'installation de ces 2 systèmes avec des différentes présentations de fonctionnalité.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/glpi/glpi_list.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Firefox &lt;/li&gt;
+&lt;li&gt;VM sphere&lt;/li&gt;
+&lt;li&gt;Fedora&lt;/li&gt;
+&lt;li&gt;GLPI&lt;/li&gt;
+&lt;li&gt;OCS Inventory&lt;/li&gt;
+&lt;li&gt;WinScp&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétences mobilisées :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.1.1 : Recenser et identifier les ressources numériques&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mise en place et utilisation d'OCS Inventory afin de récupérer les informations logicielles de l'utilisateur.&lt;/p&gt;
+&lt;p&gt;Nous avons pu installer sur les postes clients et le relié à notre serveur fedora. Cela nous a permis de faire remonter les logicielles installer sur la machine et de pouvoir les voir et listes les machines sur l'interface web.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/glpi/OCS.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.1 : Collecter, suivre et orienter des demandes&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Utilisation de GLPI afin de réaliser des tickets à l'aide de l'interface web, de réaliser des questions pour récupérer les informations nécessaires afin d'attribuer ce ticket si besoin à un rôle approprié.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/glpi/glpi.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.2 : Traiter des demandes concernant les services réseau et système, applicatifs&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Réalisation de ticket sur GLPI que nous avons résolue en donnant les informations nécessaires à la correction (différentes manipulation)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.5.3 : Accompagner les utilisateurs dans la mise en place d’un service&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Création d'un tutoriel sur l'installation mais aussi la prise en main de certaines fonctionnalités sur GLPI comme la création de ticket lié à un appareil spécifique ou bien l'attribution du ticket à une catégorie précise.
+Ce tutoriel avait pour rôle d'être le plus précis et compréhensible pour tout type d'utilisateur.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>Gestion des contrats de l'application AMAP Auvergne itération 2c</title><link href="/eportfolio/bookworm/rissian-thomas/AmapPhp2c.html" rel="alternate"></link><published>2023-12-19T14:21:00+01:00</published><updated>2023-12-19T14:21:00+01:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-12-19:/eportfolio/bookworm/rissian-thomas/AmapPhp2c.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé en groupe de 3, il s'agit d'une version évoluer de l'application AMAP php vu en 1er année. Celle-ci contient
+le framework symfony. Nous avons du tout d'abord analyser le cahier des charges disponible sur un document au format odt expliquant les points clé à …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé en groupe de 3, il s'agit d'une version évoluer de l'application AMAP php vu en 1er année. Celle-ci contient
+le framework symfony. Nous avons du tout d'abord analyser le cahier des charges disponible sur un document au format odt expliquant les points clé à savoir, afin de regrouper les nouvelles fonctionnalités à implémenter. &lt;/p&gt;
+&lt;p&gt;Pour cela nous avons utilisé &lt;em&gt;Framapad&lt;/em&gt; qui a permis, d'énoncer de façon simple, les différentes tâches à réaliser.
+Quand ce-ci a été fait, notre chef de projet a mise en place des tickets sur la forge logicielle &lt;em&gt;Framagit&lt;/em&gt;, afin de 
+nous répartir nos tâches. &lt;/p&gt;
+&lt;p&gt;Pour chaque ticket qui nous était attribués, nous devions faire de façon détaille des spécifications de chacune de nos actions 
+que nous allons entreprendre sur l'application (nouvelle route, méthode, modification bdd).&lt;/p&gt;
+&lt;p&gt;Les tickets étaient ranger en différentes catégories afin de voir l'avancement du projet et de savoir si nous devions passer
+à un autre, continuer de spécifier ou de programmer.
+les statuts étaient : "en attente" / "prêt" / "en cours" / "terminé" &lt;/p&gt;
+&lt;p&gt;Après spécification validée, nous pouvions commencer le développement de notre fonctionnalité, tout en étant conforme à nos 
+spécifications. Si nous avions mal spécifier d'entrer ou que des changements ont eu lieu, ou pour plus préciser nous avions le droit
+de reprendre nos spécifications afin de les améliorer.&lt;/p&gt;
+&lt;p&gt;Ces spécifications étaient autant utilisé pour nous, afin de réaliser notre ticket, mais aussi par mes collègues, qui pouvaient
+avoir besoin d'utiliser une ou plusieurs de mes fonctionnalités (route, méthode).&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;VisualParadigm &lt;/li&gt;
+&lt;li&gt;Firefox &lt;/li&gt;
+&lt;li&gt;Framagit&lt;/li&gt;
+&lt;li&gt;Apache Netbean &lt;/li&gt;
+&lt;li&gt;QuickMockup &lt;/li&gt;
+&lt;li&gt;PHP&lt;/li&gt;
+&lt;li&gt;Twig&lt;/li&gt;
+&lt;li&gt;Symfony &lt;/li&gt;
+&lt;li&gt;Git &lt;/li&gt;
+&lt;li&gt;MVC&lt;/li&gt;
+&lt;li&gt;DAO&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétences mobilisées :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.1.2 : Exploiter des référentiels, normes et standards adoptés par le prestataire informatique&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Comme recommandation que nous avions à respecter, était celle du PSR2 de PHP, qui permet une homogénéisation du code et
+une meilleure lecture.&lt;/p&gt;
+&lt;p&gt;Pendant cet AP, j'ai pu globalement respecter le PSR2, mais parfois, suite à un rendu rapide de ma mission, j'ai pu
+oublier de le respecter. Pour éviter cette oublie j'aurai pu le noter dans un script à exécuter à chaque fin de tâche afin d’exécuter les tests et la commande PSR2 ou alors
+mettre dans une note sur par exemple le framapad qui contiendrait toutes les choses que je suis censé réaliser.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.1.3 : Mettre en place et vérifier les niveaux d’habilitation associés à un service&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;J'ai dû m'assurer que seulement les personnes habilités pouvaient accéder aux pages. 
+Dans notre cas seulement &lt;em&gt;l’administrateur&lt;/em&gt; du site internet avait accès à nos pages.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapPhp2c/role.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.3 : Traiter des demandes concernant les applications&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avons pu mettre en place certaines fonctionnalités qui nous avaient été demandé de rajouter. Dont l'ajout d'une gestion des chèques par le biais de menu. Les chèques étaient ajoutable, supprimables et éditables et tous lié à un contrat existant. &lt;/p&gt;
+&lt;p&gt;Pour réaliser cette demande, nous avons du après avoir partagé analysé et dispatcher les sous tâches à réaliser en différent ticket, dû faire une analyse de comment l'implémenter dans le code, par l'ajout de constructeur, de méthode, 
+d'accès à la base de donnée (DAO), de nouvelle vue. Pour cela une analyse des fonctionnalités existantes et une veille active a dû être faite.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapPhp2c/modification_cheque.png"&gt;&lt;/p&gt;
+&lt;p&gt;Afin d'être sur du bon fonctionnement de nos nouvelles fonctionnalités, des tests fonctionnels ont été mis en place, 
+afin de réaliser des actions possibles de l'utilisateur et qu'ils retournent les bonnes informations, sans erreur.&lt;/p&gt;
+&lt;p&gt;Par exemple : j'ai testé l'ajout d'un nouveau chèque avec des valeurs possibles et impossible afin de voir 
+le résultat attendu sur l'interface.&lt;/p&gt;
+&lt;p&gt;Des tests unitaires ont aussi été réalisés afin de vérifier les données de la base de donnée.&lt;/p&gt;
+&lt;p&gt;par exemple : supprimer un chèque et vérifier s'il est bien supprimer dans la base de donnée.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapPhp2c/test.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.4.2 : Planifier les activités&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pour que le projet puisse avancer de façon optimale, nous avons du, après analyse du cahier des charges, 
+regarder les différentes évolutions du projet pour les divisés afin que tous le mondes est des tâches à réaliser.&lt;/p&gt;
+&lt;p&gt;Pour cela nous avons pu noter les différentes tâches à réaliser grâce à &lt;em&gt;framapad&lt;/em&gt;. Ensuite ces tâches ont pu être dispatchées en différentes sous tâches 
+sur la forge logicielle &lt;em&gt;framagit&lt;/em&gt;, qui permet de faire une gestion de version mais aussi de réaliser des
+tickets pour chacune de nos évolutions. Ces tickets ont été attribués par notre chef de projet.&lt;/p&gt;
+&lt;p&gt;Ces tickets permettent d'expliquer ce que nous devons faire de façon assez détailler et permet d'expliquer les rajouts réaliser dans le code de l'application(méthode, attributs, test ...)&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.6.2 : Mettre en œuvre des outils et stratégies de veille informationnelle&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Afin de pouvoir utiliser correctement le framework symfony, j'ai dû me documenter sur ses fonctionnalités,
+pour cela j'ai pu réaliser une veille active, &lt;/p&gt;
+&lt;p&gt;Cette veille active je l'ai réalisé sur la documentation de symfony mais aussi sur des forums comme stack overflow afin de comprendre le fonctionnement 
+des formulaires. Cela m’a permis de récupérer une liste d'élément dans la bdd afin de l'afficher dans une liste du formulaire.&lt;/p&gt;
+&lt;p&gt;Pour réaliser cette veille active j'ai recherché dans un moteur de recherche "symfony" afin de tomber sur le site officiel, afin de rechercher les fonctionnaltiés.&lt;/p&gt;
+&lt;p&gt;Dans mon cas, j'ai écrit "symfony formulaire" afin de recenser seulement les informations liées au formulaire de symfony.
+Cela proposé le site officiel symfony.com et le forum communautaire stack overflow.&lt;/p&gt;
+&lt;p&gt;J'ai pu obtenir le fonctionnement et des exemples de comment résoudre mon problème.&lt;/p&gt;
+&lt;p&gt;J'ai pu trouver différentes solutions, et j'ai pu les essayer dans mon code et utilisé celle qui était la plus simple à mettre en place.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>Mission 1er stage : Correction intranet</title><link href="/eportfolio/bookworm/rissian-thomas/Stage1CorrectionIntranet.html" rel="alternate"></link><published>2023-06-05T20:28:00+02:00</published><updated>2023-06-05T20:28:00+02:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-06-05:/eportfolio/bookworm/rissian-thomas/Stage1CorrectionIntranet.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;J'ai travaillé seul sur cette mission.
+Je travaillais sur une partie de l'intranet de l'entreprise.&lt;/p&gt;
+&lt;p&gt;Cette partie s'occupait de l'affichage des ordres de fabrication.&lt;/p&gt;
+&lt;p&gt;Pour cela j'ai dû vérifier dans la base de donnée si le colis était initialisé à null ce qui provoquait l'erreur, &lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;notepad ++&lt;/li&gt;
+&lt;li&gt;microsoft …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;J'ai travaillé seul sur cette mission.
+Je travaillais sur une partie de l'intranet de l'entreprise.&lt;/p&gt;
+&lt;p&gt;Cette partie s'occupait de l'affichage des ordres de fabrication.&lt;/p&gt;
+&lt;p&gt;Pour cela j'ai dû vérifier dans la base de donnée si le colis était initialisé à null ce qui provoquait l'erreur, &lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;notepad ++&lt;/li&gt;
+&lt;li&gt;microsoft sql server&lt;/li&gt;
+&lt;li&gt;bureau à distance (environnement de développement)&lt;/li&gt;
+&lt;li&gt;ASP Legacy&lt;/li&gt;
+&lt;li&gt;mysql&lt;/li&gt;
+&lt;li&gt;HTML / CSS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.3 : Traiter des demandes concernant les applications&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;J'ai dû trouver comment corriger une erreur présente qui était dû à une erreur NULL dans la base de donnée.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/stage/1er/CorrectionBugColis/code.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/stage/1er/CorrectionBugColis/renduFinal.png"&gt; &lt;/p&gt;
+&lt;p&gt;Puis j'ai dû réaliser une autre amélioration qui était le rajout d'une colonne auquel j'ai dû créer un nouveau champ dans la base.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/stage/1er/champLocalisation/ajoutLieuAffichage2.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/stage/1er/champLocalisation/codeAjoutLieu2.png"&gt; &lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>Mission 1er stage : Mail automatique</title><link href="/eportfolio/bookworm/rissian-thomas/Stage1MailAuto.html" rel="alternate"></link><published>2023-06-05T20:28:00+02:00</published><updated>2023-06-05T20:28:00+02:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-06-05:/eportfolio/bookworm/rissian-thomas/Stage1MailAuto.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Mon projet de stage a été réalisé seul, j'ai travaillé sur une version de test de l'intranet de l'entreprise.&lt;/p&gt;
+&lt;p&gt;Pendant mon stage j'avais un projet qui avait comme objectif de récupérer le nombre d'erreur d'ordre de fabrication(OF) et de les envoyer par mail aux personnes concernées. Tout en …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Mon projet de stage a été réalisé seul, j'ai travaillé sur une version de test de l'intranet de l'entreprise.&lt;/p&gt;
+&lt;p&gt;Pendant mon stage j'avais un projet qui avait comme objectif de récupérer le nombre d'erreur d'ordre de fabrication(OF) et de les envoyer par mail aux personnes concernées. Tout en précisant le plus d'information par rapport à cet OF.&lt;/p&gt;
+&lt;p&gt;Les erreurs d'OF pouvait-être recensé sur différent site, donc il fallait pouvoir les rediriger aux bonnes personnes de l'entreprise.&lt;/p&gt;
+&lt;p&gt;J'ai pu commencer mes tests sur une page web pour pouvoir vérifier si mes requêtes étaient correctes et si mes tests fonctionnaient comme voulu.&lt;/p&gt;
+&lt;p&gt;La création et la lecture de la base de donnée a pu se faire grâce au logiciel microsoft sql server, et les tests de boites mail sur outlook.&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;visual studio code&lt;/li&gt;
+&lt;li&gt;microsoft sql server&lt;/li&gt;
+&lt;li&gt;outlook&lt;/li&gt;
+&lt;li&gt;bureau à distance (environnement de développement)&lt;/li&gt;
+&lt;li&gt;PHP&lt;/li&gt;
+&lt;li&gt;mysql&lt;/li&gt;
+&lt;li&gt;HTML / CSS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.3 : Traiter des demandes concernant les applications&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;J'ai mis un certain temps avant de comprendre où était situé toutes les informations dans le code et dans la base de donnée(BDD).&lt;/p&gt;
+&lt;p&gt;J'ai dû développer un système permettant de récupérer les informations qui m'étaient nécessaire(numéro de camion, date et un identifiant).
+Afin de pouvoir les transmettre par mail à une liste de personne disponible dans la base de donnée.
+J'ai dû faire en sorte que les informations que je renvoyais correspondaient bien à ceux qui avaient une erreur et donc possédait un identifiant égale à 002.&lt;/p&gt;
+&lt;p&gt;Je devais réaliser 2 mails : &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;l'un récupère les erreurs du jour précédant et les envoyés chaque jour chaque site avait ses erreurs.&lt;/li&gt;
+&lt;li&gt;l'autre envoyé en début de semaine toutes les erreurs de la semaine passé et de tous les sites.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/stage/1er/mailLog/rendu/journalier.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/stage/1er/mailLog/rendu/reporting.png"&gt; &lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>Mission 1er stage : Modification Amaliage</title><link href="/eportfolio/bookworm/rissian-thomas/stage1Amaliage.html" rel="alternate"></link><published>2023-06-05T20:28:00+02:00</published><updated>2023-06-05T20:28:00+02:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-06-05:/eportfolio/bookworm/rissian-thomas/stage1Amaliage.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;J'ai travaillé seul sur cette mission de stage. &lt;/p&gt;
+&lt;p&gt;J'ai dû développer une fonctionnalité sur leur intranet, la partie de cet intranet s'appelle Amaliage. 
+Amaliage s'occupe de la gestion des camions.&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;visual studio code&lt;/li&gt;
+&lt;li&gt;microsoft sql server&lt;/li&gt;
+&lt;li&gt;bureau à distance (environnement de développement)&lt;/li&gt;
+&lt;li&gt;PHP&lt;/li&gt;
+&lt;li&gt;mysql&lt;/li&gt;
+&lt;li&gt;HTML / CSS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence …&lt;/h3&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;J'ai travaillé seul sur cette mission de stage. &lt;/p&gt;
+&lt;p&gt;J'ai dû développer une fonctionnalité sur leur intranet, la partie de cet intranet s'appelle Amaliage. 
+Amaliage s'occupe de la gestion des camions.&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;visual studio code&lt;/li&gt;
+&lt;li&gt;microsoft sql server&lt;/li&gt;
+&lt;li&gt;bureau à distance (environnement de développement)&lt;/li&gt;
+&lt;li&gt;PHP&lt;/li&gt;
+&lt;li&gt;mysql&lt;/li&gt;
+&lt;li&gt;HTML / CSS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.3 : Traiter des demandes concernant les applications&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;l'objectif était que quand on cliquait sur "arrivé" ou "parti" dans transporeon, la case sur Amaliage soit tout aussi coché.&lt;/p&gt;
+&lt;p&gt;Pour pouvoir faire cela j'ai dû tenter de récupérer la donnée par la base de donnée et faire des tests afin de modifier la valeur correctement.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/stage/1er/lienAmaliageTransporeon/rendu/choixTranporeon.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/stage/1er/lienAmaliageTransporeon/rendu/renduAmaliage.png"&gt; &lt;/p&gt;
+&lt;p&gt;J'ai rajouté une catégorie qui permettait de gérer les heures de chargement de chaque site.
+Sur la base de donnée se trouver les horaires pour chaque site, mais ils n'étaient pas implémentés.&lt;/p&gt;
+&lt;p&gt;je devais dire quand la livraison devait arriver "matin, après midi, journée", et les bons horaires de chaque site devait automatiquement être retourné&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/stage/1er/horraireLivraison/rendu.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/stage/1er/horraireLivraison/renduTransporeon.png"&gt; &lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>Mission 1er stage : Modification clé transporteur</title><link href="/eportfolio/bookworm/rissian-thomas/stage1ModifClefTransporeon.html" rel="alternate"></link><published>2023-06-05T20:28:00+02:00</published><updated>2023-06-05T20:28:00+02:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-06-05:/eportfolio/bookworm/rissian-thomas/stage1ModifClefTransporeon.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;J'ai réalisé cette mission seul.
+J'ai travaillé sur l'intranet de l'entreprise.&lt;/p&gt;
+&lt;p&gt;L'entreprise recense donc leurs transporteurs et travaille en parallèle sur une autre plateforme. Pour que les données puissent travailler 
+sur 2 plateformes, des clés de transporteurs existent.&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;visual studio code&lt;/li&gt;
+&lt;li&gt;microsoft sql server&lt;/li&gt;
+&lt;li&gt;bureau à distance …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;J'ai réalisé cette mission seul.
+J'ai travaillé sur l'intranet de l'entreprise.&lt;/p&gt;
+&lt;p&gt;L'entreprise recense donc leurs transporteurs et travaille en parallèle sur une autre plateforme. Pour que les données puissent travailler 
+sur 2 plateformes, des clés de transporteurs existent.&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;visual studio code&lt;/li&gt;
+&lt;li&gt;microsoft sql server&lt;/li&gt;
+&lt;li&gt;bureau à distance (environnement de développement)&lt;/li&gt;
+&lt;li&gt;PHP&lt;/li&gt;
+&lt;li&gt;mysql&lt;/li&gt;
+&lt;li&gt;HTML / CSS&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.3 : Traiter des demandes concernant les applications&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Il y avait parfois des problèmes avec certaine clé avec le site transporeon(un des sites de leur sous-traitant), et je devais pouvoir faire modifier la clé assez facilement à l'aide d'un tableau récapitulatif et rajouter un système de log pour pouvoir voir qui à fait tel modification en cas d'erreur.&lt;/p&gt;
+&lt;p&gt;Pour cela j'ai dû récupérer et renvoyer des données de la base de donnée,
+j'ai dû recréer une nouvelle table afin d'enregistrer les logs.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/stage/1er/clefTransporeon/rendu1.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/stage/1er/clefTransporeon/rendu2.png"&gt; &lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>correction d'incident du site AMAP Auvergne itération 1a</title><link href="/eportfolio/bookworm/rissian-thomas/correctionIncidentAmap1a.html" rel="alternate"></link><published>2023-05-09T20:28:00+02:00</published><updated>2023-05-09T20:28:00+02:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-05-09:/eportfolio/bookworm/rissian-thomas/correctionIncidentAmap1a.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé seul et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analyser les incidents proposer par notre professeur&lt;/li&gt;
+&lt;li&gt;Proposer des solutions pour corriger le problème&lt;/li&gt;
+&lt;li&gt;Corriger l’erreur sur le site&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avons dû Analyser l’application afin de comprendre son fonctionnement.&lt;/p&gt;
+&lt;p&gt;Notre professeur nous a donné un certain …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé seul et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analyser les incidents proposer par notre professeur&lt;/li&gt;
+&lt;li&gt;Proposer des solutions pour corriger le problème&lt;/li&gt;
+&lt;li&gt;Corriger l’erreur sur le site&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avons dû Analyser l’application afin de comprendre son fonctionnement.&lt;/p&gt;
+&lt;p&gt;Notre professeur nous a donné un certain nombre d’incident que nous devions régler. 
+Chaque incident pris par un étudiant ne pouvait être réalisé que par lui. L’objectif était de tous les corriger.&lt;/p&gt;
+&lt;p&gt;Nous devions passer par des tickets assez détailler qui expliquaient l’erreur, afin de pouvoir par la suite
+réaliser les modifications nécessaires sur l’application donner par notre professeur.&lt;/p&gt;
+&lt;p&gt;Chaque ticket devait être validé par notre professeur afin de passer à la suite, toutes erreurs dans le ticket
+étaient écris en commentaire afin de le résoudre.&lt;/p&gt;
+&lt;p&gt;Le problème devait être résolu sur l’application et push sur la forge logicielle &lt;em&gt;framagit&lt;/em&gt; sur une nouvelle branche.
+Chaque ticket devait avoir une branche et chaque projet branche était indépendante et non liée aux autres tickets.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/correctionIncidentAmap1a/ticket1.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/correctionIncidentAmap1a/ticket2.png"&gt;
+ &lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;firefox&lt;/li&gt;
+&lt;li&gt;php&lt;/li&gt;
+&lt;li&gt;twig&lt;/li&gt;
+&lt;li&gt;Netbean (debug)&lt;/li&gt;
+&lt;li&gt;pgAdmin (PostgreSQL)&lt;/li&gt;
+&lt;li&gt;framagit&lt;/li&gt;
+&lt;li&gt;ticket au format markdown&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétences mobilisées :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.1.2 : Exploiter des référentiels, normes et standards adoptés par le prestataire informatique&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous devions respecter les standards &lt;em&gt;PSR&lt;/em&gt; afin de nous habituer et permettre à toute autre personne externe
+de le comprendre (respecter les normes):&lt;/p&gt;
+&lt;p&gt;Après l’activité j’ai pu constater que je n’avais pas respecté la réglementation durant le projet suite à un commentaire de mon professeur que j’appliquerai dans le prochain projet.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.1 : Collecter, suivre et orienter des demandes&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avions à réaliser des &lt;em&gt;tickets&lt;/em&gt; assez précis décrivant &lt;em&gt;l’erreur&lt;/em&gt; et comment la résoudre :&lt;/p&gt;
+&lt;p&gt;j’ai pu réaliser des tickets qui respectaient la syntaxe markdown comme demander tout en expliquant le plus précisément possible l’incident.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.3 : Traiter des demandes concernant les applications&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Après avoir réalisé le &lt;em&gt;ticket&lt;/em&gt; nous devions résoudre cette erreur dans l’application :&lt;/p&gt;
+&lt;p&gt;j’ai pu la résoudre facilement après plusieurs avis de mon professeur par le biais des commentaires de la plateforme &lt;em&gt;framagit&lt;/em&gt;. Par contre je n’avais pas correctement renseigné la documentation technique de la nouvelle fonction créer que j’ai pu réaliser après.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.4.1 : Analyser les objectifs et les modalités d’organisation d’un projet&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Pendant cet Ap nous travaillons par ticket sur &lt;em&gt;framagit&lt;/em&gt; pour pouvoir expliquer notre analyse ainsi que comment remédier au problème.
+Chaque ticket était trié selon 3 catégories (bloquant, majeur, mineur) qui correspondait à l'importance du problème. &lt;/p&gt;
+&lt;p&gt;Chaque ticket était pris en charge par 1 personne et devait pour chaque incident créer une nouvelle branche avec comme nom le numéro de ticket et que chaque incident résolu parte du projet principale. 
+Ils devaient recenser 3 informations : &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Expression du besoin&lt;/li&gt;
+&lt;li&gt;Analyse du problème &lt;/li&gt;
+&lt;li&gt;Spécification&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Chaque information que l'on devait demander devait passer par la forge logicielle pour avoir une trace.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/correctionIncidentAmap1a/fonctionExistante.png"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>Site vitrine du réseau AMAP Auvergne avec Django CMS</title><link href="/eportfolio/bookworm/rissian-thomas/AmapDjangoCms.html" rel="alternate"></link><published>2023-05-04T20:28:00+02:00</published><updated>2023-05-04T20:28:00+02:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-05-04:/eportfolio/bookworm/rissian-thomas/AmapDjangoCms.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Ce TP a été réalisé seul et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Comprendre le fonctionnement de Django CMS&lt;/li&gt;
+&lt;li&gt;Faire les modifications demander &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/réseauDesAmapPage.png"&gt; &lt;/p&gt;
+&lt;p&gt;Notre professeur nous avait donné un document nous expliquant qu’est-ce qu’un CMS ainsi que son fonctionnement à l’aide du site vitrine AMAP Auvergne&lt;strong&gt;,&lt;/strong&gt; hébergé sur …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Ce TP a été réalisé seul et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Comprendre le fonctionnement de Django CMS&lt;/li&gt;
+&lt;li&gt;Faire les modifications demander &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/réseauDesAmapPage.png"&gt; &lt;/p&gt;
+&lt;p&gt;Notre professeur nous avait donné un document nous expliquant qu’est-ce qu’un CMS ainsi que son fonctionnement à l’aide du site vitrine AMAP Auvergne&lt;strong&gt;,&lt;/strong&gt; hébergé sur une machine virtuelle LAMP et propulsé par un serveur Apache. Nous avions à modifier ce site tout au long de la séquence afin de comprendre le fonctionnement de Django CMS.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/adhererAuReseau.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/charteAgriculturePaysanne.png"&gt;&lt;/p&gt;
+&lt;p&gt;Nous devions modifier à l’aide de l’interface graphique tant que c’était possible (ajout lien, texte, image) sur la page. Si nous devions ajouter des emplacements ou autre nous devions passer par le code HTML afin de les rajouter manuellement.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/ajoutConsultationLien.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/ajoutLienCharteAccueil.png"&gt; &lt;/p&gt;
+&lt;p&gt;À l’aide du logiciel libre Matomo écrit en PHP nous avions pu mettre en place un système de mesure d’audience grâce à une interface graphique simple d’utilisation semblable à google Analytics.&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;Vscodium&lt;/li&gt;
+&lt;li&gt;Thunar&lt;/li&gt;
+&lt;li&gt;FileZilla&lt;/li&gt;
+&lt;li&gt;Firefox&lt;/li&gt;
+&lt;li&gt;Virtual Box&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétences mobilisées :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.3.1 : Participer à la valorisation de l’image de l’organisation sur les médias numériques en tenant compte du cadre juridique et des enjeux économiques&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;L’utilisation de Matomo permet de respecter la confidentialité des données, l’anonymisation de l’adresse IP. Même si l’interface graphique est assez simple d’utilisation l’implémentation dans le second site AMAP a été plus complexe, car je ne savais pas où implémenter l’extrait de code fournit par Matomo dans le site.&lt;/p&gt;
+&lt;p&gt;Des mentions légales ont été mises en place concernant l’hébergeur et les dirigeants pour être conformes au cadre juridique. Cette implémentation a été réalisée en ajoutant une page grâce à Django qui à rajouter un bouton qui dirige vers cette nouvelle page avec les informations demander à l’intérieur.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/mentionsLegales.png"&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.3.3 : Participer à l’évolution d’un site Web exploitant les données de l’organisation&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avons pu réaliser les ajouts des différentes pages et liens sur le site vitrine AMAP conforme à l’attente demander de notre professeur malgré quelques erreurs dues à une mauvaise maîtrise de django CMS(utilisation des mauvais outils) qui après une relecture du support a pu être facilement corrigé.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/InterfaceModifAdhererReseau.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/AmapDjangoCms/redirectionCharteAmap.png"&gt;&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>création des sessions dans le contexte de formation de la SNCF</title><link href="/eportfolio/bookworm/rissian-thomas/creationSessionSNCF.html" rel="alternate"></link><published>2023-03-15T20:28:00+01:00</published><updated>2023-03-15T20:28:00+01:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2023-03-15:/eportfolio/bookworm/rissian-thomas/creationSessionSNCF.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé à 2 en peer programming, nous avions comme objectif :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Observer les insuffisances dans le contrôle de validité des informations saisies&lt;/li&gt;
+&lt;li&gt;Proposer des solutions pour garantir la concordance des informations saisies &lt;/li&gt;
+&lt;li&gt;Compléter ou créer une procédure de façon à prendre en charge ces nouveaux besoins …&lt;/li&gt;&lt;/ul&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé à 2 en peer programming, nous avions comme objectif :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Observer les insuffisances dans le contrôle de validité des informations saisies&lt;/li&gt;
+&lt;li&gt;Proposer des solutions pour garantir la concordance des informations saisies &lt;/li&gt;
+&lt;li&gt;Compléter ou créer une procédure de façon à prendre en charge ces nouveaux besoins&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avons dû Analyser l’application afin de repérer les erreurs possibles au bon fonctionnement&lt;/p&gt;
+&lt;p&gt;Nous devions passer par des tickets assez détailler qui expliquer l’erreur, afin de pouvoir par la suite
+réaliser les modifications nécessaires sur l’application donner par notre professeur.&lt;/p&gt;
+&lt;p&gt;Chaque ticket devait être validé par notre professeur afin de passer à la suite, toutes erreurs dans le ticket
+étaient écris en commentaire afin de le résoudre.&lt;/p&gt;
+&lt;p&gt;Le problème devait être résolu sur l’application et push sur la forge logicielle &lt;em&gt;framagit&lt;/em&gt; sur une nouvelle branche.
+Chaque ticket devait avoir une branche et chaque projet branche était indépendante et non liée aux autres tickets.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/creationSessionSNCF/ticket.png"&gt;
+&lt;img alt="Mon image" src="./theme/images/article/creationSessionSNCF/accueil.png"&gt;
+&lt;img alt="Mon image" src="./theme/images/article/creationSessionSNCF/ajoutVille.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;python&lt;/li&gt;
+&lt;li&gt;geany &lt;/li&gt;
+&lt;li&gt;pgAdmin (PostgreSQL)&lt;/li&gt;
+&lt;li&gt;framagit&lt;/li&gt;
+&lt;li&gt;ticket au format markdown&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.1.2 : Exploiter des référentiels, normes et standards adoptés par le prestataire informatique&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous devions respecter les normes du &lt;em&gt;PEP-8&lt;/em&gt; afin de nous habituer et permettre à tout autre personnes externe
+de le comprendre (respecter les normes):
+Lors de l’activité j’ai compris les &lt;em&gt;réglementations&lt;/em&gt; à respecter dont le &lt;em&gt;PEP-8&lt;/em&gt; mais ne l’est pas appliqué correctement dans
+le projet.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.1 : Collecter, suivre et orienter des demandes&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avions à réaliser des &lt;em&gt;tickets&lt;/em&gt; assez précis décrivant &lt;em&gt;l’erreur&lt;/em&gt; et comment la résoudre :
+Au début nos tickets étaient mal rédigés et nous les avons corrigés et plus détailler en utilisant la
+syntaxe &lt;em&gt;Markdown&lt;/em&gt; afin de résumer l’erreur et la démarche à suivre.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.3 : Traiter des demandes concernant les applications&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Après avoir réalisé le &lt;em&gt;ticket&lt;/em&gt; nous devions résoudre cette erreur dans l’application :
+Pour le premier ticket à résoudre nous avons réussi à le faire en respectant les actions expliquées dans le ticket,
+mais nous avons réalisé la moitié du second ticket par manque de temps et n’avons pas pu terminer la correction des erreurs.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.4.1 : Analyser les objectifs et les modalités d’organisation d’un projet&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous devions &lt;em&gt;analyser&lt;/em&gt; le projet afin de le comprendre et de pouvoir &lt;em&gt;repérer&lt;/em&gt; différentes erreur puis nous les partager :
+Nous avons réussi à analyser le projet et nous avons pu trouver 5 erreurs dont 3 proposés par notre professeur,
+nous devions par la suite &lt;em&gt;réfléchir&lt;/em&gt; à un moyen de corriger cette erreur pour la détailler dans le ticket.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>préparation mise en réseau d'une salle</title><link href="/eportfolio/bookworm/rissian-thomas/preparationmiseenreseausalle.html" rel="alternate"></link><published>2022-12-07T20:28:00+01:00</published><updated>2022-12-07T20:28:00+01:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2022-12-07:/eportfolio/bookworm/rissian-thomas/preparationmiseenreseausalle.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé à 2 et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analyser la salle &lt;/li&gt;
+&lt;li&gt;Réaliser un plan de cablage&lt;/li&gt;
+&lt;li&gt;Faire un devis des éléments nécessaire&lt;/li&gt;
+&lt;li&gt;Réaliser une fiche avec les calculs réaliser &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous étions des employés de chez IT Partner et nous devions faire un plan visio de …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé à 2 et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analyser la salle &lt;/li&gt;
+&lt;li&gt;Réaliser un plan de cablage&lt;/li&gt;
+&lt;li&gt;Faire un devis des éléments nécessaire&lt;/li&gt;
+&lt;li&gt;Réaliser une fiche avec les calculs réaliser &lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous étions des employés de chez IT Partner et nous devions faire un plan visio de la salle avec les tables et le nombre de port RJ45 et prise électrique avec le passage des câbles et l'emplacement des prises.
+Les composants nécessaires(colonne, câble, embase, plastron et connecteur) était trouvable sur le site de chez Abix.
+Pour pouvoir réaliser le devis il nous a fallu calculer les distances nécessaires pour le bon nombre de câble.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/preparationmiseenreseausalle/devis.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/preparationmiseenreseausalle/calcule.png"&gt;
+&lt;img alt="Mon image" src="./theme/images/article/preparationmiseenreseausalle/planSalle.png"&gt;
+ &lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;internet (site Abix)&lt;/li&gt;
+&lt;li&gt;Microsoft (visio/ word / excel)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.1.2 : Exploiter des référentiels, normes et standards adoptés par le prestataire informatique&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avons utilisé des câbles de catégorie récentes permettant un changement plus tardif si nécessaire et un grand nombre de prise(rj45 et électrique) pour permettre une évolution du nombre d'équipement.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.2 : Répondre aux incidents et aux demandes d’assistance et d’évolution&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avons réalisé les plans de la salle comme demander en respectant le contrat demander.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>appel d'offres pc fixes et portables</title><link href="/eportfolio/bookworm/rissian-thomas/appeloffrepcfixesetportable.html" rel="alternate"></link><published>2022-11-09T20:28:00+01:00</published><updated>2022-11-09T20:28:00+01:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2022-11-09:/eportfolio/bookworm/rissian-thomas/appeloffrepcfixesetportable.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé à 2 et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analyser les demandes &lt;/li&gt;
+&lt;li&gt;Proposer un devis contenant les ordinateurs et leurs options&lt;/li&gt;
+&lt;li&gt;Réaliser un argumentaire de choix&lt;/li&gt;
+&lt;li&gt;Faire une documentation technique des solutions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous étions des employés de chez IT Partner et nous devions réaliser 3 ordinateurs …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé à 2 et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analyser les demandes &lt;/li&gt;
+&lt;li&gt;Proposer un devis contenant les ordinateurs et leurs options&lt;/li&gt;
+&lt;li&gt;Réaliser un argumentaire de choix&lt;/li&gt;
+&lt;li&gt;Faire une documentation technique des solutions&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous étions des employés de chez IT Partner et nous devions réaliser 3 ordinateurs(2 fixes et 1 portable) qui avait chacun des critères spécifique.
+Pour cela nous devions trouver sur internet les composants des ordinateurs fixes et vérifier leurs compatibilités et le meilleur qualité prix. Et pour l'ordinateur portable trouver celui qui respecte le mieux la demande.&lt;/p&gt;
+&lt;p&gt;Après avoir trouvé les composant nous devions créer un devis fonctionnel (avec formule).
+Un oral final a eu lieu pour expliquer nos choix pour chaque composant.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/appeloffrepcfixesetportable/appel1.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/appeloffrepcfixesetportable/appel2.png"&gt;
+&lt;img alt="Mon image" src="./theme/images/article/appeloffrepcfixesetportable/appel3.png"&gt;
+ &lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;internet (site pour les recherches des composants)&lt;/li&gt;
+&lt;li&gt;libre office (calc/writter)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.1.2 : Exploiter des référentiels, normes et standards adoptés par le prestataire informatique&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;la gestion de composant compatible entre eux et conforme aux normes actuelles.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.2.2 : Répondre aux incidents et aux demandes d’assistance et d’évolution&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Nous avons pu faire le choix de 3 ordinateurs qui était conforme à la demande tout en ayant un rapport qualité prix assez correcte.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>recherches métiers / rédaction CV / mail motivé</title><link href="/eportfolio/bookworm/rissian-thomas/recherchemetier.html" rel="alternate"></link><published>2022-10-21T20:28:00+02:00</published><updated>2022-10-21T20:28:00+02:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2022-10-21:/eportfolio/bookworm/rissian-thomas/recherchemetier.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé à seul et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analyser des vidéos ou documents de différents métier &lt;/li&gt;
+&lt;li&gt;Réaliser une lettre de motivation et un CV&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Je devais regarder des vidéos présentatrice ou des documents de différents métier en rapport avec le réseau pour pouvoir plus facilement …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cet AP a été réalisé à seul et nous avions comme objectifs :&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Analyser des vidéos ou documents de différents métier &lt;/li&gt;
+&lt;li&gt;Réaliser une lettre de motivation et un CV&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Je devais regarder des vidéos présentatrice ou des documents de différents métier en rapport avec le réseau pour pouvoir plus facilement m'orienter sur le choix d'étude plus tard. 
+Par la suite j'ai dû réaliser une lettre de motivation et un CV selon une aide et un schéma de notre professeur afin de nous permettre d'en réaliser une conforme.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/recherchemetier/cv.png"&gt; 
+&lt;img alt="Mon image" src="./theme/images/article/recherchemetier/mail.png"&gt;
+ &lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;libre office(writter)&lt;/li&gt;
+&lt;li&gt;boite mail(gmail)&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.6.3 Gérer son identité professionnelle&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Cette réalisation m'a permis d’apprendre à réaliser un CV et une lettre de motivation mais m'a permis d’évoquer qui j’étais en format écrit ainsi que réunir mes compétences actuelles et futur pour les professionnels.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;B1.6.4 Développer son projet professionnel&lt;/strong&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Cette activité m’a permis de découvrir différents métiers en lien avec le réseau. Cela m’a permis d'en découvrir la diversité même si j'ai une plus grande attirance vers le milieu de la programmation.
+Réaliser un CV et une lettre de motivation qu'importe notre spécialité choisie est assez utile, car elle m’a permis de savoir comment en réaliser une et les différentes manière de pouvoir attirer l’œil de l'entreprise.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>Mission CV &amp; motivation</title><link href="/eportfolio/bookworm/rissian-thomas/cv&amp;motivation.html" rel="alternate"></link><published>2022-01-04T20:28:00+01:00</published><updated>2022-01-04T20:28:00+01:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2022-01-04:/eportfolio/bookworm/rissian-thomas/cv&amp;motivation.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cette activité a été réalisée lors d’une AP, nous devions réaliser un CV et une lettre
+de motivation seule pour un futur stage en option SLAM en tant que développeur.&lt;/p&gt;
+&lt;p&gt;Nous avons réalisé un CV à l’aide d’un modèle de départ de notre professeur composé de …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Cette activité a été réalisée lors d’une AP, nous devions réaliser un CV et une lettre
+de motivation seule pour un futur stage en option SLAM en tant que développeur.&lt;/p&gt;
+&lt;p&gt;Nous avons réalisé un CV à l’aide d’un modèle de départ de notre professeur composé de style. Cela avait pour rôles d’apprendre à les utiliser. Ce qui a permis d’être plus efficace et de pouvoir facilement changer les catégories.
+Le CV devait être simple, compréhensible et sobre, cela permettant une bonne lecture.
+Ce CV était composé des applications et langages exploité durant la première année en option SLAM et évoluera l’année prochaine avec les nouveautés.&lt;/p&gt;
+&lt;p&gt;Par la suite nous avons dû écrire deux lettres de motivation pour deux entreprises différentes du secteur, proposé par notre enseignant grâce au retour d’anciens élèves.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/cv&amp;amp;motivation/lm.png"&gt;&lt;img alt="Mon image" src="./theme/images/article/cv&amp;amp;motivation/cv.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;libre office writter&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;B1.6.3 Gérer son identité professionnelle&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Cette réalisation m'a permis d’apprendre à réaliser un CV et une lettre de motivation mais m'a permis d’évoquer qui j’étais en format écrit ainsi que réunir mes compétences actuelles et futur pour les professionnels.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry><entry><title>Découverte des métiers</title><link href="/eportfolio/bookworm/rissian-thomas/decouverteMetier.html" rel="alternate"></link><published>2022-01-04T20:28:00+01:00</published><updated>2022-01-04T20:28:00+01:00</updated><author><name>Thomas Rissian</name></author><id>tag:None,2022-01-04:/eportfolio/bookworm/rissian-thomas/decouverteMetier.html</id><summary type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Pendant un AP en groupe de 2, nous avions comme objectif de rechercher des informations sur un métier possible après le BTS SIO désigner par notre professeur. J’ai dû réaliser des recherches sur le métier
+de développeur d’applications bureautiques et multi-plateformes. Les informations de ce métier ont …&lt;/p&gt;</summary><content type="html">&lt;h3&gt;Contexte :&lt;/h3&gt;
+&lt;p&gt;Pendant un AP en groupe de 2, nous avions comme objectif de rechercher des informations sur un métier possible après le BTS SIO désigner par notre professeur. J’ai dû réaliser des recherches sur le métier
+de développeur d’applications bureautiques et multi-plateformes. Les informations de ce métier ont été renseignées au préalable dans une fiche de synthèse au format markdown donnée par notre professeur afin de suivre notre avancé et de pouvoir obtenir sa validation.&lt;/p&gt;
+&lt;p&gt;Cet oral était constitué de différente partie explicative de ce métier.&lt;/p&gt;
+&lt;p&gt;Nous avons pu expliquer nos recherches à l’oral à l’aide d’un diaporama comme support qui devait être contextualisé pour découvrir différents métiers de façon détaillée afin de pouvoir s’orienter vers la filière et le stage adéquat.&lt;/p&gt;
+&lt;p&gt;&lt;img alt="Mon image" src="./theme/images/article/decouverteMetier/metier.png"&gt;&lt;/p&gt;
+&lt;h3&gt;Environnement technologique :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;diaporama&lt;/li&gt;
+&lt;li&gt;réalisation d’un thème libre office impress&lt;/li&gt;
+&lt;li&gt;synthèse avec markdown&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3&gt;compétence mobilisée :&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;B1.6.4 Développer son projet professionnel&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Grâce à cette activité j'ai pu apprendre le rôle de certains métiers comme développeur full stack. Pour ma part cette activité m'a permis de me rapprocher de 2 métiers qui m’intéresse qui sont développeurs front-end et développeur d’application bureautique.&lt;/p&gt;</content><category term="Python"></category><category term="pelican"></category></entry></feed>

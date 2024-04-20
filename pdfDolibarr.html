@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+          <title>Mon ePortfolio - Mission 2nd stage : Création modèle PDF dolibarr</title>
+        <meta charset="utf-8" />
+        <meta name="generator" content="Pelican" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="/eportfolio/bookworm/rissian-thomas/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Mon ePortfolio Full Atom Feed" />
+        <link href="/eportfolio/bookworm/rissian-thomas/feeds/python.atom.xml" type="application/atom+xml" rel="alternate" title="Mon ePortfolio Categories Atom Feed" />
+
+
+
+
+    <meta name="tags" content="pelican" />
+
+</head>
+
+<body>
+        <header>
+              <hgroup><h1><a href="/eportfolio/bookworm/rissian-thomas/">Mon ePortfolio</a></h1></hgroup>
+        <nav><ul>
+            <li><a href="/eportfolio/bookworm/rissian-thomas/category/python.html"  aria-current="page" >Python</a></li>
+        </ul></nav>
+        </header>
+        <main>
+<article>
+  <header>
+    <h2>
+      <a href="/eportfolio/bookworm/rissian-thomas/pdfDolibarr.html" rel="bookmark"
+         title="Permalink to Mission 2nd stage : Création modèle PDF dolibarr">Mission 2nd stage : Création modèle PDF dolibarr</a></h2>
+ 
+  </header>
+  <h3>Contexte :</h3>
+<p>J'ai travaillé chez l'entreprise Yansys, sur leur ERP, il s'agit d'un ERP open source et gratuit développé en PHP, nommé dolibarr.
+J'avais comme tâche de modifier et créer des modèles de fichier PDF.</p>
+<p>Le modèle est entièrement créé en PHP grâce à la librairie TCPDF intégré dans l'ERP. 
+Pour créer de nouveau modèle il faut exploiter ceux déjà existant afin de pouvoir l'intégrer dans dolibarr.</p>
+<p>Les modèles PDF créés sont composés d'un tableau, le tableau peut possiblement changer de page si besoin. 
+Les données du tableau sont insérés par ligne et lors de l'insertion de la ligne on traite chacune des colonnes de la gauche vers la droite.</p>
+<p>Nativement, quand une ligne est insérée, il vérifie si le texte insérer dans la colonne de gauche a changé de page et si c'est le cas, tous le reste du texte continue sur le page d'après.</p>
+<p>Le code du modèle PDF est assez complexe et une évolution a été réalisé pour une simplicité d'utilisation.</p>
+<p><img alt="Mon image" src="./theme/images/article/pdfDolibarr/dolibarr.png"></p>
+<h3>Environnement technologique :</h3>
+<ul>
+<li>Firefox </li>
+<li>Visual Studio Code</li>
+<li>MySql Workbench</li>
+<li>NotePad ++</li>
+<li>PHP</li>
+<li>Github</li>
+<li>Filezilla</li>
+</ul>
+<h3>compétences mobilisées :</h3>
+<ul>
+<li><strong>B1.2.3 : Traiter des demandes concernant les applications</strong></li>
+</ul>
+<p>J'ai dû modifier et créer plusieurs modèles PDF de l'ERP, cela consistait à changer le thème actuel, modifiant les colonnes, certains encadrés. </p>
+<p>J'ai pu commencer par regarder le fonctionnement des modèles PDF sur l'ERP, un fichier PHP est créé, composé de 1000 lignes de codes afin de créer le fichier pdf.
+Mon problème a été de gérer comment réaliser un tableau en multipage. 
+Le tableau insert les valeurs déjà par ligne puis par colonne et quand un changement de page est possible, il vérifie seulement si la colonne de gauche changé de page, et dans ce cas tous le reste de la ligne changer.
+Pour palier à ce problème j'ai dû entièrement calculer toutes les colonnes de ma ligne pour savoir si ça allait changer de page et quelle ligne était la plus grande afin qu’elle puisse imposer la taille maximum.
+Grâce à cette méthode, toutes les lignes pouvaient être si besoin sur 2 pages en simultané.</p>
+<p>J'ai pu par la suite modifier le modèle du PDF afin de factoriser et minimiser le code que le développeur devra lire en réalisant une classe contenant le modèle et des méthodes placer à des emplacements clé, chacune de ces méthodes contrôlera une partie du PDF. Et pour créer un nouveau modèle il faudra hériter de cette classe.</p>
+<p><img alt="Mon image" src="./theme/images/article/pdfDolibarr/diagramme_pdf.png">
+<img alt="Mon image" src="./theme/images/article/pdfDolibarr/pdf.png"></p>
+<ul>
+<li><strong>B1.5.2 : Déployer un service</strong></li>
+</ul>
+<p>J'ai pu mettre mon projet réaliser en production.
+Tout d'abord j'ai dû déposer mon code sur github afin que l'entreprise possède une un historique de mes modifications. Puis j'ai dû manuellement intégrer mes fichiers à partir de filezilla sur le serveur de l'ERP.</p>
+  <footer>
+    <p>Published: <time datetime="2024-02-16T14:21:00+01:00">
+      Fri 16 February 2024
+    </time></p>
+    <address>
+      By           <a href="/eportfolio/bookworm/rissian-thomas/author/thomas-rissian.html">Thomas Rissian</a>
+    </address>
+    <p>
+        Category: <a href="/eportfolio/bookworm/rissian-thomas/category/python.html">Python</a>
+    </p>
+    <p>
+        Tags:
+            <a href="/eportfolio/bookworm/rissian-thomas/tag/pelican.html">pelican</a>
+    </p>
+  </footer>
+  </article>
+        </main>
+        <footer>
+                <address>
+                Proudly powered by <a rel="nofollow" href="https://getpelican.com/">Pelican</a>,
+                which takes great advantage of <a rel="nofollow" href="https://www.python.org/">Python</a>.
+                </address>
+        </footer>
+</body>
+</html>
