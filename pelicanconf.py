@@ -184,6 +184,5 @@ COMPETENCES = (
 )
 
 CHAMPS_CONTACT = (
-    ('Numéro de téléphone','06.42.51.33.18'),
-    ('E-mail','Thomas.risian@proton.me')
+    ('E-mail','Thomas.risian@proton.me'),
 )
