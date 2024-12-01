@@ -35,7 +35,7 @@ DEFAULT_PAGINATION = False
 THEME = 'themes/mon-theme-pelican'
 CSS_FILE = 'style.css'
 
-CLASSE = "BTS SIO"
+CLASSE = "BUT Informatique Graphique"
 
 MENU = (
 	('accueil', 'Accueil'),
