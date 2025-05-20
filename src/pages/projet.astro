@@ -1,0 +1,188 @@
+---
+import Layout from '../layouts/Layout.astro';
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+
+// Récupère les compétences depuis src/content/about/skill/*.md
+const skillDir = path.resolve(process.cwd(), 'src/content/about/skill');
+const skillFiles = fs.existsSync(skillDir) ? fs.readdirSync(skillDir) : [];
+const projects = await Astro.glob('../content/project/*.md');
+
+// Récupère toutes les technos utilisées dans les projets
+const allProjectTechnos = new Set(
+  projects.flatMap(p => (p.frontmatter.technologies || []))
+);
+
+// Filtre les compétences pour ne garder que celles utilisées dans au moins un projet
+const competences = skillFiles
+  .filter((file) => file.endsWith('.md'))
+  .map((file) => {
+    const filePath = path.join(skillDir, file);
+    const fileContent = fs.readFileSync(filePath, 'utf-8');
+    const { data } = matter(fileContent);
+    return {
+      name: data.title,
+      key: data.title.toLowerCase().replace(/\s+/g, '-'),
+      technologies: (data.technologies || []).filter(tech => allProjectTechnos.has(tech)),
+      order: data.order ?? 999
+    };
+  })
+  // On garde seulement les compétences qui ont au moins une techno utilisée dans un projet
+  .filter(comp => comp.technologies.length > 0)
+  .sort((a, b) => a.order - b.order);
+
+import "../../public/styles/projet-cards.css";
+---
+
+<Layout pageTitle="Mes Projets">
+  <nav class="competence-bar competence-bar-limited">
+    {competences.map(comp => (
+      <button class="competence-btn" data-key={comp.key} type="button">
+        <span class="parallelogram">
+          {comp.name}
+          <span class="competence-arrow">&#9662;</span>
+        </span>
+      </button>
+    ))}
+  </nav>
+  {competences.map(comp => (
+    <div class="tech-volet" data-key={comp.key} style="display:none;">
+      {comp.technologies.length === 0 && (
+        <span style="color:#888;font-size:0.95em;">Aucune technologie</span>
+      )}
+      {comp.technologies.map(tech => (
+        <button class="tech-chip" data-tech={tech} type="button" tabindex="-1">{tech}</button>
+      ))}
+    </div>
+  ))}
+  <section class="projects-grid">
+    {projects.map((project, idx) => {
+      const { title, technologies = [], image, slug, competence } = project.frontmatter;
+      return (
+        <a
+          href={`/projet/${slug ?? project.file.replace('.md', '').split('/').pop()}`}
+          class="project-card"
+          key={idx}
+          aria-label={`Voir le projet ${title}`}
+          data-competence={competence ? competence.toLowerCase().replace(/\s+/g, '-') : ''}
+          data-technos={technologies.join(',')}
+        >
+          <div class="project-card-img-wrapper">
+            <img src={image ?? "/placeholder.png"} alt={title} class="project-card-img" loading="lazy" />
+          </div>
+          <div class="project-card-overlay">
+            <div class="project-card-title">{title}</div>
+            <div class="project-card-techs">
+              {technologies.map(tech => (
+                <span class="project-card-tech">{tech}</span>
+              ))}
+            </div>
+          </div>
+        </a>
+      );
+    })}
+  </section>
+  <script>
+    let openVolet = null;
+    let selectedCompetences = new Set();
+    let selectedTechnos = new Set();
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // Ouvre/ferme le volet techno (clic sur la flèche)
+      document.querySelectorAll('.competence-arrow').forEach(arrow => {
+        arrow.addEventListener('click', function(e) {
+          e.stopPropagation();
+          let btn = arrow.closest('.competence-btn');
+          if (!btn) return;
+          const key = btn.dataset.key;
+          // Ferme tous les volets sauf celui cliqué
+          document.querySelectorAll('.tech-volet').forEach(volet => {
+            if (volet.dataset.key === key) {
+              const isOpen = volet.style.display === 'flex';
+              volet.style.display = isOpen ? 'none' : 'flex';
+              openVolet = isOpen ? null : key;
+            } else {
+              volet.style.display = 'none';
+            }
+          });
+        });
+      });
+
+      // Sélection multiple des compétences (clic sur le parallélogramme)
+      document.querySelectorAll('.parallelogram').forEach(paral => {
+        paral.addEventListener('click', e => {
+          e.stopPropagation();
+          const btn = paral.closest('.competence-btn');
+          const key = btn.dataset.key;
+          if (selectedCompetences.has(key)) {
+            selectedCompetences.delete(key);
+            btn.classList.remove('selected');
+          } else {
+            selectedCompetences.add(key);
+            btn.classList.add('selected');
+          }
+          filterProjects();
+        });
+      });
+
+      // Sélection multiple des technos (clic sur la techno)
+      function updateTechChipListeners() {
+        document.querySelectorAll('.tech-chip').forEach(chip => {
+          chip.removeEventListener('click', chip._techChipHandler);
+          chip._techChipHandler = function(e) {
+            e.stopPropagation();
+            const tech = chip.dataset.tech;
+            if (selectedTechnos.has(tech)) {
+              selectedTechnos.delete(tech);
+              chip.classList.remove('selected');
+            } else {
+              selectedTechnos.add(tech);
+              chip.classList.add('selected');
+            }
+            filterProjects();
+          };
+          chip.addEventListener('click', chip._techChipHandler);
+        });
+      }
+      updateTechChipListeners();
+
+      // Affiche les volets fermés au chargement
+      document.querySelectorAll('.tech-volet').forEach(volet => {
+        volet.style.display = 'none';
+      });
+
+      function filterProjects() {
+        const projectCards = document.querySelectorAll('.project-card');
+        // Si aucune compétence ni techno sélectionnée, tout afficher
+        if (selectedCompetences.size === 0 && selectedTechnos.size === 0) {
+          projectCards.forEach(card => card.style.display = '');
+          return;
+        }
+        // Récupère toutes les technos des compétences sélectionnées
+        let competenceTechs = [];
+        document.querySelectorAll('.competence-btn').forEach(btn => {
+          const key = btn.dataset.key;
+          if (selectedCompetences.has(key)) {
+            const techVolet = document.querySelector('.tech-volet[data-key="' + key + '"]');
+            const techs = Array.from(techVolet?.querySelectorAll('.tech-chip') || []).map(chip => chip.dataset.tech);
+            competenceTechs = competenceTechs.concat(techs);
+          }
+        });
+
+        projectCards.forEach(card => {
+          const cardTechnos = (card.dataset.technos || '').split(',');
+          let show = false;
+          // Si des technos sont sélectionnées, on filtre sur elles (au moins une doit être présente dans le projet)
+          if (selectedTechnos.size > 0) {
+            show = Array.from(selectedTechnos).some(tech => cardTechnos.includes(tech));
+          } else if (selectedCompetences.size > 0) {
+            // Sinon, on filtre sur toutes les technos des compétences sélectionnées (au moins une doit matcher)
+            show = competenceTechs.some(tech => cardTechnos.includes(tech));
+          }
+          card.style.display = show ? '' : 'none';
+        });
+      }
+    });
+  </script>
+</Layout>

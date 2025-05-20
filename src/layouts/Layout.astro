@@ -32,42 +32,43 @@ const bgTitle = getBgTitle(pageTitle);
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle ? pageTitle : "Portfolio"}</title>
     <style>
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@900&family=Roboto:wght@900&display=swap');
       .main-page-title-outer {
         position: relative;
         width: 100vw;
         display: flex;
         justify-content: center;
-        align-items: flex-start;
-        margin: 5rem 0 0 0;
+        align-items: center;
+        margin: 4.5rem 0 0 0;
         padding: 0;
-        height: 8.5rem;
+        height: 7.5rem;
+        min-height: 5.5rem;
       }
       .main-page-title-bg {
         position: absolute;
-        top: 0;
+        top: 50%;
         left: 50%;
-        transform: translateX(-50%);
-        font-size: clamp(3.5rem, 10vw, 6.5rem); /* plus gros mais pas immense */
+        transform: translate(-50%, -50%);
+        font-size: clamp(3.2rem, 10vw, 6.5rem); /* moins gros */
         font-weight: 900;
-        color: #5A82B2;
-        opacity: 0.09;
+        color: #22304a; /* plus foncé */
+        opacity: 0.22; /* plus visible */
         pointer-events: none;
         user-select: none;
-        white-space: pre-line;
+        white-space: nowrap;
         z-index: 1;
         text-transform: uppercase;
-        letter-spacing: 0.08em;
+        letter-spacing: 0.12em;
         width: 100vw;
         text-align: center;
         line-height: 1;
-        text-shadow: none;
-        filter: none;
+        font-family: 'Roboto', Arial, sans-serif;
       }
       .main-page-title-wrapper {
         position: absolute;
-        top: 0;
+        top: 50%;
         left: 50%;
-        transform: translateX(-50%);
+        transform: translate(-50%, -50%);
         width: 100vw;
         display: flex;
         justify-content: center;
@@ -78,23 +79,80 @@ const bgTitle = getBgTitle(pageTitle);
       .main-page-title {
         position: relative;
         z-index: 2;
-        filter: none;
-        text-shadow: none;
         margin: 0;
         padding: 0;
-        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-size: clamp(2.2rem, 5vw, 3.7rem);
         font-weight: 900;
         text-align: center;
         letter-spacing: 0.04em;
         line-height: 1.1;
         user-select: none;
-        display: inline-flex;
-        justify-content: center;
+        display: flex;
+        flex-direction: row;
         align-items: center;
-        flex-wrap: wrap;
-        gap: 0.5rem;
+        justify-content: center;
+        gap: 0.6rem;
+        color: #dbeafe;
+        pointer-events: auto;
+        font-family: 'Poppins', 'Inter', 'Segoe UI', Arial, sans-serif;
         background: none;
-        color: #D2D2D2;
+        box-shadow: none;
+        border: none;
+      }
+      .main-title-first {
+        color: #dbeafe;
+        font-weight: 900;
+        display: inline-block;
+        font-size: inherit;
+        letter-spacing: 0.01em;
+        text-transform: none;
+        position: relative;
+        z-index: 2;
+        font-family: 'Poppins', 'Inter', 'Segoe UI', Arial, sans-serif;
+        /* Bordure bleu moyen, plus épaisse */
+        -webkit-text-stroke: 1.2px #3b4a6b;
+        text-stroke: 1.2px #3b4a6b;
+      }
+      .main-title-second {
+        color: #5A82B2;
+        font-weight: 900;
+        font-size: inherit;
+        margin-left: 0.6rem;
+        opacity: 0.93;
+        text-transform: uppercase;
+        letter-spacing: 0.13em;
+        z-index: 2;
+        display: inline-block;
+        position: relative;
+        font-style: normal;
+        font-family: 'Roboto', Arial, sans-serif;
+        /* Bordure bleu foncé, bien épaisse */
+        -webkit-text-stroke: 2.2px #22304a;
+        text-stroke: 2.2px #22304a;
+      }
+      @media (max-width: 900px) {
+        .main-page-title-outer {
+          height: 5.5rem;
+          min-height: 3.5rem;
+        }
+        .main-page-title-bg {
+          font-size: 2.1rem;
+        }
+        .main-page-title {
+          font-size: 2.1rem;
+        }
+      }
+      @media (max-width: 600px) {
+        .main-page-title-outer {
+          height: 3.5rem;
+          min-height: 2.2rem;
+        }
+        .main-page-title-bg {
+          font-size: 1.2rem;
+        }
+        .main-page-title {
+          font-size: 1.2rem;
+        }
       }
     </style>
   </head>
@@ -106,10 +164,12 @@ const bgTitle = getBgTitle(pageTitle);
             {bgTitle}
           </div>
           <div class="main-page-title-wrapper">
-            <h1 class="main-page-title">
+            <div class="main-page-title">
               <span class="main-title-first">{titleFirst}</span>
-              {titleSecond && <span class="main-title-second"> {titleSecond}</span>}
-            </h1>
+              {titleSecond && (
+                <span class="main-title-second">{titleSecond}</span>
+              )}
+            </div>
           </div>
         </div>
       )}

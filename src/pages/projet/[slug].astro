@@ -1,0 +1,143 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const projects = await Astro.glob('../../content/project/*.md');
+  return projects.map((project) => ({
+    params: { slug: project.frontmatter.slug }
+  }));
+}
+
+const { slug } = Astro.params;
+const projects = await Astro.glob('../../content/project/*.md');
+const project = projects.find(p => p.frontmatter.slug === slug);
+
+if (!project) {
+  throw new Error('Projet introuvable');
+}
+
+const {
+  title,
+  image,
+  dates,
+  description,
+  etapes,
+  technologies,
+  competences,
+  illustration,
+  conclusion,
+  github,
+} = project.frontmatter;
+---
+
+<Layout>
+  <article class="project-detail">
+    <header>
+      <h1>{title}</h1>
+      {image && <img src={image} alt={title} class="main-image" />}
+    </header>
+    <section>
+      <h2>Dates</h2>
+      <p>{dates}</p>
+    </section>
+    <section>
+      <h2>Description</h2>
+      <p>{description}</p>
+    </section>
+    <section>
+      <h2>Étapes du projet</h2>
+      <ul>
+        {(etapes || []).map(etape => <li>{etape}</li>)}
+      </ul>
+    </section>
+    <section>
+      <h2>Technologies</h2>
+      <div class="tech-list">
+        {(technologies || []).map(tech => <span class="tech">{tech}</span>)}
+      </div>
+    </section>
+    <section>
+      <h2>Compétences</h2>
+      <ul>
+        {(competences || []).map(comp => (
+          <li>
+            <strong>{comp.titre} :</strong> {comp.justificatif}
+          </li>
+        ))}
+      </ul>
+    </section>
+    {illustration && (
+      <section>
+        <h2>Illustration</h2>
+        <img src={illustration} alt="Illustration du projet" class="illustration" />
+      </section>
+    )}
+    <section>
+      <h2>Conclusion</h2>
+      <p>{conclusion}</p>
+    </section>
+    {github && (
+      <section>
+        <a href={github} target="_blank" rel="noopener" class="github-link">Voir sur GitHub</a>
+      </section>
+    )}
+    <section>
+      <a href="/src/pages/projet" class="other-link">Découvrir d'autres projets</a>
+    </section>
+  </article>
+  <style>
+    .project-detail {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .main-image {
+      width: 100%;
+      max-width: 500px;
+      display: block;
+      margin: 2rem auto;
+      border-radius: 1rem;
+      box-shadow: 0 2px 8px #0002;
+    }
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .tech {
+      background: #0077ff22;
+      border-radius: 0.5rem;
+      padding: 0.2rem 0.7rem;
+      font-size: 0.95em;
+    }
+    .illustration {
+      width: 100%;
+      max-width: 400px;
+      margin: 1rem auto;
+      display: block;
+      border-radius: 0.7rem;
+      box-shadow: 0 2px 8px #0001;
+    }
+    .github-link {
+      display: inline-block;
+      margin-top: 1rem;
+      background: #24292f;
+      color: #fff;
+      padding: 0.6rem 1.2rem;
+      border-radius: 0.5rem;
+      text-decoration: none;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .github-link:hover {
+      background: #0077ff;
+    }
+    .other-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #0077ff;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  </style>
+</Layout>

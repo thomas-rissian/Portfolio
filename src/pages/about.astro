@@ -8,7 +8,15 @@ import TimelineSection from "../components/about/TimelineSection.astro";
 ---
 
 <Layout pageTitle="A Propos">
-    <AboutSection />
-    <CompetencesSection/>
-    <TimelineSection />
+  <nav class="about-navbar modern-navbar">
+    <div class="about-navbar-inner">
+      <a href="#infos" class="about-nav-link">Infos personnelles</a>
+      <a href="#competences" class="about-nav-link">Compétences</a>
+      <a href="#xp" class="about-nav-link">Expériences & Projets</a>
+    </div>
+  </nav>
+
+  <AboutSection />
+  <CompetencesSection />
+  <TimelineSection />
 </Layout>

@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const contactMd = await Astro.glob('../content/contact/*.md');
+const contact = contactMd.length > 0 ? contactMd[0].frontmatter : {};
+---
+
+<Layout>
+  <h1>Contact</h1>
+  <div class="contact-info">
+    <p><strong>Email :</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
+    <p><strong>Message :</strong> {contact.message}</p>
+  </div>
+</Layout>
+

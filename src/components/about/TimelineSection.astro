@@ -1,0 +1,64 @@
+---
+const experiences = await Astro.glob('/src/content/about/experience/*.md');
+
+const MONTHS = {
+  janvier: 1, février: 2, mars: 3, avril: 4, mai: 5, juin: 6,
+  juillet: 7, août: 8, septembre: 9, octobre: 10, novembre: 11, décembre: 12
+};
+
+function parseDate(dateStr) {
+  if (!dateStr || typeof dateStr !== 'string') return 0;
+  // Exemples : "mai 2023 - juin 2023", "2023", "septembre 2022 - juin 2024"
+  const [start] = dateStr.split('-').map(s => s.trim());
+  const parts = start.split(' ');
+  let year = 0, month = 1;
+  if (parts.length === 2) {
+    month = MONTHS[parts[0].toLowerCase()] || 1;
+    year = parseInt(parts[1], 10) || 0;
+  } else if (parts.length === 1) {
+    year = parseInt(parts[0], 10) || 0;
+  }
+  // Pour trier année+mois, ex: 2023.05
+  return year * 100 + month;
+}
+
+const sortedExperiences = experiences
+  .map(exp => ({
+    ...exp.frontmatter,
+    getDescription: exp.compiledContent,
+    sortDate: parseDate(exp.frontmatter.date)
+  }))
+  .sort((a, b) => b.sortDate - a.sortDate);
+---
+
+<section class="timeline-section" id="xp">
+  <h2 class="personal-title">Expériences & Projets</h2>
+  <div class="timeline">
+    {sortedExperiences.map((exp, idx) => (
+      <div class="timeline-item">
+        {exp.icon
+          ? <span class="timeline-icon">{exp.icon}</span>
+          : <span class="timeline-dot"></span>
+        }
+        <span class="timeline-connector"></span>
+        <div class="timeline-content">
+          <div class="timeline-label">{exp.title}</div>
+          <div class="timeline-meta">
+            <span class="timeline-date">{exp.date}</span>
+            {exp.location && <span class="timeline-location">{exp.location}</span>}
+            {exp.technologies && (
+              <span class="timeline-tech">
+                {Array.isArray(exp.technologies) ? exp.technologies.join(', ') : exp.technologies}
+              </span>
+            )}
+          </div>
+          {exp.getDescription && (
+            <div class="timeline-desc">
+              <Fragment set:html={await exp.getDescription()} />
+            </div>
+          )}
+        </div>
+      </div>
+    ))}
+  </div>
+</section>

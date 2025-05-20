@@ -1,0 +1,63 @@
+---
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const projets = await Astro.glob('/public/content/numeric-responsable/*.md');
+  return projets.map((projet) => ({
+    params: { slug: projet.frontmatter.slug }
+  }));
+}
+
+const { slug } = Astro.params;
+const projets = await Astro.glob('../../content/numerique-responsable/*.md');
+const projet = projets.find(p => p.frontmatter.slug === slug);
+
+if (!projet) {
+  throw new Error('Projet numérique responsable introuvable');
+}
+
+const {
+  titre,
+  lien,
+  ecoconception,
+  accessibilite,
+} = projet.frontmatter;
+---
+
+<Layout>
+  <article class="nr-detail">
+    <header>
+      <h1>{titre}</h1>
+      {lien && (
+        <p>
+          <a href={lien} target="_blank" rel="noopener">Lien information projet</a>
+        </p>
+      )}
+    </header>
+    <section>
+      <h2>Écoconception</h2>
+      <p>{ecoconception}</p>
+    </section>
+    <section>
+      <h2>Accessibilité / Inclusivité</h2>
+      <p>{accessibilite}</p>
+    </section>
+    <section>
+      <a href="/numerique-responsable" class="other-link">Retour à la liste</a>
+    </section>
+  </article>
+  <style>
+    .nr-detail {
+      max-width: 700px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+    .other-link {
+      display: inline-block;
+      margin-top: 2rem;
+      color: #0077ff;
+      text-decoration: underline;
+      font-weight: bold;
+    }
+  </style>
+</Layout>

@@ -1,0 +1,54 @@
+---
+import about from '/src/content/about/about.md?raw';
+import matter from 'gray-matter';
+
+const { data: frontmatter } = matter(about);
+---
+
+<section class="personal-section" id="infos">
+  <h2 class="personal-title">Informations personnelles</h2>
+  <div class="personal-content spaced">
+    <div class="personal-left">
+      <div class="profile-info-table grid-align">
+        <div class="profile-row">
+          <span class="profile-label"><span class="icon">👤</span></span>
+          <span class="label-text">Nom :</span>
+          <span class="profile-value">{frontmatter.nom}</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label"><span class="icon">🧑</span></span>
+          <span class="label-text">Prénom :</span>
+          <span class="profile-value">{frontmatter.prenom}</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label"><span class="icon">🎂</span></span>
+          <span class="label-text">Âge :</span>
+          <span class="profile-value">{frontmatter.age} ans</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label"><span class="icon">🌍</span></span>
+          <span class="label-text">Pays :</span>
+          <span class="profile-value">{frontmatter.pays}</span>
+        </div>
+        <div class="profile-row">
+          <span class="profile-label"><span class="icon">🗣️</span></span>
+          <span class="label-text">Langues :</span>
+          <span class="profile-value">{Array.isArray(frontmatter.langues) ? frontmatter.langues.join(', ') : frontmatter.langues}</span>
+        </div>
+      </div>
+    </div>
+    <div class="personal-right">
+      <iframe
+        src={frontmatter.cv}
+        class="cv-viewer"
+        title="CV PDF"
+        frameborder="0"
+        loading="lazy"
+      ></iframe>
+      <a href={frontmatter.cv} class="cv-btn" target="_blank" rel="noopener">
+        <span>Télécharger mon CV</span>
+      </a>
+    </div>
+  </div>
+</section>
+

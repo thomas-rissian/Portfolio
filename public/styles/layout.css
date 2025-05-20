@@ -1,6 +1,5 @@
-
 body {
-  background: var(--background-main);
+  background: linear-gradient(120deg, #101624 0%, #18223a 100%);
   color: var(--text-main);
   font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
   min-height: 100vh;
@@ -36,24 +35,26 @@ body {
   align-items: center;
   flex-wrap: wrap;
   gap: 0.5rem;
-  filter: drop-shadow(0 2px 24px var(--primary-shadow));
+  /* filter: drop-shadow(0 2px 24px var(--primary-shadow)); */
 }
 .main-title-first {
-  background: linear-gradient(90deg, var(--primary-color-light), var(--primary-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--primary-color);
   font-weight: 900;
-  text-shadow: 0 2px 16px var(--primary-color-dark);
+  /* background: none; */
+  /* -webkit-background-clip: unset; */
+  /* -webkit-text-fill-color: unset; */
+  /* background-clip: unset; */
+  /* text-shadow: none; */
   display: inline-block;
 }
 .main-title-second {
-  background: linear-gradient(90deg, var(--accent-color-light), var(--accent-color));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  color: var(--accent-color);
   font-weight: 900;
-  text-shadow: 0 2px 16px var(--primary-color-dark);
+  /* background: none; */
+  /* -webkit-background-clip: unset; */
+  /* -webkit-text-fill-color: unset; */
+  /* background-clip: unset; */
+  /* text-shadow: none; */
   display: inline-block;
 }
 
