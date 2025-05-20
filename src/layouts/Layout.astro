@@ -1,14 +1,121 @@
+---
+const { pageTitle = "" } = Astro.props;
+function splitTitle(title) {
+  const parts = title.trim().split(' ');
+  if (parts.length < 2) return [title, ''];
+  const mid = Math.ceil(parts.length / 2);
+  return [parts.slice(0, mid).join(' '), parts.slice(mid).join(' ')];
+}
+const [titleFirst, titleSecond] = splitTitle(pageTitle);
+
+// Traduction rapide pour le titre arrière-plan
+function getBgTitle(title) {
+  if (title.trim().toLowerCase() === "mes projets") return "My Projects";
+  if (title.trim().toLowerCase() === "a propos") return "About";
+  if (title.trim().toLowerCase() === "compétences") return "Skills";
+  return title;
+}
+const bgTitle = getBgTitle(pageTitle);
+---
 <!doctype html>
-<html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="stylesheet" href="/styles/base.css">
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro Basics</title>
-	</head>
-	<body>
-		<slot />
-	</body>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="stylesheet" href="/styles/variables.css">
+    <link rel="stylesheet" href="/styles/layout.css">
+    <link rel="stylesheet" href="/styles/about.css">
+    <link rel="stylesheet" href="/styles/project.css">
+    <link rel="stylesheet" href="/styles/base.css">
+    <link rel="stylesheet" href="/styles/projet-cards.css">
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle ? pageTitle : "Portfolio"}</title>
+    <style>
+      .main-page-title-outer {
+        position: relative;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        margin: 5rem 0 0 0;
+        padding: 0;
+        height: 8.5rem;
+      }
+      .main-page-title-bg {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: clamp(3.5rem, 10vw, 6.5rem); /* plus gros mais pas immense */
+        font-weight: 900;
+        color: #5A82B2;
+        opacity: 0.09;
+        pointer-events: none;
+        user-select: none;
+        white-space: pre-line;
+        z-index: 1;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        width: 100vw;
+        text-align: center;
+        line-height: 1;
+        text-shadow: none;
+        filter: none;
+      }
+      .main-page-title-wrapper {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 2;
+        pointer-events: none;
+      }
+      .main-page-title {
+        position: relative;
+        z-index: 2;
+        filter: none;
+        text-shadow: none;
+        margin: 0;
+        padding: 0;
+        font-size: clamp(2.5rem, 6vw, 4.5rem);
+        font-weight: 900;
+        text-align: center;
+        letter-spacing: 0.04em;
+        line-height: 1.1;
+        user-select: none;
+        display: inline-flex;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        background: none;
+        color: #D2D2D2;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      {pageTitle && (
+        <div class="main-page-title-outer">
+          <div class="main-page-title-bg">
+            {bgTitle}
+          </div>
+          <div class="main-page-title-wrapper">
+            <h1 class="main-page-title">
+              <span class="main-title-first">{titleFirst}</span>
+              {titleSecond && <span class="main-title-second"> {titleSecond}</span>}
+            </h1>
+          </div>
+        </div>
+      )}
+    </header>
+    <main>
+      <slot />
+    </main>
+  </body>
 </html>

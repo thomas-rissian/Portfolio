@@ -1,0 +1,48 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const projets = await Astro.glob('../content/numerique-responsable/*.md');
+---
+
+<Layout>
+  <h1>Numérique Responsable</h1>
+  <div class="nr-list">
+    {projets.map(projet => (
+      <a href={`/numerique-responsable/${projet.frontmatter.slug}/`} class="nr-card">
+        <h2>{projet.frontmatter.titre}</h2>
+        {projet.frontmatter.lien && (
+          <p>
+            <a href={projet.frontmatter.lien} target="_blank" rel="noopener">Lien information projet</a>
+          </p>
+        )}
+        <p><strong>Écoconception :</strong> {projet.frontmatter.ecoconception}</p>
+        <p><strong>Accessibilité / Inclusivité :</strong> {projet.frontmatter.accessibilite}</p>
+      </a>
+    ))}
+  </div>
+  <style>
+    .nr-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      margin-top: 2rem;
+    }
+    .nr-card {
+      display: block;
+      padding: 1.5rem;
+      border-radius: 1rem;
+      background: #f5faff;
+      box-shadow: 0 2px 8px #0001;
+      text-decoration: none;
+      color: inherit;
+      transition: box-shadow 0.2s;
+    }
+    .nr-card:hover {
+      box-shadow: 0 4px 16px #0077ff33;
+      background: #eaf4ff;
+    }
+    .nr-card h2 {
+      margin-top: 0;
+    }
+  </style>
+</Layout>
