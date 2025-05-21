@@ -6,5 +6,5 @@ pays: "France"
 langues:
   - "Français"
   - "Anglais"
-cv: "cv-thomas-dupont.pdf"
+cv: "cv.pdf"
 ---
