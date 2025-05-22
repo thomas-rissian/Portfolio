@@ -867,7 +867,6 @@ body {
   opacity: 0.28;
   letter-spacing: 0.13em;
   text-transform: uppercase;
-  /* ...existing code... */
 }
 .main-page-title, .main-title-first, .main-title-second {
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
@@ -886,6 +885,9 @@ body {
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
 }
 
-/* ...existing code... */
+/* Décalage d'ancre pour les sections about (pour voir le titre) */
+#infos, #competences, #xp {
+  scroll-margin-top: 6.5rem;
+}
 
 

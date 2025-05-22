@@ -28,37 +28,41 @@ const competences = skillFiles
       order: data.order ?? 999
     };
   })
-  // On garde seulement les compétences qui ont au moins une techno utilisée dans un projet
   .filter(comp => comp.technologies.length > 0)
   .sort((a, b) => a.order - b.order);
 
 import "../../public/styles/projet-cards.css";
+
+// Helper function to normalize technologies
+function normalizeTechnologies(tech: any) {
+  if (Array.isArray(tech)) return tech;
+  if (typeof tech === 'object' && tech.langages) return tech.langages;
+  return [];
+}
 ---
 
 <Layout pageTitle="Mes Projets">
-  <nav class="competence-bar competence-bar-limited">
-    {competences.map(comp => (
-      <button class="competence-btn" data-key={comp.key} type="button">
-        <span class="parallelogram">
-          {comp.name}
-          <span class="competence-arrow">&#9662;</span>
-        </span>
-      </button>
-    ))}
-  </nav>
-  {competences.map(comp => (
-    <div class="tech-volet" data-key={comp.key} style="display:none;">
-      {comp.technologies.length === 0 && (
-        <span style="color:#888;font-size:0.95em;">Aucune technologie</span>
-      )}
-      {comp.technologies.map(tech => (
-        <button class="tech-chip" data-tech={tech} type="button" tabindex="-1">{tech}</button>
+  <div class="filterbar">
+    <div class="filterbar-inner">
+      {competences.map(comp => (
+        <div class="competence-filter" data-key={comp.key} data-technos={JSON.stringify(comp.technologies)}>
+          <button class="competence-filter-btn" type="button">
+            <span class="competence-filter-label">{comp.name}</span>
+            <span class="competence-filter-arrow">&#9662;</span>
+          </button>
+        </div>
       ))}
+      <button class="filter-btn filter-btn-all" data-filter="all" aria-pressed="true" type="button">
+        <span class="filter-btn-label">Tous les projets</span>
+      </button>
     </div>
-  ))}
+    <div id="competence-techs-zone"></div>
+  </div>
   <section class="projects-grid">
     {projects.map((project, idx) => {
-      const { title, technologies = [], image, slug, competence } = project.frontmatter;
+      const { title, image, slug, competence } = project.frontmatter;
+      const technologies = normalizeTechnologies(project.frontmatter.technologies);
+      
       return (
         <a
           href={`/projet/${slug ?? project.file.replace('.md', '').split('/').pop()}`}
@@ -84,105 +88,188 @@ import "../../public/styles/projet-cards.css";
     })}
   </section>
   <script>
-    let openVolet = null;
-    let selectedCompetences = new Set();
-    let selectedTechnos = new Set();
+  let selectedTechs: string[] = [];
+  let openedCompetence: string | null = null;
+  let selectedCompetences: Set<string> = new Set();
 
-    document.addEventListener('DOMContentLoaded', () => {
-      // Ouvre/ferme le volet techno (clic sur la flèche)
-      document.querySelectorAll('.competence-arrow').forEach(arrow => {
-        arrow.addEventListener('click', function(e) {
-          e.stopPropagation();
-          let btn = arrow.closest('.competence-btn');
-          if (!btn) return;
-          const key = btn.dataset.key;
-          // Ferme tous les volets sauf celui cliqué
-          document.querySelectorAll('.tech-volet').forEach(volet => {
-            if (volet.dataset.key === key) {
-              const isOpen = volet.style.display === 'flex';
-              volet.style.display = isOpen ? 'none' : 'flex';
-              openVolet = isOpen ? null : key;
-            } else {
-              volet.style.display = 'none';
-            }
-          });
-        });
-      });
+  // Liste des compétences et technos (Astro côté client)
+  const COMPETENCES = [
+    ...Array.from(document.querySelectorAll('.competence-filter')).map(div => {
+      const el = div as HTMLElement;
+      return {
+        key: el.dataset.key || '',
+        name: (el.querySelector('.competence-filter-label') as HTMLElement)?.textContent || '',
+        technos: JSON.parse(el.getAttribute('data-technos') || '[]') as string[]
+      };
+    })
+  ];
 
-      // Sélection multiple des compétences (clic sur le parallélogramme)
-      document.querySelectorAll('.parallelogram').forEach(paral => {
-        paral.addEventListener('click', e => {
-          e.stopPropagation();
-          const btn = paral.closest('.competence-btn');
-          const key = btn.dataset.key;
-          if (selectedCompetences.has(key)) {
-            selectedCompetences.delete(key);
-            btn.classList.remove('selected');
-          } else {
-            selectedCompetences.add(key);
-            btn.classList.add('selected');
-          }
-          filterProjects();
-        });
-      });
+  function toggleCompetence(key: string) {
+    const comp = COMPETENCES.find(c => c.key === key);
+    if (!comp) return;
 
-      // Sélection multiple des technos (clic sur la techno)
-      function updateTechChipListeners() {
-        document.querySelectorAll('.tech-chip').forEach(chip => {
-          chip.removeEventListener('click', chip._techChipHandler);
-          chip._techChipHandler = function(e) {
-            e.stopPropagation();
-            const tech = chip.dataset.tech;
-            if (selectedTechnos.has(tech)) {
-              selectedTechnos.delete(tech);
-              chip.classList.remove('selected');
-            } else {
-              selectedTechnos.add(tech);
-              chip.classList.add('selected');
-            }
-            filterProjects();
-          };
-          chip.addEventListener('click', chip._techChipHandler);
-        });
-      }
-      updateTechChipListeners();
-
-      // Affiche les volets fermés au chargement
-      document.querySelectorAll('.tech-volet').forEach(volet => {
-        volet.style.display = 'none';
-      });
-
-      function filterProjects() {
-        const projectCards = document.querySelectorAll('.project-card');
-        // Si aucune compétence ni techno sélectionnée, tout afficher
-        if (selectedCompetences.size === 0 && selectedTechnos.size === 0) {
-          projectCards.forEach(card => card.style.display = '');
-          return;
+    const btn = document.querySelector(`.competence-filter[data-key="${key}"] .competence-filter-btn`);
+    
+    // Si la compétence est déjà sélectionnée, on la désélectionne
+    if (selectedCompetences.has(key)) {
+      selectedCompetences.delete(key);
+      selectedTechs = selectedTechs.filter(tech => !comp.technos.includes(tech));
+      btn?.classList.remove('selected');
+    } else {
+      // Sinon on l'ajoute aux sélectionnées
+      selectedCompetences.add(key);
+      comp.technos.forEach(tech => {
+        if (!selectedTechs.includes(tech)) {
+          selectedTechs.push(tech);
         }
-        // Récupère toutes les technos des compétences sélectionnées
-        let competenceTechs = [];
-        document.querySelectorAll('.competence-btn').forEach(btn => {
-          const key = btn.dataset.key;
-          if (selectedCompetences.has(key)) {
-            const techVolet = document.querySelector('.tech-volet[data-key="' + key + '"]');
-            const techs = Array.from(techVolet?.querySelectorAll('.tech-chip') || []).map(chip => chip.dataset.tech);
-            competenceTechs = competenceTechs.concat(techs);
-          }
-        });
+      });
+      btn?.classList.add('selected');
+    }
 
-        projectCards.forEach(card => {
-          const cardTechnos = (card.dataset.technos || '').split(',');
-          let show = false;
-          // Si des technos sont sélectionnées, on filtre sur elles (au moins une doit être présente dans le projet)
-          if (selectedTechnos.size > 0) {
-            show = Array.from(selectedTechnos).some(tech => cardTechnos.includes(tech));
-          } else if (selectedCompetences.size > 0) {
-            // Sinon, on filtre sur toutes les technos des compétences sélectionnées (au moins une doit matcher)
-            show = competenceTechs.some(tech => cardTechnos.includes(tech));
-          }
-          card.style.display = show ? '' : 'none';
-        });
+    filterProjects();
+  }
+
+  function resetAllSelections() {
+    selectedTechs = [];
+    selectedCompetences.clear();
+    openedCompetence = null;
+    
+    document.querySelectorAll('.competence-filter-btn').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+      btn.classList.remove('selected');
+    });
+    
+    const zone = document.getElementById('competence-techs-zone');
+    if (zone) zone.innerHTML = '';
+    
+    filterProjects();
+  }
+
+  function renderTechsForCompetence(key: string) {
+    const comp = COMPETENCES.find(c => c.key === key);
+    const zone = document.getElementById('competence-techs-zone');
+    
+    // Reset l'état des autres boutons
+    document.querySelectorAll('.competence-filter-btn').forEach(btn => {
+      btn.setAttribute('aria-expanded', 'false');
+    });
+    
+    // Si on clique sur la même compétence, on ferme
+    if (openedCompetence === key && zone) {
+      zone.innerHTML = '';
+      openedCompetence = null;
+      return;
+    }
+
+    // Mise à jour du bouton actif
+    const activeBtn = document.querySelector(`.competence-filter[data-key="${key}"] .competence-filter-btn`);
+    if (activeBtn) {
+      activeBtn.setAttribute('aria-expanded', 'true');
+    }
+
+    if (!comp || !zone) return;
+    openedCompetence = key;
+
+    zone.innerHTML = `
+      <div class="competence-tech-list competence-tech-list-bar">
+        ${comp.technos.map(tech => {
+          const isSelected = selectedTechs.includes(tech);
+          return `
+            <button 
+              class="competence-tech-chip ${isSelected ? 'selected' : ''}" 
+              data-tech="${tech}"
+              type="button"
+            >
+              ${tech}
+            </button>
+          `;
+        }).join('')}
+      </div>
+    `;
+
+    // Ajoute les listeners sur les chips
+    zone.querySelectorAll('.competence-tech-chip').forEach(chip => {
+      chip.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const tech = (chip as HTMLElement).dataset.tech;
+        if (!tech) return;
+
+        const index = selectedTechs.indexOf(tech);
+        if (index > -1) {
+          selectedTechs.splice(index, 1);
+          chip.classList.remove('selected');
+        } else {
+          selectedTechs.push(tech);
+          chip.classList.add('selected');
+        }
+        filterProjects();
+      });
+    });
+  }
+
+  function filterProjects() {
+    const projectCards = document.querySelectorAll('.project-card');
+    
+    if (selectedTechs.length === 0) {
+      projectCards.forEach(card => (card as HTMLElement).style.display = '');
+      document.querySelector('.filter-btn-all')?.setAttribute('aria-pressed', 'true');
+      return;
+    }
+
+    document.querySelector('.filter-btn-all')?.setAttribute('aria-pressed', 'false');
+    
+    projectCards.forEach(card => {
+      const cardEl = card as HTMLElement;
+      const cardTechnos = (cardEl.dataset.technos || '').split(',').map(t => t.trim()).filter(Boolean);
+      const show = selectedTechs.some(tech => cardTechnos.includes(tech));
+      cardEl.style.display = show ? '' : 'none';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Gestion du double-clic et clic simple
+    document.querySelectorAll('.competence-filter-btn').forEach(btn => {
+      let clickTimeout: number | null = null;
+
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const parent = btn.closest('.competence-filter') as HTMLElement;
+        if (!parent) return;
+        
+        const key = parent.dataset.key || '';
+        
+        if (clickTimeout === null) {
+          clickTimeout = window.setTimeout(() => {
+            // Single click
+            clickTimeout = null;
+            renderTechsForCompetence(key);
+          }, 200);
+        } else {
+          // Double click
+          clearTimeout(clickTimeout);
+          clickTimeout = null;
+          toggleCompetence(key);
+        }
+      });
+    });
+
+    // Click handler for "All projects" button
+    document.querySelector('.filter-btn-all')?.addEventListener('click', resetAllSelections);
+
+    // Close tech list when clicking outside
+    document.addEventListener('click', (e) => {
+      const target = e.target as HTMLElement;
+      if (openedCompetence && !target?.closest('.competence-filter') && !target?.closest('#competence-techs-zone')) {
+        const zone = document.getElementById('competence-techs-zone');
+        if (zone) {
+          zone.innerHTML = '';
+          openedCompetence = null;
+          document.querySelectorAll('.competence-filter-btn').forEach(btn => {
+            btn.setAttribute('aria-expanded', 'false');
+          });
+        }
       }
     });
+  });
   </script>
 </Layout>

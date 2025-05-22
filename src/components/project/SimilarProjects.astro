@@ -1,0 +1,92 @@
+---
+const { projects } = Astro.props;
+---
+
+<section class="similar-projects">
+  <h2>Projets similaires</h2>
+  <div class="similar-projects-grid">
+    {projects.map(project => (
+      <a 
+        href={`/projet/${project.frontmatter.slug}`} 
+        class="similar-project-card"
+      >
+        <img 
+          src={project.frontmatter.image} 
+          alt={project.frontmatter.title} 
+          loading="lazy"
+        />
+        <div class="similar-project-info">
+          <h3>{project.frontmatter.title}</h3>
+          <div class="similar-project-techs">
+            {project.frontmatter.technologies?.map(tech => (
+              <span class="tech-chip">{tech}</span>
+            ))}
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  .similar-projects {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid #22304a;
+  }
+
+  .similar-projects h2 {
+    font-size: 1.5rem;
+    color: #5A82B2;
+    margin-bottom: 1.5rem;
+  }
+
+  .similar-projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+  }
+
+  .similar-project-card {
+    background: #18223a;
+    border-radius: 1rem;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .similar-project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+  }
+
+  .similar-project-card img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .similar-project-info {
+    padding: 1rem;
+  }
+
+  .similar-project-info h3 {
+    color: #dbeafe;
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .similar-project-techs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tech-chip {
+    background: #23293a;
+    color: #b3c6e0;
+    padding: 0.2rem 0.8rem;
+    border-radius: 1rem;
+    font-size: 0.9rem;
+  }
+</style>

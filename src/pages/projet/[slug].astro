@@ -1,5 +1,23 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import ProjectNavigation from '../../components/project/ProjectNavigation.astro';
+
+interface Image {
+  src: string;
+  alt: string;
+  caption?: string;
+}
+
+interface Frontmatter {
+  slug: string;
+  title: string;
+  image?: string;
+  dates?: string;
+  description?: string;
+  technologies?: string[];
+  github?: string;
+  images?: Image[];
+}
 
 export async function getStaticPaths() {
   const projects = await Astro.glob('../../content/project/*.md');
@@ -28,116 +46,535 @@ const {
   conclusion,
   github,
 } = project.frontmatter;
+
+// Trouve les projets suivant/précédent
+const projectIndex = projects.findIndex(p => p.frontmatter.slug === slug);
+const prevProject = projectIndex > 0 ? projects[projectIndex - 1] : null;
+const nextProject = projectIndex < projects.length - 1 ? projects[projectIndex + 1] : null;
+
+// Add this to the top level
+const currentImage = 0; // Default value for initial render
 ---
 
-<Layout>
+<Layout pageTitle={title}>
+  <ProjectNavigation prevProject={prevProject?.frontmatter} nextProject={nextProject?.frontmatter} />
+
   <article class="project-detail">
-    <header>
-      <h1>{title}</h1>
-      {image && <img src={image} alt={title} class="main-image" />}
-    </header>
-    <section>
-      <h2>Dates</h2>
-      <p>{dates}</p>
-    </section>
-    <section>
-      <h2>Description</h2>
-      <p>{description}</p>
-    </section>
-    <section>
-      <h2>Étapes du projet</h2>
-      <ul>
-        {(etapes || []).map(etape => <li>{etape}</li>)}
-      </ul>
-    </section>
-    <section>
-      <h2>Technologies</h2>
-      <div class="tech-list">
-        {(technologies || []).map(tech => <span class="tech">{tech}</span>)}
+    <div class="project-header">
+      <div class="project-header-img">
+        {image && <img src={image} alt={title} class="main-image-modern" />}
       </div>
-    </section>
-    <section>
-      <h2>Compétences</h2>
-      <ul>
-        {(competences || []).map(comp => (
-          <li>
-            <strong>{comp.titre} :</strong> {comp.justificatif}
-          </li>
-        ))}
-      </ul>
-    </section>
-    {illustration && (
-      <section>
-        <h2>Illustration</h2>
-        <img src={illustration} alt="Illustration du projet" class="illustration" />
-      </section>
+      <div class="project-header-content">
+        <h1 class="project-title-modern">{title}</h1>
+        <div class="project-meta">
+          {dates && <span class="project-date">{dates}</span>}
+          {github && (
+            <a href={github} target="_blank" rel="noopener" class="github-link-modern">
+              <svg width="1.5em" height="1.5em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2C6.48 2 2 6.58 2 12.26c0 4.48 2.87 8.28 6.84 9.63.5.09.68-.22.68-.48 0-.24-.01-.87-.01-1.7-2.78.62-3.37-1.36-3.37-1.36-.45-1.18-1.1-1.5-1.1-1.5-.9-.63.07-.62.07-.62 1 .07 1.53 1.06 1.53 1.06.89 1.57 2.34 1.12 2.91.86.09-.66.35-1.12.63-1.38-2.22-.26-4.56-1.14-4.56-5.07 0-1.12.39-2.04 1.03-2.76-.1-.26-.45-1.3.1-2.7 0 0 .84-.28 2.75 1.05A9.36 9.36 0 0 1 12 7.43c.85.004 1.7.12 2.5.34 1.9-1.33 2.74-1.05 2.74-1.05.55 1.4.2 2.44.1 2.7.64.72 1.03 1.64 1.03 2.76 0 3.94-2.34 4.8-4.57 5.06.36.32.68.94.68 1.9 0 1.37-.01 2.47-.01 2.8 0 .26.18.57.69.47C19.13 20.54 22 16.74 22 12.26 22 6.58 17.52 2 12 2z"/></svg>
+              <span>GitHub</span>
+            </a>
+          )}
+        </div>
+        {description && (
+          <div class="project-description-modern">
+            <h2>Description</h2>
+            <p>{description}</p>
+          </div>
+        )}
+        {technologies && technologies.length > 0 && (
+          <div class="project-technos-modern">
+            <h3>Technologies</h3>
+            <div class="tech-list-modern">
+              {(technologies as string[]).map((tech: string) => (
+                <span class="tech-chip-modern">{tech}</span>
+              ))}
+            </div>
+          </div>
+        )}
+
+        <div class="nr-section-modern">
+          <a href={`/numerique-responsable/${slug}`} class="nr-link-modern">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 3v18M3 12h18M12 8a4 4 0 0 1 4 4M12 16a4 4 0 0 0 4-4"/>
+            </svg>
+            <span>Voir l'impact numérique responsable</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-content">
+      <Fragment set:html={project.compiledContent()} />
+    </div>
+
+    {project.frontmatter.images && (
+      <div class="project-gallery">
+        <h2 class="project-section-title">Galerie</h2>
+        <div class="carousel-container">
+          <div class="carousel-track" data-current="0">
+            {(project.frontmatter.images as Image[]).map((img: Image, index: number) => (
+              <div 
+                class={`carousel-item${index === 0 ? ' active' : ''}`}
+                data-index={index}
+              >
+                <img 
+                  src={img.src} 
+                  alt={img.alt}
+                  loading="lazy"
+                />
+                {img.caption && <div class="carousel-caption">{img.caption}</div>}
+              </div>
+            ))}
+          </div>
+          
+          <div class="carousel-nav">
+            <button class="carousel-btn prev" aria-label="Image précédente">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M15 18l-6-6 6-6"/>
+              </svg>
+            </button>
+            <button class="carousel-btn next" aria-label="Image suivante">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path d="M9 18l6-6-6-6"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
     )}
-    <section>
-      <h2>Conclusion</h2>
-      <p>{conclusion}</p>
-    </section>
-    {github && (
-      <section>
-        <a href={github} target="_blank" rel="noopener" class="github-link">Voir sur GitHub</a>
-      </section>
-    )}
-    <section>
-      <a href="/src/pages/projet" class="other-link">Découvrir d'autres projets</a>
-    </section>
   </article>
-  <style>
-    .project-detail {
-      max-width: 800px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
-    }
-    .main-image {
-      width: 100%;
-      max-width: 500px;
-      display: block;
-      margin: 2rem auto;
-      border-radius: 1rem;
-      box-shadow: 0 2px 8px #0002;
-    }
-    .tech-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-    }
-    .tech {
-      background: #0077ff22;
-      border-radius: 0.5rem;
-      padding: 0.2rem 0.7rem;
-      font-size: 0.95em;
-    }
-    .illustration {
-      width: 100%;
-      max-width: 400px;
-      margin: 1rem auto;
-      display: block;
-      border-radius: 0.7rem;
-      box-shadow: 0 2px 8px #0001;
-    }
-    .github-link {
-      display: inline-block;
-      margin-top: 1rem;
-      background: #24292f;
-      color: #fff;
-      padding: 0.6rem 1.2rem;
-      border-radius: 0.5rem;
-      text-decoration: none;
-      font-weight: bold;
-      transition: background 0.2s;
-    }
-    .github-link:hover {
-      background: #0077ff;
-    }
-    .other-link {
-      display: inline-block;
-      margin-top: 2rem;
-      color: #0077ff;
-      text-decoration: underline;
-      font-weight: bold;
-    }
-  </style>
+
+  <div class="image-modal">
+    <button class="modal-close">×</button>
+    <img src="" alt="" />
+    <div class="modal-nav">
+      <button class="modal-prev">❮</button>
+      <button class="modal-next">❯</button>
+    </div>
+  </div>
 </Layout>
+
+<script>
+  function initCarousel() {
+    const track = document.querySelector('.carousel-track');
+    const items = document.querySelectorAll('.carousel-item');
+    if (!track || items.length === 0) return;
+
+    let currentIndex = 0;
+
+    function updateCarousel() {
+      items.forEach((item, index) => {
+        item.className = 'carousel-item';
+        if (index === currentIndex) {
+          item.classList.add('active');
+        } else if (index === ((currentIndex - 1 + items.length) % items.length)) {
+          item.classList.add('prev');
+        } else if (index === ((currentIndex + 1) % items.length)) {
+          item.classList.add('next');
+        }
+      });
+    }
+
+    function nextSlide() {
+      currentIndex = (currentIndex + 1) % items.length;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      currentIndex = (currentIndex - 1 + items.length) % items.length;
+      updateCarousel();
+    }
+
+    // Event Listeners
+    document.querySelector('.carousel-nav .next')?.addEventListener('click', nextSlide);
+    document.querySelector('.carousel-nav .prev')?.addEventListener('click', prevSlide);
+
+    // Initial state
+    updateCarousel();
+
+    // Auto-advance
+    const interval = setInterval(nextSlide, 5000);
+
+    // Pause on hover
+    track.addEventListener('mouseenter', () => clearInterval(interval));
+    track.addEventListener('mouseleave', () => setInterval(nextSlide, 5000));
+  }
+
+  // Initialize carousel when DOM is loaded
+  document.addEventListener('DOMContentLoaded', initCarousel);
+</script>
+
+<style>
+  .project-detail {
+    max-width: 1100px;
+    margin: 0 auto 3.5rem auto;
+    background: linear-gradient(120deg, #151a21 60%, #1a2233 100%);
+    border-radius: 1.5em;
+    box-shadow: 0 8px 36px #10162455, 0 2px 12px #22304a33;
+    padding: 2.5rem 2.2rem 2.5rem 2.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    border: 2.5px solid #22304a;
+    animation: fadeInProjectDetail 0.7s cubic-bezier(.22,1,.36,1);
+  }
+  @keyframes fadeInProjectDetail {
+    from { opacity: 0; transform: translateY(40px) scale(0.97);}
+    to   { opacity: 1; transform: translateY(0) scale(1);}
+  }
+  .project-header {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5rem;
+    align-items: flex-start;
+    flex-wrap: wrap;
+  }
+  .project-header-img {
+    flex: 1 1 320px;
+    max-width: 420px;
+    min-width: 220px;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  .main-image-modern {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 1.2em;
+    box-shadow: 0 2px 16px #22304a33;
+    margin: 0;
+    object-fit: cover;
+    aspect-ratio: 16/10;
+    background: #23293a;
+    border: 2px solid #22304a;
+    transition: box-shadow 0.22s, transform 0.22s;
+  }
+  .main-image-modern:hover {
+    box-shadow: 0 8px 32px #5A82B2aa;
+    transform: scale(1.04) rotate(-1deg);
+  }
+  .project-header-content {
+    flex: 2 1 400px;
+    min-width: 260px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    justify-content: flex-start;
+  }
+  .project-title-modern {
+    font-size: 2.2rem;
+    font-weight: 900;
+    color: #dbeafe;
+    margin: 0 0 0.7rem 0;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    font-family: 'Poppins', 'Segoe UI', Arial, sans-serif;
+    text-shadow: 0 2px 16px #0008;
+  }
+  .project-meta {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 1.5rem;
+    margin-bottom: 0.7rem;
+  }
+  .project-date {
+    color: #5A82B2;
+    font-size: 1.13rem;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    background: #23293a;
+    border-radius: 0.7em;
+    padding: 0.32em 1.2em;
+    box-shadow: 0 1px 6px #22304a33;
+    border: 1.5px solid #22304a;
+  }
+  .github-link-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5em;
+    background: #23293a;
+    color: #e3f2fd;
+    padding: 0.5em 1.3em;
+    border-radius: 2em;
+    font-weight: 700;
+    font-size: 1.08em;
+    text-decoration: none;
+    border: 1.5px solid #22304a;
+    box-shadow: 0 1px 6px #22304a33;
+    transition: background 0.18s, color 0.18s, border 0.18s, box-shadow 0.18s, transform 0.18s;
+  }
+  .github-link-modern:hover, .github-link-modern:focus {
+    background: #5A82B2;
+    color: #fff;
+    border-color: #5A82B2;
+    box-shadow: 0 4px 16px #5A82B2cc;
+    transform: scale(1.06) translateY(-2px);
+  }
+  .project-description-modern h2 {
+    font-size: 1.25rem;
+    color: #5A82B2;
+    margin-bottom: 0.5em;
+    margin-top: 0;
+    font-weight: 800;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+  }
+  .project-description-modern p {
+    color: #e3f2fd;
+    font-size: 1.13rem;
+    margin: 0 0 0.7em 0;
+    line-height: 1.6;
+  }
+  .project-technos-modern h3 {
+    font-size: 1.1rem;
+    color: #5A82B2;
+    margin-bottom: 0.3em;
+    margin-top: 0;
+    font-weight: 700;
+    letter-spacing: 0.7px;
+    text-transform: uppercase;
+  }
+  .tech-list-modern {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.7rem;
+    margin-bottom: 0.5rem;
+    margin-top: 0.2rem;
+    width: 100%;
+  }
+  .tech-chip-modern {
+    background: linear-gradient(120deg, #181f2b 60%, #23293a 100%);
+    color: #b3c6e0;
+    border: 1.5px solid #22304a;
+    border-radius: 1.7rem;
+    padding: 0.38em 1em;
+    font-size: 0.98rem;
+    font-weight: 500;
+    letter-spacing: 0.18px;
+    transition:
+      background 0.18s,
+      color 0.18s,
+      border 0.18s,
+      box-shadow 0.18s,
+      transform 0.18s;
+    box-shadow: 0 1px 6px #0002;
+    cursor: pointer;
+    display: inline-block;
+    position: relative;
+    opacity: 1;
+    outline: none;
+  }
+  .tech-chip-modern:hover, .tech-chip-modern:focus {
+    background: #5A82B2;
+    color: #fff;
+    border-color: #5A82B2;
+    box-shadow: 0 4px 16px #5A82B2cc;
+    transform: scale(1.06);
+  }
+  
+  .nr-section-modern {
+    margin-top: 2rem;
+  }
+  
+  .nr-link-modern {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.8rem;
+    background: linear-gradient(120deg, #181f2b 60%, #23293a 100%);
+    color: #b3c6e0;
+    padding: 0.8rem 1.5rem;
+    border-radius: 2rem;
+    text-decoration: none;
+    font-weight: 500;
+    border: 1.5px solid #22304a;
+    transition: all 0.3s ease;
+  }
+  
+  .nr-link-modern:hover {
+    background: #5A82B2;
+    color: white;
+    border-color: #5A82B2;
+    transform: translateX(5px);
+    box-shadow: 0 4px 16px #5A82B2cc;
+  }
+  .project-content {
+    color: #e3f2fd;
+    font-size: 1.1rem;
+    line-height: 1.7;
+    margin: 1.5rem 0;
+  }
+  .project-gallery {
+    margin: 2rem 0;
+  }
+  .image-carousel {
+    display: flex;
+    gap: 1rem;
+    width: 100%;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    position: relative;
+    margin: 2rem 0;
+    padding: 0.5rem;
+  }
+  .carousel-item {
+    flex: 0 0 100%;
+    scroll-snap-align: start;
+    transform: translateX(calc(var(--index) * -100%));
+    transition: transform 0.5s ease;
+    opacity: 0.5;
+    scale: 0.9;
+    transition: all 0.5s ease;
+  }
+  .carousel-item.active {
+    opacity: 1;
+    scale: 1;
+  }
+  .carousel-item img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+    border-radius: 1rem;
+    cursor: pointer;
+  }
+  .carousel-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .carousel-prev,
+  .carousel-next {
+    background: rgba(90, 130, 178, 0.2);
+    border: none;
+    color: #fff;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  .carousel-prev:hover,
+  .carousel-next:hover {
+    background: rgba(90, 130, 178, 0.4);
+    transform: scale(1.1);
+  }
+  .carousel-dots {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .carousel-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(90, 130, 178, 0.2);
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .carousel-dot.active {
+    background: #5A82B2;
+    transform: scale(1.2);
+  }
+  .image-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  .image-modal.active {
+    display: flex;
+  }
+  .image-modal img {
+    max-width: 90%;
+    max-height: 80%;
+    border-radius: 1rem;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.6);
+  }
+  .modal-close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    background: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+  .modal-close:hover {
+    background: rgba(255, 255, 255, 0.4);
+  }
+  .modal-nav {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    gap: 1rem;
+  }
+  .modal-prev,
+  .modal-next {
+    background: rgba(90, 130, 178, 0.2);
+    border: none;
+    color: #fff;
+    padding: 1rem;
+    cursor: pointer;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  .modal-prev:hover,
+  .modal-next:hover {
+    background: rgba(90, 130, 178, 0.4);
+    transform: scale(1.1);
+  }
+
+  .carousel-track {
+    display: flex;
+    gap: 2rem;
+    width: 100%;
+    position: relative;
+    transition: transform 0.5s ease;
+  }
+
+  .carousel-item {
+    flex: 0 0 calc(33.333% - 1.333rem);
+    opacity: 0.5;
+    transform: scale(0.9);
+    transition: all 0.5s ease;
+    cursor: pointer;
+  }
+
+  .carousel-item.prev,
+  .carousel-item.next {
+    opacity: 0.7;
+    transform: scale(0.95);
+  }
+
+  .carousel-item.active {
+    opacity: 1;
+    transform: scale(1.1);
+    z-index: 2;
+  }
+
+  .carousel-caption {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 0.5rem;
+    text-align: center;
+  }
+</style>

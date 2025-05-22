@@ -1,0 +1,108 @@
+---
+interface Props {
+  prevProject?: {
+    slug: string;
+    title: string;
+  };
+  nextProject?: {
+    slug: string;
+    title: string;
+  };
+}
+
+const { prevProject, nextProject } = Astro.props;
+---
+
+<nav class="project-nav">
+  {prevProject && (
+    <a href={`/projet/${prevProject.slug}`} class="nav-prev" data-title={prevProject.title}>
+      <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+        <path d="M15 18l-6-6 6-6"/>
+      </svg>
+      <span class="preview-title">{prevProject.title}</span>
+    </a>
+  )}
+
+  <a href="/projet" class="nav-home">
+    <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+      <path d="M3 12h18M12 3l-9 9 9 9"/>
+    </svg>
+    <span class="sr-only">Retour aux projets</span>
+  </a>
+
+  {nextProject && (
+    <a href={`/projet/${nextProject.slug}`} class="nav-next" data-title={nextProject.title}>
+      <span class="preview-title">{nextProject.title}</span>
+      <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none">
+        <path d="M9 18l6-6-6-6"/>
+      </svg>
+    </a>
+  )}
+</nav>
+
+<style>
+  .project-nav {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 100;
+  }
+
+  .nav-prev, .nav-next {
+    position: fixed;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(21, 26, 33, 0.9);
+    padding: 1.5rem 0.8rem;
+    color: #b3c6e0;
+    pointer-events: auto;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    backdrop-filter: blur(8px);
+    transition: all 0.3s ease;
+  }
+
+  .nav-prev { left: 0; border-radius: 0 1rem 1rem 0; }
+  .nav-next { right: 0; border-radius: 1rem 0 0 1rem; }
+
+  .preview-title {
+    opacity: 0;
+    transition: all 0.3s ease;
+    font-weight: 600;
+    font-size: 0.9rem;
+  }
+
+  .nav-prev .preview-title { transform: translateX(-10px); }
+  .nav-next .preview-title { transform: translateX(10px); }
+
+  .nav-prev:hover .preview-title,
+  .nav-next:hover .preview-title {
+    opacity: 1;
+    transform: translateX(0);
+  }
+
+  .nav-prev:hover, .nav-next:hover {
+    background: #5A82B2;
+    color: white;
+  }
+
+  .nav-home {
+    position: fixed;
+    top: 2rem;
+    left: 2rem;
+    background: rgba(21, 26, 33, 0.9);
+    padding: 1rem;
+    border-radius: 50%;
+    color: #b3c6e0;
+    pointer-events: auto;
+    transition: all 0.3s ease;
+  }
+
+  .nav-home:hover {
+    background: #5A82B2;
+    color: white;
+    transform: scale(1.1);
+  }
+</style>
