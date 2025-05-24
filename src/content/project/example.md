@@ -52,11 +52,6 @@ Description de l'ambition du projet et de ses enjeux...
 - Objectif principal 2
 - Objectif principal 3
 
-## Technologies utilisées
-
-- React
-- Node.js
-- TypeScript
 
 ## Compétences mobilisées
 

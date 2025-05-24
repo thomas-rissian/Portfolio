@@ -1,0 +1,41 @@
+---
+// FooterLayout.astro
+---
+
+<style>
+  :global(html, body) {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+  }
+  :global(body) {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: system-ui, sans-serif;
+    background-color: #111827;
+    color: #9ca3af;
+  }
+  main {
+    flex: 1 0 auto;
+    padding: 1rem;
+  }
+  footer {
+    flex-shrink: 0;
+    background-color: #111827;
+    border-top: 1px solid #0a111f;
+    padding: 0.5rem 0;
+    font-size: 0.8rem;
+    text-align: center;
+    user-select: none;
+    z-index: 1000;
+  }
+</style>
+
+<main>
+  <slot />
+</main>
+
+<footer>
+  © 2025 RISSIAN Thomas - Tous droits réservés
+</footer>

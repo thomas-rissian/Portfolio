@@ -8,5 +8,5 @@ technologies:
   - Java
   - Python
   - PHP
-  - Bash
+  - Kotlin
 ---

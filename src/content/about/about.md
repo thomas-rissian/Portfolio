@@ -1,10 +1,10 @@
 ---
-nom: "Dupont"
+nom: "RISSIAN"
 prenom: "Thomas"
-age: 22
+age: 20
 pays: "France"
 langues:
   - "Français"
   - "Anglais"
-cv: "cv.pdf"
+cv: "about/cv.pdf"
 ---

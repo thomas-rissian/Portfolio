@@ -1,92 +1,139 @@
 ---
-const { projects } = Astro.props;
+const { currentSlug, projectType = 'projet', technologies = [] } = Astro.props;
+
+// Récupérer tous les projets
+const allProjects = await Astro.glob('../../content/**/*.md');
+
+// Fonction pour calculer le score de similarité
+const calculateSimilarity = (project) => {
+  let score = 0;
+  const isNRProject = project.file.includes('/numerique-responsable/');
+  const projectTechs = project.frontmatter.technologies || [];
+  
+  // Même type de projet = +5 points
+  if ((isNRProject ? 'numerique-responsable' : 'projet') === projectType) {
+    score += 5;
+  }
+  
+  // Technologies en commun
+  const commonTechs = technologies.filter(tech => projectTechs.includes(tech));
+  score += commonTechs.length * 2;
+  
+  // Bonus si plus de 50% des technologies sont communes
+  if (commonTechs.length > technologies.length / 2) {
+    score += 3;
+  }
+
+  return score;
+};
+
+// Filtrer et préparer les projets similaires
+const similarProjects = allProjects
+  .filter(p => p.frontmatter.slug !== currentSlug)
+  .map(project => ({
+    ...project,
+    similarityScore: calculateSimilarity(project)
+  }))
+  .filter(p => p.similarityScore > 0) // Ne garder que les projets ayant au moins une similarité
+  .sort((a, b) => b.similarityScore - a.similarityScore)
+  .slice(0, 2);
 ---
 
-<section class="similar-projects">
-  <h2>Projets similaires</h2>
-  <div class="similar-projects-grid">
-    {projects.map(project => (
-      <a 
-        href={`/projet/${project.frontmatter.slug}`} 
-        class="similar-project-card"
-      >
-        <img 
-          src={project.frontmatter.image} 
-          alt={project.frontmatter.title} 
-          loading="lazy"
-        />
-        <div class="similar-project-info">
-          <h3>{project.frontmatter.title}</h3>
-          <div class="similar-project-techs">
-            {project.frontmatter.technologies?.map(tech => (
-              <span class="tech-chip">{tech}</span>
-            ))}
-          </div>
-        </div>
-      </a>
-    ))}
-  </div>
-</section>
+<div class="similar-projects">
+  {similarProjects.length > 0 ? (
+    <>
+      <p class="suggestion-text">Projets recommandés :</p>
+      <div class="project-links">
+        {similarProjects.map(project => {
+          const isNRProject = project.file.includes('/numerique-responsable/');
+          const projType = isNRProject ? 'numerique-responsable' : 'projet';
+          const title = project.frontmatter.title || project.frontmatter.titre;
+          const commonTechs = (project.frontmatter.technologies || [])
+            .filter(tech => technologies.includes(tech));
+          
+          return (
+            <a href={`/${projType}/${project.frontmatter.slug}`} class="project-link">
+              <div class="project-link-content">
+                <div class="project-link-title">{title}</div>
+                {commonTechs.length > 0 && (
+                  <div class="common-techs">
+                    Technologies communes : {commonTechs.slice(0, 3).join(', ')}
+                    {commonTechs.length > 3 && ' ...'}
+                  </div>
+                )}
+              </div>
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </a>
+          );
+        })}
+      </div>
+    </>
+  ) : null}
+</div>
 
 <style>
   .similar-projects {
     margin-top: 3rem;
-    padding-top: 2rem;
     border-top: 1px solid #22304a;
+    padding-top: 1.5rem;
   }
 
-  .similar-projects h2 {
-    font-size: 1.5rem;
+  .suggestion-text {
     color: #5A82B2;
-    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    margin: 0 0 1rem;
+    font-weight: 500;
   }
 
-  .similar-projects-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 1.5rem;
-  }
-
-  .similar-project-card {
-    background: #18223a;
-    border-radius: 1rem;
-    overflow: hidden;
-    text-decoration: none;
-    transition: transform 0.3s, box-shadow 0.3s;
-  }
-
-  .similar-project-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 24px rgba(0,0,0,0.2);
-  }
-
-  .similar-project-card img {
-    width: 100%;
-    height: 150px;
-    object-fit: cover;
-  }
-
-  .similar-project-info {
-    padding: 1rem;
-  }
-
-  .similar-project-info h3 {
-    color: #dbeafe;
-    font-size: 1.1rem;
-    margin-bottom: 0.5rem;
-  }
-
-  .similar-project-techs {
+  .project-links {
     display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    flex-direction: column;
+    gap: 1rem;
   }
 
-  .tech-chip {
-    background: #23293a;
-    color: #b3c6e0;
-    padding: 0.2rem 0.8rem;
-    border-radius: 1rem;
+  .project-link {
+    color: #dbeafe;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    background: rgba(90, 130, 178, 0.1);
+    border: 1px solid #22304a;
+    transition: all 0.2s ease;
+  }
+
+  .project-link:hover {
+    background: rgba(90, 130, 178, 0.2);
+    border-color: #5A82B2;
+    transform: translateX(5px);
+  }
+
+  .project-link-content {
+    flex: 1;
+  }
+
+  .project-link-title {
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-bottom: 0.25rem;
+  }
+
+  .common-techs {
     font-size: 0.9rem;
+    color: #5A82B2;
+  }
+
+  .project-link svg {
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+
+  .project-link:hover svg {
+    transform: translateX(4px);
   }
 </style>

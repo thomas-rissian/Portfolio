@@ -7,4 +7,5 @@ technologies:
   - JUnit
   - TestFX
   - WebTestCase
+  - Jest
 ---

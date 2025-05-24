@@ -1,18 +1,38 @@
 ---
-import Layout from '../layouts/Layout.astro';
+import Layout from "../layouts/baseLayout.astro";
+import VerticalNav from "../components/header.astro";
 
+// Chargement du contenu Markdown via import.meta.glob
+const presentationGlob = import.meta.glob('../content/presentation.md', { eager: true });
+const presentationEntry = Object.values(presentationGlob)[0];
+const { title, description, image } = presentationEntry.frontmatter;
+
+const currentPath = Astro.url.pathname;
 ---
 
 <Layout>
-  <div class="container py-5">
-    <section class="text-center">
-      <h2 class="display-5 fw-bold">Compétences</h2>
-      <div class="d-flex flex-wrap justify-content-center gap-3 mt-4">
-        <span class="badge bg-primary fs-6">Dev Fullstack</span>
-        <span class="badge bg-secondary fs-6">Frontend</span>
-        <span class="badge bg-success fs-6">Backend</span>
-        <!-- Ajoutez d'autres compétences ici -->
+  <VerticalNav active={currentPath} />
+  <section class="split-page">
+    <div class="left"></div>
+
+    <div class="left-box">
+      <img src={image} alt="Photo de profil" class="left-box-image" />
+    </div>
+
+    <div class="right">
+      <div class="presentation-text">
+        <h2 class="greeting" set:html={title}></h2>
+        <p class="description" set:html={description}></p>
+        <br>
+        <a href='/about'  rel="noopener noreferrer" class="project-link-button external-link">
+                <span>A Propos de moi</span>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>
+                  <path d="M15 3h6v6"/>
+                  <path d="M10 14L21 3"/>
+                </svg>
+              </a>
       </div>
-    </section>
-  </div>
+    </div>
+  </section>
 </Layout>

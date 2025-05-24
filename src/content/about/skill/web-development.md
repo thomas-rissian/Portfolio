@@ -7,11 +7,10 @@ technologies:
   - CSS3
   - JavaScript
   - PHP
-  - Bootstrap
   - Symfony
-  - Twig
   - Node.js
   - React
-  - Pelican
-  - Django CMS
+  - Next.js
+  - Express
+  - Vue.js
 ---

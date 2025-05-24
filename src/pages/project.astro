@@ -65,7 +65,7 @@ function normalizeTechnologies(tech: any) {
       
       return (
         <a
-          href={`/projet/${slug ?? project.file.replace('.md', '').split('/').pop()}`}
+          href={`/project/${slug ?? project.file.replace('.md', '').split('/').pop()}`}
           class="project-card"
           key={idx}
           aria-label={`Voir le projet ${title}`}

@@ -7,4 +7,5 @@ technologies:
   - UML
   - PostgreSQL
   - MySQL
+  - MongoDb
 ---

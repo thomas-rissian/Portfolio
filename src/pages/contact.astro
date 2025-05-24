@@ -5,11 +5,27 @@ const contactMd = await Astro.glob('../content/contact/*.md');
 const contact = contactMd.length > 0 ? contactMd[0].frontmatter : {};
 ---
 
-<Layout>
-  <h1>Contact</h1>
-  <div class="contact-info">
-    <p><strong>Email :</strong> <a href={`mailto:${contact.email}`}>{contact.email}</a></p>
-    <p><strong>Message :</strong> {contact.message}</p>
-  </div>
-</Layout>
+<Layout pageTitle="Me Contacter">
+  <section class="contact-section">
+  <h2 class="project-section-title">Contact</h2>
 
+  <p class="contact-description">
+    Envie de discuter ou de collaborer ? Voici où me trouver :
+  </p>
+
+  <div class="contact-items">
+    <div class="contact-item">
+      <span class="contact-label">Email</span>
+      <a href="mailto:ton.email@example.com" class="contact-link">ton.email@example.com</a>
+    </div>
+
+    <div class="contact-item">
+      <span class="contact-label">LinkedIn</span>
+      <a href="https://www.linkedin.com/in/tonprofil" class="contact-link" target="_blank" rel="noopener">
+        linkedin.com/in/tonprofil
+      </a>
+    </div>
+  </div>
+</section>
+
+</Layout>

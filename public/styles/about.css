@@ -1,14 +1,4 @@
-:root {
-  --bg: #0D1117;
-  --border: #22304a;
-  --border-strong: #22304a;
-  --text: #D2D2D2;
-  --accent: #5A82B2;
-  --accent2: #5A82B2;
-  --card-bg: #161B22;
-  --card-hover: #23293a;
-  --overlay-bg: rgba(10,16,24,0.96);
-}
+
 
 body {
   min-height: 100vh;
@@ -45,21 +35,7 @@ body {
   border-radius: 0.7em;
   padding: 0;
 }
-.apropos-blanc {
-  color: #dbeafe;
-  background: none;
-  padding: 0.1em 0.5em 0.1em 0.5em;
-  border-radius: 0.5em 0 0 0.5em;
-  font-weight: 900;
-}
-.apropos-bleu {
-  color: var(--accent);
-  background: none;
-  padding: 0.1em 0.5em 0.1em 0.5em;
-  border-radius: 0 0.5em 0.5em 0;
-  font-weight: 900;
-  margin-left: 0;
-}
+
 .site-header p {
   display: none;
 }
@@ -858,16 +834,7 @@ body {
   }
 }
 
-/* Titre principal harmonisé : police moderne, sans bordure, ABOUT plus gros */
-.main-page-title-bg {
-  font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
-  font-size: clamp(4.5rem, 14vw, 8.5rem) !important;
-  font-weight: 900;
-  color: #22304a;
-  opacity: 0.28;
-  letter-spacing: 0.13em;
-  text-transform: uppercase;
-}
+
 .main-page-title, .main-title-first, .main-title-second {
   font-family: 'Poppins', 'Segoe UI', Arial, sans-serif !important;
   -webkit-text-stroke: 0 !important;
