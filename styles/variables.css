@@ -1,0 +1,17 @@
+:root {
+  --primary-color: #2196f3;
+  --primary-color-light: #4fc3ff;
+  --primary-color-dark: #1565c0;
+  --accent-color: #e3f2fd;
+  --accent-color-light: #ffffff;
+  --background-main: #101624;
+  --background-card: #18223a;
+  --background-hover: #22305a;
+  --text-main: #e3f2fd;
+  --text-secondary: #b3c6e0;
+  --primary-shadow: #2196f344;
+  --border-radius: 1.2rem;
+  --transition: 0.18s cubic-bezier(.4,2,.6,1);
+  --background-hover: #20283c;
+  --transition: 0.25s ease;
+}

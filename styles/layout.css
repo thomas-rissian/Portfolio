@@ -1,0 +1,78 @@
+body {
+  background: linear-gradient(120deg, #101624 0%, #18223a 100%);
+  color: var(--text-main);
+  font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+  min-height: 100vh;
+  font-size: 1.08rem;
+  line-height: 1.6;
+  transition: background var(--transition), color var(--transition);
+}
+
+.main-page-title-outer {
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+.main-page-title-wrapper {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.main-page-title {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 900;
+  margin: 3rem 0 2.5rem 0;
+  text-align: center;
+  letter-spacing: 0.04em;
+  line-height: 1.1;
+  user-select: none;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  /* filter: drop-shadow(0 2px 24px var(--primary-shadow)); */
+}
+.main-title-first {
+  color: var(--primary-color);
+  font-weight: 900;
+
+  display: inline-block;
+}
+.main-title-second {
+  color: var(--accent-color);
+  font-weight: 900;
+  display: inline-block;
+}
+
+.container {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (max-width: 900px) {
+  section {
+    max-width: 98vw;
+    padding: 1.2rem 0.5rem;
+  }
+  .main-page-title {
+    font-size: clamp(2rem, 8vw, 3.2rem);
+  }
+}
+@media (max-width: 600px) {
+  .main-page-title {
+    font-size: clamp(1.5rem, 10vw, 2.2rem);
+    margin: 2rem 0 1.2rem 0;
+  }
+  section {
+    padding: 1rem 0.2rem;
+  }
+}
+header{
+  margin-top: 2%;
+}
