@@ -1,62 +1,602 @@
 ---
+export interface CarouselImage {
+  src: string;
+  alt: string;
+  caption: string;
+}
+
+export interface Props {
+  images: CarouselImage[];
+}
+
 const { images } = Astro.props;
 ---
 
-<div class="carousel">
-  <div class="carousel-container">
-    <div class="carousel-track" data-total={images.length}>
+<div class="carousel-container">
+  <div class="carousel-wrapper">
+    <!-- Flèches de navigation -->
+    <button class="carousel-arrow carousel-arrow-left" id="prevBtn">
+      ◀
+    </button>
+    
+    <button class="carousel-arrow carousel-arrow-right" id="nextBtn">
+      ▶
+    </button>
+
+    <!-- Images du carrousel -->
+    <div class="carousel-track" id="carouselTrack">
       {images.map((image, index) => (
         <div class="carousel-slide" data-index={index}>
-          <img src={image.src} alt={image.alt} loading={index === 0 ? "eager" : "lazy"} />
-          {image.caption && <div class="carousel-caption">{image.caption}</div>}
+          <img 
+            src={image.src} 
+            alt={image.alt}
+            class="carousel-image"
+            loading="lazy"
+          />
+          <div class="carousel-caption">
+            <h3>{image.caption}</h3>
+          </div>
         </div>
       ))}
     </div>
-    
-    <button class="carousel-nav prev" aria-label="Image précédente">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M15 18l-6-6 6-6"/>
-      </svg>
-    </button>
-    <button class="carousel-nav next" aria-label="Image suivante">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <path d="M9 18l6-6-6-6"/>
-      </svg>
-    </button>
+
+    <!-- Indicateurs -->
+    <div class="carousel-indicators">
+      {images.map((_, index) => (
+        <button 
+          class="carousel-indicator" 
+          data-index={index}
+          aria-label={`Aller à l'image ${index + 1}`}
+        ></button>
+      ))}
+    </div>
+  </div>
+
+  <!-- Modal de zoom -->
+  <div class="zoom-modal" id="zoomModal">
+    <div class="zoom-content">
+      <img class="zoom-image" id="zoomImage" src="" alt="" />
+      
+      <div class="zoom-caption" id="zoomCaption"></div>
+      
+      <!-- Contrôles de navigation fixes -->
+      <div class="zoom-controls">
+        <button class="zoom-arrow" id="zoomPrevBtn">
+          ◀
+        </button>
+        
+        <div class="zoom-counter">
+          <span id="currentPage">1</span> / <span id="totalPages">{images.length}</span>
+        </div>
+        
+        <button class="zoom-arrow" id="zoomNextBtn">
+          ▶
+        </button>
+      </div>
+      
+      <button class="zoom-close" id="zoomClose">
+        ✕
+      </button>
+    </div>
   </div>
 </div>
 
-<!-- Les styles ont été déplacés vers project-detail.css -->
+<style>
+.carousel-container {
+  position: relative;
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
 
-<script>
-  function initCarousel() {
-    const track = document.querySelector('.carousel-track');
-    const slides = document.querySelectorAll('.carousel-slide');
-    const total = slides.length;
-    let current = 0;
+.carousel-wrapper {
+  position: relative;
+  background: #f8f9fa;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+}
 
-    function updateSlides() {
-      slides.forEach((slide, index) => {
-        slide.className = 'carousel-slide';
-        if (index === current) slide.classList.add('active');
-        if (index === (current - 1 + total) % total) slide.classList.add('prev');
-        if (index === (current + 1) % total) slide.classList.add('next');
-      });
-    }
+.carousel-track {
+  display: flex;
+  transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  width: 100%;
+}
 
-    document.querySelector('.carousel-nav.prev')?.addEventListener('click', () => {
-      current = (current - 1 + total) % total;
-      updateSlides();
-    });
+.carousel-slide {
+  min-width: 100%;
+  max-width: 100%;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 16/9;
+}
 
-    document.querySelector('.carousel-nav.next')?.addEventListener('click', () => {
-      current = (current + 1) % total;
-      updateSlides();
-    });
+.carousel-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  cursor: zoom-in;
+  transition: transform 0.3s ease;
+}
 
-    // Initial state
-    updateSlides();
+.carousel-image:hover {
+  transform: scale(1.02);
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+  color: white;
+  padding: 2rem 1.5rem 1.5rem;
+  text-align: center;
+}
+
+.carousel-caption h3 {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.carousel-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.3s ease;
+  color: #333;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.carousel-arrow:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.1);
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+}
+
+.carousel-arrow-left {
+  left: 1rem;
+}
+
+.carousel-arrow-right {
+  right: 1rem;
+}
+
+.carousel-indicators {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 1.5rem;
+  background: rgba(255, 255, 255, 0.95);
+}
+
+.carousel-indicator {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: none;
+  background: #ddd;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.carousel-indicator.active {
+  background: #007bff;
+  transform: scale(1.2);
+}
+
+.carousel-indicator:hover {
+  background: #007bff;
+  opacity: 0.7;
+}
+
+/* Modal de zoom */
+.zoom-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  outline: none;
+}
+
+.zoom-modal.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.zoom-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.zoom-image {
+  max-width: 90%;
+  max-height: 70vh;
+  object-fit: contain;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  transform: scale(0.9);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  margin-bottom: 2rem;
+  cursor: default;
+  user-select: none;
+}
+
+.zoom-modal.active .zoom-image {
+  transform: scale(1);
+}
+
+.zoom-caption {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-align: center;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 0.8rem 1.5rem;
+  border-radius: 25px;
+  backdrop-filter: blur(10px);
+  margin-bottom: 1.5rem;
+}
+
+/* Contrôles fixes en bas */
+.zoom-controls {
+  position: fixed;
+  bottom: 3rem;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(10px);
+  padding: 1rem 2rem;
+  border-radius: 50px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.zoom-arrow {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.zoom-arrow:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.zoom-counter {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  min-width: 60px;
+}
+
+.zoom-close {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: white;
+  transition: all 0.3s ease;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.zoom-close:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .carousel-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+  
+  .carousel-arrow-left {
+    left: 0.5rem;
+  }
+  
+  .carousel-arrow-right {
+    right: 0.5rem;
   }
 
-  document.addEventListener('DOMContentLoaded', initCarousel);
+  .zoom-controls {
+    bottom: 1.5rem;
+    gap: 1rem;
+    padding: 0.8rem 1.5rem;
+  }
+
+  .zoom-arrow {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+
+  .zoom-close {
+    top: 1rem;
+    right: 1rem;
+    width: 40px;
+    height: 40px;
+    font-size: 16px;
+  }
+
+  .zoom-counter {
+    font-size: 1rem;
+    min-width: 50px;
+  }
+
+  .zoom-image {
+    max-height: 60vh;
+    margin-bottom: 1rem;
+  }
+
+  .zoom-caption {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+}
+</style>
+
+<script>
+  // Attendre que le DOM soit chargé
+  document.addEventListener('DOMContentLoaded', function() {
+    // Récupérer les données depuis Astro
+    const images = JSON.parse(document.querySelector('[data-carousel-images]')?.textContent || '[]');
+    
+    class Carousel {
+      constructor() {
+        this.currentIndex = 0;
+        this.images = images;
+        
+        // Vérifier que les éléments existent
+        this.track = document.getElementById('carouselTrack');
+        this.indicators = document.querySelectorAll('.carousel-indicator');
+        this.zoomModal = document.getElementById('zoomModal');
+        this.zoomImage = document.getElementById('zoomImage');
+        this.zoomCaption = document.getElementById('zoomCaption');
+        this.currentPage = document.getElementById('currentPage');
+        this.totalPages = document.getElementById('totalPages');
+        
+        if (!this.track) {
+          console.error('Carrousel: Éléments DOM non trouvés');
+          return;
+        }
+        
+        this.init();
+      }
+
+      init() {
+        this.updateCarousel();
+        this.bindEvents();
+        console.log('Carrousel initialisé avec', this.images.length, 'images');
+      }
+
+      bindEvents() {
+        // Navigation du carrousel principal
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        
+        if (prevBtn) prevBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Clic précédent');
+          this.prev();
+        });
+        
+        if (nextBtn) nextBtn.addEventListener('click', (e) => {
+          e.preventDefault();
+          console.log('Clic suivant');
+          this.next();
+        });
+
+        // Indicateurs
+        this.indicators.forEach((indicator, index) => {
+          indicator.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Clic indicateur', index);
+            this.goTo(index);
+          });
+        });
+
+        // Clic sur image pour zoom
+        document.querySelectorAll('.carousel-image').forEach((img, index) => {
+          img.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Clic image pour zoom', index);
+            this.openZoom(index);
+          });
+        });
+
+        // Navigation dans le zoom
+        const zoomPrevBtn = document.getElementById('zoomPrevBtn');
+        const zoomNextBtn = document.getElementById('zoomNextBtn');
+        const zoomClose = document.getElementById('zoomClose');
+        
+        if (zoomPrevBtn) zoomPrevBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.zoomPrev();
+        });
+        
+        if (zoomNextBtn) zoomNextBtn.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.zoomNext();
+        });
+
+        // Fermeture du zoom
+        if (zoomClose) zoomClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          this.closeZoom();
+        });
+        
+        if (this.zoomModal) {
+          this.zoomModal.addEventListener('click', (e) => {
+            // Fermer seulement si on clique sur le fond
+            if (e.target === this.zoomModal) {
+              this.closeZoom();
+            }
+          });
+        }
+
+        // Navigation clavier
+        document.addEventListener('keydown', (e) => {
+          if (this.zoomModal && this.zoomModal.classList.contains('active')) {
+            switch(e.key) {
+              case 'Escape':
+                this.closeZoom();
+                break;
+              case 'ArrowLeft':
+                this.zoomPrev();
+                break;
+              case 'ArrowRight':
+                this.zoomNext();
+                break;
+            }
+          } else {
+            switch(e.key) {
+              case 'ArrowLeft':
+                this.prev();
+                break;
+              case 'ArrowRight':
+                this.next();
+                break;
+            }
+          }
+        });
+      }
+
+      updateCarousel() {
+        if (!this.track) return;
+        
+        const translateX = -this.currentIndex * 100;
+        this.track.style.transform = `translateX(${translateX}%)`;
+        
+        console.log('Mise à jour carrousel, index:', this.currentIndex, 'translateX:', translateX);
+        
+        // Mettre à jour les indicateurs
+        this.indicators.forEach((indicator, index) => {
+          indicator.classList.toggle('active', index === this.currentIndex);
+        });
+      }
+
+      prev() {
+        this.currentIndex = this.currentIndex > 0 ? this.currentIndex - 1 : this.images.length - 1;
+        this.updateCarousel();
+      }
+
+      next() {
+        this.currentIndex = this.currentIndex < this.images.length - 1 ? this.currentIndex + 1 : 0;
+        this.updateCarousel();
+      }
+
+      goTo(index) {
+        this.currentIndex = index;
+        this.updateCarousel();
+      }
+
+      openZoom(index) {
+        if (!this.zoomModal) return;
+        
+        this.currentIndex = index;
+        this.updateZoom();
+        this.zoomModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        
+        // Focus sur le modal pour la navigation clavier
+        this.zoomModal.focus();
+      }
+
+      closeZoom() {
+        if (!this.zoomModal) return;
+        
+        this.zoomModal.classList.remove('active');
+        document.body.style.overflow = '';
+      }
+
+      updateZoom() {
+        if (!this.zoomImage || !this.zoomCaption || !this.currentPage) return;
+        
+        const currentImage = this.images[this.currentIndex];
+        this.zoomImage.src = currentImage.src;
+        this.zoomImage.alt = currentImage.alt;
+        this.zoomCaption.textContent = currentImage.caption;
+        this.currentPage.textContent = this.currentIndex + 1;
+      }
+
+      zoomPrev() {
+        this.currentIndex = this.currentIndex > 0 ? this.currentIndex - 1 : this.images.length - 1;
+        this.updateZoom();
+        this.updateCarousel();
+      }
+
+      zoomNext() {
+        this.currentIndex = this.currentIndex < this.images.length - 1 ? this.currentIndex + 1 : 0;
+        this.updateZoom();
+        this.updateCarousel();
+      }
+    }
+
+    // Initialiser le carrousel
+    new Carousel();
+  });
 </script>
+
+<!-- Script pour passer les données d'Astro à JavaScript -->
+<script type="application/json" data-carousel-images set:html={JSON.stringify(images)}></script>

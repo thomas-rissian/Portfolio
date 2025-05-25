@@ -1,5 +1,5 @@
 ---
-title: "Bonjour, <strong>RISSIAN Thomas</strong>"
-description: "<em>Je suis un passionné de design et de création numérique. J'aime transformer des idées en expériences visuelles uniques. Chaque projet est pour moi une opportunité de raconter une histoire de manière innovante.</em>"
-image: "/images/ma-photo.jpg"
+title: "Bonjour, je suis <strong>Thomas RISSIAN</strong> — Étudiant en BUT Informatique Graphique"
+description: "Bienvenue sur mon portfolio ! Je suis passionné par le développement logiciel, la programmation, et les technologies web. Depuis mes débuts au collège, j'explore les possibilités infinies du code pour créer des projets concrets, utiles et élégants"
+image: "/images/ma-photo.jpg"   
 ---

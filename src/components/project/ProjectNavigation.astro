@@ -8,13 +8,13 @@ interface Props {
     slug: string;
     title: string;
   };
-  projectType?: 'projet' | 'numerique-responsable';
+  projectType?: 'project' | 'numerique-responsable';
 }
 
-const { prevProject, nextProject, projectType = 'projet' } = Astro.props;
+const { prevProject, nextProject, projectType = 'project' } = Astro.props;
 
 // Déterminer l'URL de retour en fonction du type de projet
-const homeUrl = projectType === 'numerique-responsable' ? '/numerique-responsable' : '/projet';
+const homeUrl = projectType === 'numerique-responsable' ? '/numerique-responsable' : '/project';
 ---
 
 <nav class="project-nav">
