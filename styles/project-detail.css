@@ -2,8 +2,45 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
+  overflow: auto;
+  height: 80vh;
+  scrollbar-width: thin;
+  scrollbar-color: var(--primary-color-dark) var(--background-card);
+}
+/* Style général pour la scrollbar (fonctionne sur Chrome, Edge, Safari) */
+.project-detail::-webkit-scrollbar {
+  width: 10px;
+  height: 10px; /* pour la scrollbar horizontale */
 }
 
+/* Track (arrière-plan) */
+.project-detail::-webkit-scrollbar-track {
+  background: var(--background-card);
+  border-radius: var(--border-radius);
+}
+
+/* Handle (partie mobile) */
+.project-detail::-webkit-scrollbar-thumb {
+  background: var(--primary-color-dark);
+  border-radius: var(--border-radius);
+  transition: var(--transition);
+}
+
+/* Handle au survol */
+.project-detail::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+  transform: scale(1.05);
+}
+
+/* Boutons (flèches) - optionnel */
+.project-detail::-webkit-scrollbar-button {
+  display: none; /* On cache les flèches pour un look moderne */
+}
+
+/* Corner (angle entre scrollbar verticale/horizontale) */
+.project-detail::-webkit-scrollbar-corner {
+  background: var(--background-card);
+}
 /* Back button */
 .back-button {
   position: fixed;
