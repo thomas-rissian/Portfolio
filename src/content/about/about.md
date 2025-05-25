@@ -6,5 +6,5 @@ pays: "France"
 langues:
   - "Français"
   - "Anglais"
-cv: "about/cv.pdf"
+cv: "cv.pdf"
 ---
