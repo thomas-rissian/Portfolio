@@ -8,4 +8,5 @@ technologies:
   - PostgreSQL
   - MySQL
   - MongoDb
+  - Sqlite
 ---

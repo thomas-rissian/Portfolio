@@ -2,6 +2,7 @@
 import Layout from '../../layouts/Layout.astro';
 import ProjectNavigation from '../../components/project/ProjectNavigation.astro';
 import Carousel from '../../components/project/Carousel.astro';
+import { stringify } from 'gray-matter';
 interface Image {
   src: string;
   alt: string;
@@ -53,23 +54,27 @@ const {
   images // Galerie (array d'objets)
 } = project.frontmatter;
 
-// Trouve les projets suivant/précédent
-const projectIndex = projects.findIndex(p => p.frontmatter.slug === slug);
-// Technologies du projet courant
 const currentTechs = project.frontmatter.technologies || [];
 
-// Filtrer les projets similaires (avec techno commune) et exclure le projet courant
-const similarProjects = projects.filter(p => {
+// Filtrer les projets similaires par technologies communes, exclure le projet courant
+let similarProjects = projects.filter(p => {
   if (p.frontmatter.slug === slug) return false;
   const pTechs = p.frontmatter.technologies || [];
   return pTechs.some(tech => currentTechs.includes(tech));
 });
 
-// Trouver l'index du projet courant dans similarProjects (normalement absent donc pas utile)
-// Comme le projet courant n’est pas dans similarProjects, on trouve le premier et deuxième pour prev/next
+// Supprimer les doublons (par slug)
+const uniqueSlugs = new Set();
+similarProjects = similarProjects.filter(p => {
+  if (uniqueSlugs.has(p.frontmatter.slug)) return false;
+  uniqueSlugs.add(p.frontmatter.slug);
+  return true;
+});
 
-const prevProject = similarProjects.length > 0 ? similarProjects[0] : null;
-const nextProject = similarProjects.length > 1 ? similarProjects[1] : null;
+// Sélectionner les projets précédent et suivant parmi les similaires
+const prevProject = similarProjects[0] || null;
+const nextProject = similarProjects[1] || null;
+
 
 
 // Add this to the top level

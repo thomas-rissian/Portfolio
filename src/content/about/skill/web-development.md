@@ -13,4 +13,5 @@ technologies:
   - Next.js
   - Express
   - Vue.js
+  - Prisma
 ---

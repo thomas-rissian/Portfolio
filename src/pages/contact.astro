@@ -10,19 +10,19 @@ const contact = contactMd.length > 0 ? contactMd[0].frontmatter : {};
   <h2 class="project-section-title">Contact</h2>
 
   <p class="contact-description">
-    Envie de discuter ou de collaborer ? Voici où me trouver :
+    {contact.message} :
   </p>
 
   <div class="contact-items">
     <div class="contact-item">
       <span class="contact-label">Email</span>
-      <a href="mailto:ton.email@example.com" class="contact-link">ton.email@example.com</a>
+      <a href={"mailto:"+ contact.email} class="contact-link">{contact.email}</a>
     </div>
 
     <div class="contact-item">
       <span class="contact-label">LinkedIn</span>
       <a href="https://www.linkedin.com/in/tonprofil" class="contact-link" target="_blank" rel="noopener">
-        linkedin.com/in/tonprofil
+        {contact.linkedin}
       </a>
     </div>
   </div>
