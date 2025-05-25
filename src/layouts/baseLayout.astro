@@ -3,6 +3,10 @@ import VerticalNav from "../components/header.astro";
 import Footer from "../components/footer.astro";
 const { pageTitle = "" } = Astro.props;
 const currentPath = Astro.url.pathname;
+// src/utils/url.ts
+function withBase(path: string, base = import.meta.env.BASE_URL): string {
+  return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+}
 
 ---
 
@@ -12,17 +16,17 @@ const currentPath = Astro.url.pathname;
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="stylesheet" href="/styles/variables.css">
-    <link rel="stylesheet" href="/styles/layout.css">
-    <link rel="stylesheet" href="/styles/contact.css">
-    <link rel="stylesheet" href="/styles/about.css">
-    <link rel="stylesheet" href="/styles/project.css">
-    <link rel="stylesheet" href="/styles/base.css">
-    <link rel="stylesheet" href="/styles/projet-cards.css">
-    <link rel="stylesheet" href="/styles/project-detail.css">
-    <link rel="stylesheet" href="/styles/numerique-responsable.css">
-    <link rel="stylesheet" href="/styles/header.css">
-    <link rel="stylesheet" href="/styles/index.css">
+    <link rel="stylesheet" href={withBase("styles/variables.css")}>
+    <link rel="stylesheet" href={withBase("styles/layout.css")}>
+    <link rel="stylesheet" href={withBase("styles/contact.css")}>
+    <link rel="stylesheet" href={withBase("styles/about.css")}>
+    <link rel="stylesheet" href={withBase("styles/project.css")}>
+    <link rel="stylesheet" href={withBase("styles/base.css")}>
+    <link rel="stylesheet" href={withBase("styles/projet-cards.css")}>
+    <link rel="stylesheet" href={withBase("styles/project-detail.css")}>
+    <link rel="stylesheet" href={withBase("styles/numerique-responsable.css")}>
+    <link rel="stylesheet" href={withBase("styles/header.css")}>
+    <link rel="stylesheet" href={withBase("styles/index.css")}>
     <meta name="generator" content={Astro.generator} />
     <title>{pageTitle || "Portfolio"}</title>
   </head>

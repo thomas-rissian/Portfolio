@@ -39,6 +39,9 @@ function normalizeTechnologies(tech: any) {
   if (typeof tech === 'object' && tech.langages) return tech.langages;
   return [];
 }
+function withBase(path: string, base = import.meta.env.BASE_URL): string {
+  return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+}
 ---
 
 <Layout pageTitle="Mes Projets">
@@ -65,7 +68,7 @@ function normalizeTechnologies(tech: any) {
       
       return (
         <a
-          href={`/project/${slug ?? project.file.replace('.md', '').split('/').pop()}`}
+          href={withBase(`/project/${slug ?? project.file.replace('.md', '').split('/').pop()}`)}
           class="project-card"
           key={idx}
           aria-label={`Voir le projet ${title}`}
@@ -73,7 +76,7 @@ function normalizeTechnologies(tech: any) {
           data-technos={technologies.join(',')}
         >
           <div class="project-card-img-wrapper">
-            <img src={image ?? "/placeholder.png"} alt={title} class="project-card-img" loading="lazy" />
+            <img src={withBase(image ?? "/placeholder.png")} alt={title} class="project-card-img" loading="lazy" />
           </div>
           <div class="project-card-overlay">
             <div class="project-card-title">{title}</div>

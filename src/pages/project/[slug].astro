@@ -80,7 +80,9 @@ const nextProject = similarProjects[1] || null;
 // Add this to the top level
 const currentImage = 0; // Default value for initial render
 
-
+function withBase(path: string, base = import.meta.env.BASE_URL): string {
+  return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+}
 ---
 
 <Layout pageTitle={title}>
@@ -89,7 +91,7 @@ const currentImage = 0; // Default value for initial render
   <article class="project-detail">
     <div class="project-header">
       <div class="project-header-img">
-        {image && <img src={image} alt={title} class="main-image-modern" />}
+        {image && <img src={withBase(image)} alt={title} class="main-image-modern" />}
       </div>
       <div class="project-header-content">
         <div class="project-meta">
@@ -119,7 +121,7 @@ const currentImage = 0; // Default value for initial render
         )}
         {numerique && (
           <div class="nr-section-modern">
-          <a href={`/numerique-responsable/${slug}`} class="nr-link-modern">
+          <a href={withBase(`/numerique-responsable/${slug}`)} class="nr-link-modern">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M12 3v18M3 12h18M12 8a4 4 0 0 1 4 4M12 16a4 4 0 0 0 4-4"/>
             </svg>

@@ -3,6 +3,19 @@ import Layout from '../../layouts/Layout.astro';
 import ProjectNavigation from '../../components/project/ProjectNavigation.astro';
 import SimilarProjects from '../../components/project/SimilarProjects.astro';
 import type { GetStaticPaths } from 'astro';
+export function withBase(path: string, site?: URL | string): string {
+  // Si `site` est fourni, sinon essayer de récupérer depuis import.meta.env
+  const base = (site ?? import.meta.env.SITE ?? '').toString();
+
+  // Si aucun site/base défini, on retourne tel quel
+  if (!base) return path;
+
+  // Nettoyage du base et du path
+  const cleanBase = base.replace(/\/+$/, '');
+  const cleanPath = path.replace(/^\/+/, '');
+
+  return `${cleanBase}/${cleanPath}`;
+}
 
 interface Frontmatter {
   slug: string;
@@ -147,7 +160,7 @@ const nextProjet = projetIndex < projets.length - 1 ? getProjNav(projets[projetI
         {lien && (
           <div class="project-link-section">
             {lien && (
-              <a href={lien} rel="noopener noreferrer" class="project-link-button external-link">
+              <a href={withBase(lien)} rel="noopener noreferrer" class="project-link-button external-link">
                 <span>Voir le projet</span>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/>

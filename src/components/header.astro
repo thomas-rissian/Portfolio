@@ -7,12 +7,15 @@ const navItems = [
   { name: "Numérique Responsable", icon: "🌱", link: "/numerique-responsable" },
   { name: "Contact", icon: "✉️", link: "/contact" },
 ];
+function withBase(path: string, base = import.meta.env.BASE_URL): string {
+  return `${base.replace(/\/$/, '')}/${path.replace(/^\//, '')}`;
+}
 ---
 
 <nav class="sidebar">
   {navItems.map((item, index) => (
     <a
-      href={item.link}
+      href={withBase(item.link)}
       class={`nav-bubble ${active === item.link ? "active" : ""}`}
       aria-label={item.name}
       style={`animation-delay: ${(index + 1) * 0.1}s`}

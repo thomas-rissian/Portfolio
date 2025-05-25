@@ -18,17 +18,17 @@ github: "https://github.com/thomas-rissian/biblio"
 numerique: false
 images: [
   {
-    src: "/projects/biblio/homeBiblio.png",
+    src: "projects/biblio/homeBiblio.png",
     alt: "Page d'accueil",
     caption: "Page d'accueil"
   },
   {
-    src: "/projects/biblio/statistiqueBiblio.png",
+    src: "projects/biblio/statistiqueBiblio.png",
     alt: "Tableau des statistiques",
     caption: "Tableau des statistiques"
   },
   {
-    src: "/projects/biblio/arbo.jpeg",
+    src: "projects/biblio/arbo.jpeg",
     alt: "Arboressence du projet",
     caption: "Arboressence du projet"
   }

@@ -10,6 +10,19 @@ export interface Props {
 }
 
 const { images } = Astro.props;
+export function withBase(path: string, site?: URL | string): string {
+  // Si `site` est fourni, sinon essayer de récupérer depuis import.meta.env
+  const base = (site ?? import.meta.env.SITE ?? '').toString();
+
+  // Si aucun site/base défini, on retourne tel quel
+  if (!base) return path;
+
+  // Nettoyage du base et du path
+  const cleanBase = base.replace(/\/+$/, '');
+  const cleanPath = path.replace(/^\/+/, '');
+
+  return `${cleanBase}/${cleanPath}`;
+}
 ---
 
 <div class="carousel-container">
@@ -28,7 +41,7 @@ const { images } = Astro.props;
       {images.map((image, index) => (
         <div class="carousel-slide" data-index={index}>
           <img 
-            src={image.src} 
+            src={withBase(image.src)} 
             alt={image.alt}
             class="carousel-image"
             loading="lazy"
@@ -397,6 +410,19 @@ const { images } = Astro.props;
 </style>
 
 <script>
+  export function withBase(path: string, site?: URL | string): string {
+  // Si `site` est fourni, sinon essayer de récupérer depuis import.meta.env
+  const base = (site ?? import.meta.env.SITE ?? '').toString();
+
+  // Si aucun site/base défini, on retourne tel quel
+  if (!base) return path;
+
+  // Nettoyage du base et du path
+  const cleanBase = base.replace(/\/+$/, '');
+  const cleanPath = path.replace(/^\/+/, '');
+
+  return `${cleanBase}/${cleanPath}`;
+}
   // Attendre que le DOM soit chargé
   document.addEventListener('DOMContentLoaded', function() {
     // Récupérer les données depuis Astro
@@ -574,7 +600,7 @@ const { images } = Astro.props;
         if (!this.zoomImage || !this.zoomCaption || !this.currentPage) return;
         
         const currentImage = this.images[this.currentIndex];
-        this.zoomImage.src = currentImage.src;
+        this.zoomImage.src = withBase(currentImage.src);
         this.zoomImage.alt = currentImage.alt;
         this.zoomCaption.textContent = currentImage.caption;
         this.currentPage.textContent = this.currentIndex + 1;

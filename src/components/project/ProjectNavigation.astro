@@ -15,11 +15,25 @@ const { prevProject, nextProject, projectType = 'project' } = Astro.props;
 
 // Déterminer l'URL de retour en fonction du type de projet
 const homeUrl = projectType === 'numerique-responsable' ? '/numerique-responsable' : '/project';
+export function withBase(path: string, site?: URL | string): string {
+  // Si `site` est fourni, sinon essayer de récupérer depuis import.meta.env
+  const base = (site ?? import.meta.env.SITE ?? '').toString();
+
+  // Si aucun site/base défini, on retourne tel quel
+  if (!base) return path;
+
+  // Nettoyage du base et du path
+  const cleanBase = base.replace(/\/+$/, '');
+  const cleanPath = path.replace(/^\/+/, '');
+
+  return `${cleanBase}/${cleanPath}`;
+}
+
 ---
 
 <nav class="project-nav">
   {prevProject && (
-    <a href={`/${projectType}/${prevProject.slug}`} class="nav-prev" data-title={prevProject.title}>
+    <a href={withBase(`/${projectType}/${prevProject.slug}`)} class="nav-prev" data-title={prevProject.title}>
       <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none">
         <path d="M15 18l-6-6 6-6"/>
       </svg>
@@ -28,14 +42,14 @@ const homeUrl = projectType === 'numerique-responsable' ? '/numerique-responsabl
   )}
 
   <div class="nav-home-group">
-    <a href={homeUrl} class="nav-home">
+    <a href={withBase(homeUrl)} class="nav-home">
       <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none">
         <path d="M3 12h18M12 3l-9 9 9 9"/>
       </svg>
       <span class="sr-only">Retour aux projets</span>
     </a>
     {projectType === 'projet' && (
-      <a href="/numerique-responsable" class="nav-switch" title="Voir les projets numériques responsables">
+      <a href={withBase("/numerique-responsable")} class="nav-switch" title="Voir les projets numériques responsables">
         <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none">
           <path d="M12 3v18M3 12h18M12 8a4 4 0 0 1 4 4M12 16a4 4 0 0 0 4-4"/>
         </svg>
@@ -44,7 +58,7 @@ const homeUrl = projectType === 'numerique-responsable' ? '/numerique-responsabl
   </div>
 
   {nextProject && (
-    <a href={`/${projectType}/${nextProject.slug}`} class="nav-next" data-title={nextProject.title}>
+    <a href={withBase(`/${projectType}/${nextProject.slug}`)} class="nav-next" data-title={nextProject.title}>
       <span class="preview-title">{nextProject.title}</span>
       <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" fill="none">
         <path d="M9 18l6-6-6-6"/>
