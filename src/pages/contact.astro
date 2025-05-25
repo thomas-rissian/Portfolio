@@ -21,7 +21,7 @@ const contact = contactMd.length > 0 ? contactMd[0].frontmatter : {};
 
     <div class="contact-item">
       <span class="contact-label">LinkedIn</span>
-      <a href="https://www.linkedin.com/in/tonprofil" class="contact-link" target="_blank" rel="noopener">
+      <a href={contact.linkedin} class="contact-link" target="_blank" rel="noopener">
         {contact.linkedin}
       </a>
     </div>
