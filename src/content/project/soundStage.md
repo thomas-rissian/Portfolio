@@ -47,6 +47,16 @@ images: [
     src: "/projects/soundstage/reactAriste.png",
     alt: "React",
     caption: "Liste des artistes sur l'application react"
+
+  },{
+    src: "/projects/soundstage/code_coverage_shell.png",
+    alt: "Code coverage shell",
+    caption: "Retour console des tests"
+  },
+  {
+    src: "/projects/soundstage/code_coverage.PNG",
+    alt: "Code coverage html",
+    caption: "Retour html des test"
   }
 ]
 ---
