@@ -118,5 +118,3 @@ SoundStage est divisé en deux parties indépendantes :
 - Mise en production avec Docker / CI.
 - Étendre les filtres d’événements côté client.
 ---
-
-Souhaite-tu aussi que je t'aide à intégrer ce markdown dans un fichier `.md` compatible Astro ou que je l’envoie vers ton projet Carousel ?
