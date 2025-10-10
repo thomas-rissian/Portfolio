@@ -1,7 +1,7 @@
 ---
 icon: "💻"
-number: "10+"
+number: "15+"
 label: "Technologies utilisées"
 ---
 
-Compétent dans plusieurs langages de programmation et frameworks modernes.
+Expertise en Vue.js, React, Node.js, Symfony, Godot, C#, PHP et plus encore.

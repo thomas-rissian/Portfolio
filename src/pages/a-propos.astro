@@ -1,0 +1,307 @@
+---
+import Layout from '../layouts/Layout.astro'
+import Footer from '../components/layout/Footer.astro'
+import { getCollection } from 'astro:content'
+
+const aboutData = await getCollection('about')
+const about = aboutData[0]
+const { Content } = await about.render()
+---
+
+<Layout title={`${about.data.title} - Thomas RISSIAN`}>
+  <main class="min-h-screen py-12 px-4 bg-gradient-to-b from-gray-50 to-white">
+    <div class="container mx-auto max-w-4xl px-4">
+      <!-- Header simple -->
+      <div class="mb-12">
+        <a href="/" class="inline-flex items-center text-gray-600 hover:text-gray-900 mb-8 transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+          </svg>
+          Retour à l'accueil
+        </a>
+        <h1 class="text-5xl font-bold text-gray-900 mb-4">{about.data.title}</h1>
+        <p class="text-xl text-gray-600">
+          {about.data.subtitle}
+        </p>
+      </div>
+
+      <!-- Content from Markdown -->
+      <div id="about-content" class="markdown-content space-y-8">
+        <Content />
+      </div>
+
+    </div>
+  </main>
+  
+  <script>
+    // Wrapper automatique des sections en cards élégantes
+    document.addEventListener('DOMContentLoaded', () => {
+      const content = document.getElementById('about-content');
+      if (!content) return;
+
+      const h2Elements = content.querySelectorAll('h2');
+      
+      h2Elements.forEach((h2) => {
+        // Créer une card pour chaque section
+        const card = document.createElement('div');
+        card.className = 'section-card';
+        
+        // Insérer la card avant le h2
+        h2.parentNode?.insertBefore(card, h2);
+        
+        // Déplacer le h2 dans la card
+        card.appendChild(h2);
+        
+        // Déplacer tous les éléments suivants jusqu'au prochain h2
+        let nextElement = card.nextElementSibling;
+        while (nextElement && nextElement.tagName !== 'H2') {
+          const elementToMove = nextElement;
+          nextElement = nextElement.nextElementSibling;
+          card.appendChild(elementToMove);
+        }
+      });
+    });
+  </script>
+  
+  <Footer />
+</Layout>
+
+
+
+<style>
+  /* Styles GitLab Markdown - Contenu direct */
+  .markdown-content {
+    max-width: 100%;
+    color: #303030;
+  }
+
+  /* Cards de sections élégantes */
+  .markdown-content :global(.section-card) {
+    background: white;
+    border-radius: 12px;
+    padding: 32px;
+    margin-bottom: 24px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e5e7eb;
+    transition: all 0.3s ease;
+  }
+
+  .markdown-content :global(.section-card:hover) {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08), 0 4px 10px rgba(0, 0, 0, 0.05);
+    transform: translateY(-2px);
+  }
+
+  /* Les styles h1, h2, h3 sont définis dans Layout.astro */
+
+  /* Ajustements spécifiques pour les cards */
+  .markdown-content :global(.section-card) h2 {
+    margin-top: 0 !important;
+  }
+
+  /* Paragraphes */
+  .markdown-content p,
+  div#about-content p {
+    color: #374151 !important;
+    line-height: 1.8 !important;
+    margin: 0 0 20px 0 !important;
+    font-size: 1.0625rem !important;
+    display: block !important;
+    text-align: justify !important;
+  }
+
+  /* Texte en gras */
+  .markdown-content strong,
+  div#about-content strong {
+    color: #1a1a1a !important;
+    font-weight: 700 !important;
+    background: linear-gradient(120deg, rgba(59, 130, 246, 0.1) 0%, rgba(59, 130, 246, 0.05) 100%) !important;
+    padding: 0.1em 0.3em !important;
+    border-radius: 0.25rem !important;
+  }
+
+  /* Listes stylisées */
+  .markdown-content ul,
+  div#about-content ul {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    padding-left: 1.5em !important;
+    list-style: none !important;
+  }
+
+  .markdown-content ul li,
+  div#about-content ul li {
+    position: relative !important;
+    color: #4b5563 !important;
+    margin-bottom: 10px !important;
+    line-height: 1.7 !important;
+    font-size: 1rem !important;
+    padding-left: 1.5em !important;
+  }
+
+  .markdown-content ul li::before,
+  div#about-content ul li::before {
+    content: "→" !important;
+    position: absolute !important;
+    left: 0 !important;
+    color: #3b82f6 !important;
+    font-weight: bold !important;
+    font-size: 1.1em !important;
+  }
+
+  .markdown-content ol,
+  div#about-content ol {
+    margin-top: 0 !important;
+    margin-bottom: 20px !important;
+    padding-left: 2em !important;
+    counter-reset: item !important;
+    list-style: none !important;
+  }
+
+  .markdown-content ol li,
+  div#about-content ol li {
+    position: relative !important;
+    color: #4b5563 !important;
+    margin-bottom: 10px !important;
+    line-height: 1.7 !important;
+    font-size: 1rem !important;
+    counter-increment: item !important;
+    padding-left: 0.5em !important;
+  }
+
+  .markdown-content ol li::before,
+  div#about-content ol li::before {
+    content: counter(item) "." !important;
+    position: absolute !important;
+    left: -2em !important;
+    color: #3b82f6 !important;
+    font-weight: 700 !important;
+    width: 1.5em !important;
+    text-align: right !important;
+  }
+
+  #about-content ul ul,
+  #about-content ol ol,
+  #about-content ul ol,
+  #about-content ol ul {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  /* Code inline */
+  .markdown-content code,
+  div#about-content code {
+    background: linear-gradient(135deg, #f3f4f6 0%, #e5e7eb 100%) !important;
+    border: 1px solid #d1d5db !important;
+    border-radius: 4px !important;
+    padding: 0.15em 0.4em !important;
+    font-family: 'Menlo', 'Monaco', 'Courier New', monospace !important;
+    font-size: 0.9em !important;
+    color: #dc2626 !important;
+    font-weight: 500 !important;
+  }
+
+  /* Blocs de code */
+  .markdown-content pre,
+  div#about-content pre {
+    background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%) !important;
+    border-radius: 8px !important;
+    padding: 20px !important;
+    margin: 24px 0 !important;
+    overflow: auto !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+    border: 1px solid #334155 !important;
+  }
+
+  .markdown-content pre code,
+  div#about-content pre code {
+    background: transparent !important;
+    border: none !important;
+    padding: 0 !important;
+    font-size: 0.875rem !important;
+    color: #e2e8f0 !important;
+    line-height: 1.7 !important;
+  }
+
+  /* Citations */
+  .markdown-content blockquote,
+  div#about-content blockquote {
+    margin: 24px 0 !important;
+    padding: 16px 20px !important;
+    border-left: 4px solid #3b82f6 !important;
+    background: linear-gradient(to right, rgba(59, 130, 246, 0.05), transparent) !important;
+    color: #4b5563 !important;
+    border-radius: 0 4px 4px 0 !important;
+    font-style: italic !important;
+  }
+
+  .markdown-content blockquote p,
+  div#about-content blockquote p {
+    margin-bottom: 0 !important;
+  }
+
+  /* Séparateurs */
+  .markdown-content hr,
+  div#about-content hr {
+    height: 2px !important;
+    margin: 40px 0 !important;
+    background: linear-gradient(to right, transparent, #3b82f6, transparent) !important;
+    border: none !important;
+  }
+
+  /* Liens */
+  .markdown-content a,
+  div#about-content a {
+    color: #2563eb !important;
+    text-decoration: none !important;
+    font-weight: 600 !important;
+    border-bottom: 2px solid transparent !important;
+    transition: all 0.2s ease !important;
+  }
+
+  .markdown-content a:hover,
+  div#about-content a:hover {
+    color: #1d4ed8 !important;
+    border-bottom-color: #3b82f6 !important;
+  }
+
+  /* Tables stylisées */
+  .markdown-content table,
+  div#about-content table {
+    border-collapse: separate !important;
+    border-spacing: 0 !important;
+    margin: 24px 0 !important;
+    width: 100% !important;
+    border-radius: 8px !important;
+    overflow: hidden !important;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06) !important;
+  }
+
+  .markdown-content th,
+  div#about-content th {
+    background: linear-gradient(to bottom, #3b82f6, #2563eb) !important;
+    color: white !important;
+    border: none !important;
+    padding: 12px 16px !important;
+    font-weight: 600 !important;
+    text-align: left !important;
+  }
+
+  .markdown-content td,
+  div#about-content td {
+    border: 1px solid #e5e7eb !important;
+    border-left: none !important;
+    border-right: none !important;
+    padding: 10px 16px !important;
+    color: #4b5563 !important;
+  }
+
+  .markdown-content tr:nth-child(even) td,
+  div#about-content tr:nth-child(even) td {
+    background-color: #f9fafb !important;
+  }
+
+  .markdown-content tr:hover td,
+  div#about-content tr:hover td {
+    background-color: rgba(59, 130, 246, 0.05) !important;
+  }
+</style>

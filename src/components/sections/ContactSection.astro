@@ -1,0 +1,121 @@
+---
+import { getCollection } from 'astro:content';
+
+const personalData = await getCollection('personal');
+const personal = personalData.find(item => item.id === 'info' || item.slug === 'info');
+
+// Type for social links
+type SocialLink = { name: string; url: string; icon: string };
+type PersonalInfo = { 
+  location: string; 
+  timezone: string; 
+  availability: string; 
+  socialLinks: SocialLink[] 
+};
+
+const info: PersonalInfo = personal && 'location' in personal.data 
+  ? (personal.data as PersonalInfo)
+  : {
+      location: 'Le puy en velay',
+      timezone: 'Paris',
+      availability: 'En étude',
+      socialLinks: []
+    };
+
+// Icon configurations
+const iconConfig: Record<string, {
+  svg: string;
+  bgColor: string;
+  textColor: string;
+  gradientFrom: string;
+  gradientTo: string;
+  hoverGradientFrom: string;
+  hoverGradientTo: string;
+}> = {
+  github: {
+    svg: '<path fill-rule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z" clip-rule="evenodd" />',
+    bgColor: 'bg-gray-800',
+    textColor: 'text-gray-800',
+    gradientFrom: 'from-gray-50',
+    gradientTo: 'to-gray-100',
+    hoverGradientFrom: 'hover:from-gray-100',
+    hoverGradientTo: 'hover:to-gray-200'
+  },
+  linkedin: {
+    svg: '<path fill-rule="evenodd" d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z" clip-rule="evenodd" />',
+    bgColor: 'bg-blue-700',
+    textColor: 'text-blue-700',
+    gradientFrom: 'from-blue-50',
+    gradientTo: 'to-indigo-100',
+    hoverGradientFrom: 'hover:from-blue-100',
+    hoverGradientTo: 'hover:to-indigo-200'
+  },
+  mail: {
+    svg: '<path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z" /><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z" />',
+    bgColor: 'bg-blue-600',
+    textColor: 'text-blue-600',
+    gradientFrom: 'from-blue-50',
+    gradientTo: 'to-blue-100',
+    hoverGradientFrom: 'hover:from-blue-100',
+    hoverGradientTo: 'hover:to-blue-200'
+  }
+};
+---
+
+<section id="contact" class="bg-white/80 backdrop-blur-lg rounded-3xl p-8 shadow-xl">
+  <h3 class="text-2xl font-semibold mb-8 text-center">Me contacter</h3>
+  
+  <div class="max-w-2xl mx-auto">
+    <p class="text-center text-apple-gray-400 mb-8">
+      N'hésitez pas à me contacter pour discuter de projets, d'opportunités ou simplement pour échanger !
+    </p>
+    
+    <div class="space-y-4">
+      {/* Social Links from info.md */}
+      {info.socialLinks.map((link) => {
+        const config = iconConfig[link.icon.toLowerCase()];
+        if (!config) return null;
+        
+        const isExternal = link.url.startsWith('http');
+        const displayUrl = link.url.replace('mailto:', '').replace('https://', '').replace('http://', '');
+        
+        return (
+          <a 
+            href={link.url}
+            target={isExternal ? '_blank' : '_self'}
+            rel={isExternal ? 'noopener noreferrer' : ''}
+            class={`flex items-center gap-4 bg-gradient-to-r ${config.gradientFrom} ${config.gradientTo} ${config.hoverGradientFrom} ${config.hoverGradientTo} rounded-2xl p-6 transition-all duration-300 hover:shadow-lg group`}
+          >
+            <div class={`w-14 h-14 flex items-center justify-center ${config.bgColor} rounded-xl group-hover:scale-110 transition-transform`}>
+              <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true" set:html={config.svg} />
+            </div>
+            <div class="flex-1">
+              <p class="text-sm text-apple-gray-400 mb-1">{link.name}</p>
+              <p class={`text-lg font-medium text-apple-gray-500 group-hover:${config.textColor} transition-colors`}>
+                {displayUrl}
+              </p>
+            </div>
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class={`w-6 h-6 ${config.textColor} group-hover:translate-x-1 transition-transform`}>
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+        );
+      })}
+
+      {/* Localisation */}
+      <div class="flex items-center gap-4 bg-gradient-to-r from-green-50 to-emerald-100 rounded-2xl p-6">
+        <div class="w-14 h-14 flex items-center justify-center bg-green-600 rounded-xl">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-7 h-7 text-white">
+            <path fill-rule="evenodd" d="M11.54 22.351l.07.04.028.016a.76.76 0 00.723 0l.028-.015.071-.041a16.975 16.975 0 001.144-.742 19.58 19.58 0 002.683-2.282c1.944-1.99 3.963-4.98 3.963-8.827a8.25 8.25 0 00-16.5 0c0 3.846 2.02 6.837 3.963 8.827a19.58 19.58 0 002.682 2.282 16.975 16.975 0 001.145.742zM12 13.5a3 3 0 100-6 3 3 0 000 6z" clip-rule="evenodd" />
+          </svg>
+        </div>
+        <div class="flex-1">
+          <p class="text-sm text-apple-gray-400 mb-1">Localisation</p>
+          <p class="text-lg font-medium text-apple-gray-500">
+            {info.location}, France
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

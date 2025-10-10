@@ -1,0 +1,44 @@
+---
+// Projects widget component
+import { getCollection } from 'astro:content';
+
+// Get only featured projects
+const allProjects = await getCollection('projects');
+const featuredProjects = allProjects.filter(project => project.data.featured === true);
+---
+
+<div class="bg-white/80 backdrop-blur-lg rounded-3xl p-6 shadow-xl">
+  <div class="md:flex justify-between items-center mb-6">
+    <h3 class="text-2xl font-semibold text-blue-900">Projets Principaux</h3>
+    <a href="/projects" class="text-blue-600 hover:text-blue-800 transition-colors text-sm">Voir tous les projets</a>
+  </div>
+  <div class="grid gap-6">
+    {featuredProjects.map((project) => (
+      <a
+        href={project.data.githubUrl || '#'}
+        target={project.data.githubUrl ? '_blank' : '_self'}
+        rel={project.data.githubUrl ? 'noopener noreferrer' : ''}
+        class="block bg-gradient-to-br from-blue-50 to-white p-4 sm:p-6 rounded-2xl hover:shadow-lg transition-all duration-300"
+      >
+        <div class="flex flex-col sm:flex-row gap-4 sm:gap-6">
+          <img
+            src={project.data.image}
+            alt={project.data.title}
+            class="w-full sm:w-24 h-48 sm:h-24 rounded-xl object-cover"
+          />
+          <div class="flex-1">
+            <h4 class="text-xl font-medium text-blue-900 mb-2">{project.data.title}</h4>
+            <p class="text-blue-600 mb-3">{project.data.description}</p>
+            <div class="flex flex-wrap gap-2">
+              {project.data.tags.map((tech: string) => (
+                <span class="px-3 py-1 bg-blue-100 text-blue-600 rounded-full text-sm">{tech}</span>
+              ))}
+            </div>
+          </div>
+        </div>
+      </a>
+    ))}
+  </div>
+</div>
+
+

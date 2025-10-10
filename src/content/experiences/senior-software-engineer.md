@@ -1,12 +1,12 @@
 ---
-title: "Ingénieur Logiciel Senior"
-company: "Tech Solutions Inc."
-period: "2021 - Présent"
+title: "Développeur Web (Stage)"
+company: "Bacacier"
+period: "Mai 2023 - Juin 2023"
 description:
-  - "Direction du développement d'applications cloud-native avec architecture microservices"
-  - "Mentorat des développeurs juniors et révisions de code"
-  - "Amélioration des performances du système de 40% grâce à l'optimisation"
-technologies: ["React", "Node.js", "AWS", "Docker"]
+  - "Développement et maintenance d'applications web en PHP et ASP"
+  - "Intégration front-end avec HTML, CSS et JavaScript"
+  - "Collaboration avec l'équipe pour améliorer les outils internes"
+technologies: ["PHP", "ASP", "HTML", "CSS", "JavaScript"]
 ---
 
-Direction du développement d'applications cloud-native avec architecture microservices, mentorat des développeurs juniors et amélioration des performances du système.
+Stage de développement web au sein de Bacacier, avec travail sur des applications PHP et ASP, ainsi que l'intégration front-end.

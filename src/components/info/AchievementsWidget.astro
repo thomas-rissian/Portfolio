@@ -1,0 +1,39 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+const achievements: CollectionEntry<'achievements'>[] = await getCollection('achievements');
+
+// Calculer dynamiquement les valeurs
+const projects = await getCollection('projects');
+const experiences = await getCollection('experiences');
+
+// Map pour remplacer les valeurs calculées
+const calculatedValues: Record<string, string> = {
+  'Projets réalisés': projects.length.toString() + '+',
+  'Expériences pro': experiences.length.toString(),
+};
+
+// Enrichir les achievements avec les valeurs calculées
+const enrichedAchievements = achievements.map(achievement => {
+  const calculatedValue = calculatedValues[achievement.data.label];
+  return {
+    ...achievement,
+    data: {
+      ...achievement.data,
+      number: calculatedValue || achievement.data.number
+    }
+  };
+});
+---
+
+<div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-8 shadow-xl text-white">
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+    {enrichedAchievements.map((achievement) => (
+      <div class="text-center">
+        <span class="text-3xl mb-2 block">{achievement.data.icon}</span>
+        <p class="text-4xl font-bold mb-1">{achievement.data.number}</p>
+        <p class="text-blue-100 text-sm">{achievement.data.label}</p>
+      </div>
+    ))}
+  </div>
+</div>

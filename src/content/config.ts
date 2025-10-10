@@ -30,9 +30,11 @@ const educationSchema = z.object({
 
 const skillSchema = z.object({
   name: z.string(),
-  level: z.enum(['Expert', 'Advanced', 'Intermediate']),
+  level: z.enum(['Expert', 'Advanced', 'Intermediate', 'Avancé', 'Intermédiaire']),
   icon: z.string(),
   category: z.string(),
+  order: z.number().optional(),
+  technologies: z.array(z.string()).optional(),
 });
 
 const testimonialSchema = z.object({
@@ -60,37 +62,11 @@ const personalSchema = z.object({
   })),
 });
 
-// Content collections for each language
-const projectsFr = defineCollection({
-  type: 'content',
-  schema: projectSchema,
+const favoriteSkillsSchema = z.object({
+  favorites: z.array(z.string()),
 });
 
-const projectsEn = defineCollection({
-  type: 'content',
-  schema: projectSchema,
-});
-
-const experiencesFr = defineCollection({
-  type: 'content',
-  schema: experienceSchema,
-});
-
-const experiencesEn = defineCollection({
-  type: 'content',
-  schema: experienceSchema,
-});
-
-const educationFr = defineCollection({
-  type: 'content',
-  schema: educationSchema,
-});
-
-const educationEn = defineCollection({
-  type: 'content',
-  schema: educationSchema,
-});
-
+// Content collections
 const experiences = defineCollection({
   type: 'content',
   schema: experienceSchema,
@@ -101,229 +77,40 @@ const education = defineCollection({
   schema: educationSchema,
 });
 
-const skillsFr = defineCollection({
+const personal = defineCollection({
+  type: 'content',
+  schema: z.union([personalSchema, favoriteSkillsSchema]),
+});
+
+const skills = defineCollection({
   type: 'content',
   schema: skillSchema,
 });
 
-const skillsEn = defineCollection({
+const projects = defineCollection({
   type: 'content',
-  schema: skillSchema,
+  schema: projectSchema,
 });
 
-const testimonialsFr = defineCollection({
-  type: 'content',
-  schema: testimonialSchema,
-});
-
-const testimonialsEn = defineCollection({
-  type: 'content',
-  schema: testimonialSchema,
-});
-
-const achievementsFr = defineCollection({
+const achievements = defineCollection({
   type: 'content',
   schema: achievementSchema,
 });
 
-const achievementsEn = defineCollection({
-  type: 'content',
-  schema: achievementSchema,
-});
-
-const personalFr = defineCollection({
-  type: 'content',
-  schema: personalSchema,
-});
-
-const personalEn = defineCollection({
-  type: 'content',
-  schema: personalSchema,
-});
-
-// Hero content collections
-const heroFr = defineCollection({
+const about = defineCollection({
   type: 'content',
   schema: z.object({
     title: z.string(),
     subtitle: z.string(),
-    description: z.string(),
-    viewMyWork: z.string(),
-    getInTouch: z.string(),
-    giveMeAStar: z.string(),
-  }),
-});
-
-const heroEn = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    subtitle: z.string(),
-    description: z.string(),
-    viewMyWork: z.string(),
-    getInTouch: z.string(),
-    giveMeAStar: z.string(),
-  }),
-});
-
-// Contact content collections
-const contactFr = defineCollection({
-  type: 'content',
-  schema: z.object({
-    getInTouch: z.string(),
-    name: z.string(),
-    email: z.string(),
-    message: z.string(),
-    sendMessage: z.string(),
-    contactInformation: z.string(),
-    officeHours: z.string(),
-    mondayFriday: z.string(),
-  }),
-});
-
-const contactEn = defineCollection({
-  type: 'content',
-  schema: z.object({
-    getInTouch: z.string(),
-    name: z.string(),
-    email: z.string(),
-    message: z.string(),
-    sendMessage: z.string(),
-    contactInformation: z.string(),
-    officeHours: z.string(),
-    mondayFriday: z.string(),
-  }),
-});
-
-// Blog content collections
-const blogFr = defineCollection({
-  type: 'content',
-  schema: z.object({
-    recentPosts: z.string(),
-    viewAllPosts: z.string(),
-    read: z.string(),
-  }),
-});
-
-const blogEn = defineCollection({
-  type: 'content',
-  schema: z.object({
-    recentPosts: z.string(),
-    viewAllPosts: z.string(),
-    read: z.string(),
-  }),
-});
-
-// Skills content collections
-const skillsContentFr = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    seeMore: z.string(),
-  }),
-});
-
-const skillsContentEn = defineCollection({
-  type: 'content',
-  schema: z.object({
-    title: z.string(),
-    seeMore: z.string(),
-  }),
-});
-
-// Info widgets content collections
-const infoFr = defineCollection({
-  type: 'content',
-  schema: z.object({
-    location: z.string(),
-    localTime: z.string(),
-    availability: z.string(),
-    socialMedia: z.string(),
-  }),
-});
-
-const infoEn = defineCollection({
-  type: 'content',
-  schema: z.object({
-    location: z.string(),
-    localTime: z.string(),
-    availability: z.string(),
-    socialMedia: z.string(),
-  }),
-});
-
-// Experience content collections
-const experienceFr = defineCollection({
-  type: 'content',
-  schema: z.object({
-    workExperience: z.string(),
-    education: z.string(),
-    seeMore: z.string(),
-    seeLess: z.string(),
-  }),
-});
-
-const experienceEn = defineCollection({
-  type: 'content',
-  schema: z.object({
-    workExperience: z.string(),
-    education: z.string(),
-    seeMore: z.string(),
-    seeLess: z.string(),
-  }),
-});
-
-// Projects content collections
-const projectsContentFr = defineCollection({
-  type: 'content',
-  schema: z.object({
-    featuredProjects: z.string(),
-    viewAllProjects: z.string(),
-  }),
-});
-
-const projectsContentEn = defineCollection({
-  type: 'content',
-  schema: z.object({
-    featuredProjects: z.string(),
-    viewAllProjects: z.string(),
   }),
 });
 
 export const collections = {
-  // French collections
-  'projects-fr': projectsFr,
-  'experiences-fr': experiencesFr,
-  'education-fr': educationFr,
-  'skills-fr': skillsFr,
-  'testimonials-fr': testimonialsFr,
-  'achievements-fr': achievementsFr,
-  'personal-fr': personalFr,
-  'hero-fr': heroFr,
-  'contact-fr': contactFr,
-  'blog-fr': blogFr,
-  'skills-content-fr': skillsContentFr,
-  'info-fr': infoFr,
-  'experience-fr': experienceFr,
-  'projects-content-fr': projectsContentFr,
-
-  // English collections
-  'projects-en': projectsEn,
-  'experiences-en': experiencesEn,
-  'education-en': educationEn,
-  'skills-en': skillsEn,
-  'testimonials-en': testimonialsEn,
-  'achievements-en': achievementsEn,
-  'personal-en': personalEn,
-  'hero-en': heroEn,
-  'contact-en': contactEn,
-  'blog-en': blogEn,
-  'skills-content-en': skillsContentEn,
-  'info-en': infoEn,
-  'experience-en': experienceEn,
-  'projects-content-en': projectsContentEn,
-
-  // General collections
-  'experiences': experiences,
-  'education': education,
+  experiences,
+  education,
+  personal,
+  skills,
+  projects,
+  achievements,
+  about,
 };

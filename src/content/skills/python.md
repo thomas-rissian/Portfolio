@@ -1,8 +1,9 @@
 ---
 name: "Python"
-level: "Advanced"
+level: "Intermédiaire"
 icon: "🐍"
-category: "Backend"
+category: "Languages"
+order: 23
 ---
 
-Advanced Python developer with data science and web development experience.
+Scripts Python pour automatisation et développement d'applications.

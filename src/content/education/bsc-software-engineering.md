@@ -1,11 +1,10 @@
 ---
-degree: "Licence en Génie Logiciel"
-school: "Université d'État"
-period: "2013 - 2017"
+degree: "Baccalauréat STI2D"
+school: "Lycée Jean Monnet, Yzeure (03)"
+period: "2020 - 2022"
 achievements:
-  - "Liste d'honneur du doyen tous les semestres"
-  - "Direction du Club de Programmation"
-  - "Mémoire de fin d'études sur les systèmes distribués"
+  - "Sciences et Technologies de l'Industrie et du Développement Durable"
+  - "Formation scientifique et technologique"
 ---
 
-Liste d'honneur du doyen tous les semestres, direction du Club de Programmation, mémoire de fin d'études sur les systèmes distribués.
+Formation scientifique et technologique axée sur l'innovation et le développement durable.

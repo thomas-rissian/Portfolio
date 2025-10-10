@@ -1,16 +1,16 @@
 ---
 import Layout from '../layouts/Layout.astro'
 import Hero from '../components/Hero.astro'
-import InfoWidgets from '../components/InfoWidgets.astro'
-import SkillsWidget from '../components/SkillsWidget.astro'
-import ProjectsWidget from '../components/ProjectsWidget.astro'
-import ExperienceWidget from '../components/ExperienceWidget.astro'
-import ContactSection from '../components/ContactSection.astro'
-import AchievementsWidget from '../components/AchievementsWidget.astro'
-import Footer from '../components/Footer.astro'
+import InfoWidgets from '../components/info/InfoWidgets.astro'
+import SkillsWidget from '../components/info/SkillsWidget.astro'
+import ProjectsWidget from '../components/info/ProjectsWidget.astro'
+import ExperienceWidget from '../components/info/ExperienceWidget.astro'
+import ContactSection from '../components/sections/ContactSection.astro'
+import AchievementsWidget from '../components/info/AchievementsWidget.astro'
+import Footer from '../components/layout/Footer.astro'
 ---
 
-<Layout title="Modern Developer Portfolio">
+<Layout title="Portfolio - Thomas RISSIAN">
   <main>
     <Hero />
 
@@ -29,7 +29,7 @@ import Footer from '../components/Footer.astro'
         <div class="space-y-8 mb-8">
           <ExperienceWidget />
         </div>
-        <div class="space-y-8 mb-8">
+        <div class="space-y-8 mb-4">
           <ContactSection />
         </div>
       </div>

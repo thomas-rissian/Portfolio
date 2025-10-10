@@ -7,7 +7,7 @@ socialLinks:
     url: "https://github.com/thomas-rissian"
     icon: "github"
   - name: "LinkedIn"
-    url: "https://linkedin.com"
+    url: "https://www.linkedin.com/in/thomas-rissian"
     icon: "linkedin"
   - name: "Email"
     url: "mailto:thomas.rissian@proton.me"

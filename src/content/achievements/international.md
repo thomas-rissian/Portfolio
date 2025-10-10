@@ -1,7 +1,7 @@
 ---
-icon: "�"
+icon: "🎓"
 number: "Bac+3"
 label: "Niveau d'études"
 ---
 
-Actuellement en formation supérieure en informatique.
+BUT Informatique Graphique en cours à l'IUT Clermont Auvergne.

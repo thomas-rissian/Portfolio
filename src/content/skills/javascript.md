@@ -1,8 +1,9 @@
 ---
 name: "JavaScript"
-level: "Expert"
+level: "Avancé"
 icon: "⚡"
-category: "Frontend"
+category: "Web"
+order: 1
 ---
 
-Expert level JavaScript developer with extensive experience in modern ES6+ features.
+**Langage web fondamental** : Maîtrise de JavaScript moderne (ES6+), programmation asynchrone (async/await), manipulation du DOM. Base de tous mes projets web.

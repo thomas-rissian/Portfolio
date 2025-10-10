@@ -1,0 +1,169 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+
+const allSkills: CollectionEntry<'skills'>[] = await getCollection('skills');
+const sortedAllSkills = allSkills.sort((a, b) => (a.data.order || 999) - (b.data.order || 999));
+
+// Afficher le top 3 des compétences basé sur order
+const displayedSkills = sortedAllSkills
+  .filter(skill => (skill.data.order ?? 999) < 99) // Exclure les compétences masquées (order >= 99)
+  .slice(0, 3); // Prendre les 3 premières
+const skillsByCategory = allSkills.reduce((acc, skill) => {
+  const category = skill.data.category;
+  if (!acc[category]) acc[category] = [];
+  acc[category].push(skill);
+  return acc;
+}, {} as Record<string, CollectionEntry<'skills'>[]>);
+
+const levelColors = {
+  Expert: 'bg-blue-100 text-blue-700',
+  Avancé: 'bg-blue-100 text-blue-700',
+  Advanced: 'bg-green-100 text-green-700',
+  Intermédiaire: 'bg-yellow-100 text-yellow-700',
+  Intermediate: 'bg-yellow-100 text-yellow-700'
+};
+
+// Sort skills by order
+const sortedSkills = allSkills.sort((a, b) => (a.data.order || 999) - (b.data.order || 999));
+
+// Map tech names to SVG logo URLs (using cdnjs or jsdelivr)
+const getTechLogo = (name: string): string => {
+  const logos: Record<string, string> = {
+    'JavaScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
+    'React': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg',
+    'Linux': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg',
+    'Node.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+    'TypeScript': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg',
+    'Python': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+    'Java': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/java/java-original.svg',
+    'C#': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg',
+    'HTML5': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
+    'CSS3': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
+    'Godot': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/godot/godot-original.svg',
+    'Git': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg',
+    'Docker': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg',
+    'PostgreSQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
+    'MySQL': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg',
+    'MongoDB': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg',
+    'Express': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg',
+    'Vue.js': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vuejs/vuejs-original.svg',
+    'Tailwind CSS': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-plain.svg',
+    'Bootstrap': 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg',
+  };
+  return logos[name] || '';
+};
+---
+
+<div class="bg-white/80 backdrop-blur-lg rounded-3xl p-6 shadow-xl">
+  <h3 class="text-2xl font-semibold mb-6">Technologies principales</h3>
+  <div class="grid grid-cols-1 gap-4">
+    {displayedSkills.map((skill) => (
+      <div class="group hover:scale-[1.02] transition-transform duration-200">
+        <div class="flex items-center justify-between p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl border-2 border-gray-200 hover:border-blue-500 hover:shadow-md transition-all">
+          <div class="flex items-center gap-4">
+            <div class="w-10 h-10 transform group-hover:scale-110 transition-transform">
+              {getTechLogo(skill.data.name) ? (
+                <img src={getTechLogo(skill.data.name)} alt={skill.data.name} class="w-full h-full object-contain" />
+              ) : (
+                <span class="text-4xl">{skill.data.icon}</span>
+              )}
+            </div>
+            <span class="font-bold text-gray-900 text-xl">{skill.data.name}</span>
+          </div>
+          <span class={`px-3 py-1 rounded-full text-sm font-medium ${levelColors[skill.data.level as keyof typeof levelColors]}`}>
+            {skill.data.level}
+          </span>
+        </div>
+      </div>
+    ))}
+  </div>
+  
+  {allSkills.length > 3 && (
+    <div class="mt-6 text-center">
+      <button 
+        id="skills-more-btn"
+        class="px-6 py-2 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors text-sm font-medium shadow-sm hover:shadow-md"
+      >
+        {t.skills.seeMore} →
+      </button>
+    </div>
+  )}
+</div>
+
+<!-- Skills Modal -->
+<div id="skills-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden z-50 flex items-center justify-center p-4">
+  <div class="bg-white rounded-3xl p-8 shadow-xl max-w-7xl w-full max-h-[90vh] overflow-hidden">
+    <div class="flex justify-between items-center mb-8">
+      <h3 class="text-3xl font-semibold">Toutes mes compétences</h3>
+      <button id="skills-close-btn" class="text-gray-500 hover:text-gray-700 text-4xl leading-none h-12 w-12 flex items-center justify-center hover:bg-gray-100 rounded-full transition-colors">×</button>
+    </div>
+    <div class="overflow-y-auto max-h-[calc(90vh-120px)]">
+      <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+        {Object.entries(skillsByCategory).map(([category, skills]) => (
+          <div class="bg-gradient-to-br from-blue-50 to-white rounded-2xl p-6 shadow-sm border border-blue-100">
+            <h4 class="text-xl font-semibold text-gray-900 mb-6 flex items-center">
+              <span class="w-10 h-10 bg-blue-100 text-blue-600 rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                {category === 'Frontend' ? '🎨' : category === 'Backend' ? '⚙️' : '🛠️'}
+              </span>
+              {category}
+              <span class="ml-auto text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded-full">
+                {skills.length} compétences
+              </span>
+            </h4>
+            <div class="grid grid-cols-1 gap-3">
+              {skills.map((skill) => (
+                <div class="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow">
+                  <div class="flex items-center gap-3">
+                    <div class="w-6 h-6">
+                      {getTechLogo(skill.data.name) ? (
+                        <img src={getTechLogo(skill.data.name)} alt={skill.data.name} class="w-full h-full object-contain" />
+                      ) : (
+                        <span class="text-xl">{skill.data.icon}</span>
+                      )}
+                    </div>
+                    <span class="font-medium text-gray-700">{skill.data.name}</span>
+                  </div>
+                  <span class={`px-3 py-1 rounded-full text-sm font-medium ${levelColors[skill.data.level as keyof typeof levelColors]}`}>
+                    {skill.data.level}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const modal = document.getElementById('skills-modal') as HTMLElement;
+    const openBtn = document.getElementById('skills-more-btn') as HTMLElement;
+    const closeBtn = document.getElementById('skills-close-btn') as HTMLElement;
+
+    if (openBtn && modal && closeBtn) {
+      openBtn.addEventListener('click', () => {
+        modal.classList.remove('hidden');
+      });
+
+      closeBtn.addEventListener('click', () => {
+        modal.classList.add('hidden');
+      });
+
+      // Close modal when clicking outside
+      modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+          modal.classList.add('hidden');
+        }
+      });
+
+      // Close modal with Escape key
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+          modal.classList.add('hidden');
+        }
+      });
+    }
+  });
+</script>

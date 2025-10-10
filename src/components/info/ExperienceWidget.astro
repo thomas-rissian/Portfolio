@@ -1,0 +1,180 @@
+---
+// Experience widget component
+import { getCollection } from 'astro:content';
+
+// Load experiences and education from content collections
+const experiencesData = await getCollection('experiences');
+const educationData = await getCollection('education');
+
+// Helper function to convert period string to timestamp for sorting
+const getDateFromPeriod = (period: string): number => {
+  // Map French months to numbers
+  const monthMap: { [key: string]: number } = {
+    'janvier': 0, 'février': 1, 'mars': 2, 'avril': 3, 'mai': 4, 'juin': 5,
+    'juillet': 6, 'août': 7, 'septembre': 8, 'octobre': 9, 'novembre': 10, 'décembre': 11
+  };
+  
+  // Try to extract month and year from patterns like "Mai 2023", "Juillet 2023", etc.
+  const monthYearMatch = period.match(/(\w+)\s+(\d{4})/i);
+  if (monthYearMatch) {
+    const month = monthYearMatch[1].toLowerCase();
+    const year = parseInt(monthYearMatch[2]);
+    const monthNum = monthMap[month] !== undefined ? monthMap[month] : 0;
+    return new Date(year, monthNum).getTime();
+  }
+  
+  // Fallback: extract just the year from strings like "2024 - 2026"
+  const yearMatch = period.match(/(\d{4})/g);
+  if (yearMatch && yearMatch.length > 0) {
+    return new Date(parseInt(yearMatch[yearMatch.length - 1]), 0).getTime();
+  }
+  
+  return 0;
+};
+
+// Sort by most recent first (descending order)
+const sortedExperiences = experiencesData.sort((a, b) => {
+  const dateA = getDateFromPeriod(a.data.period);
+  const dateB = getDateFromPeriod(b.data.period);
+  return dateB - dateA; // Descending order
+});
+
+const sortedEducation = educationData.sort((a, b) => {
+  const dateA = getDateFromPeriod(a.data.period);
+  const dateB = getDateFromPeriod(b.data.period);
+  return dateB - dateA; // Descending order
+});
+---
+
+<!-- Work Experience Section -->
+<div class="bg-white/80 backdrop-blur-lg rounded-3xl p-6 shadow-xl mb-8">
+  <h3 class="text-2xl font-semibold mb-6" id="work-experience-title">Expérience Professionnelle</h3>
+  <div class="space-y-6" id="experiences-container">
+    {sortedExperiences.map((exp, index) => (
+      <div class={`border-l-2 border-blue-500 pl-4 pb-6 experience-item ${index >= 2 ? 'hidden' : ''}`}>
+        <div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-4">
+          <div>
+            <h4 class="text-xl font-medium text-apple-gray-500">{exp.data.title}</h4>
+            <p class="text-apple-gray-400">{exp.data.company}</p>
+          </div>
+          <span class="text-sm text-apple-gray-300 bg-apple-gray-100 px-3 py-1 rounded-full whitespace-nowrap">
+            {exp.data.period}
+          </span>
+        </div>
+        <ul class="list-disc list-inside text-apple-gray-400 mb-3 space-y-1">
+          {exp.data.description.map((item) => (
+            <li>{item}</li>
+          ))}
+        </ul>
+        <div class="flex flex-wrap gap-2">
+          {exp.data.technologies.map((tech) => (
+            <span class="px-3 py-1 bg-blue-50 text-blue-600 rounded-full text-sm">{tech}</span>
+          ))}
+        </div>
+      </div>
+    ))}
+  </div>
+  {sortedExperiences.length > 2 && (
+    <button 
+      id="toggle-experiences-btn"
+      class="mt-4 text-blue-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-2"
+    >
+      <span id="toggle-experiences-text">Voir plus</span>
+      <svg class="w-5 h-5 transition-transform" id="toggle-experiences-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+  )}
+</div>
+
+<!-- Education Section -->
+<div class="bg-white/80 backdrop-blur-lg rounded-3xl p-6 shadow-xl">
+  <h3 class="text-2xl font-semibold mb-6" id="education-title">Formation</h3>
+  <div class="space-y-6" id="education-container">
+    {sortedEducation.map((edu, index) => (
+      <div class={`border-l-2 border-blue-500 pl-4 pb-6 education-item ${index >= 2 ? 'hidden' : ''}`}>
+        <div class="flex flex-col sm:flex-row justify-between items-start gap-2 mb-4">
+          <div>
+            <h4 class="text-xl font-medium text-apple-gray-500">{edu.data.degree}</h4>
+            <p class="text-apple-gray-400">{edu.data.school}</p>
+          </div>
+          <span class="text-sm text-apple-gray-300 bg-apple-gray-100 px-3 py-1 rounded-full whitespace-nowrap">
+            {edu.data.period}
+          </span>
+        </div>
+        <ul class="list-disc list-inside text-apple-gray-400 space-y-1">
+          {edu.data.achievements.map((achievement) => (
+            <li>{achievement}</li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+  {sortedEducation.length > 2 && (
+    <button 
+      id="toggle-education-btn"
+      class="mt-4 text-blue-600 hover:text-blue-700 font-medium transition-colors flex items-center gap-2"
+    >
+      <span id="toggle-education-text">Voir plus</span>
+      <svg class="w-5 h-5 transition-transform" id="toggle-education-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+      </svg>
+    </button>
+  )}
+</div>
+
+<script>
+  // Toggle experiences visibility
+  let experiencesExpanded = false;
+  const toggleExperiencesBtn = document.getElementById('toggle-experiences-btn');
+  const experienceItems = document.querySelectorAll('.experience-item');
+  const toggleExperiencesText = document.getElementById('toggle-experiences-text');
+  const toggleExperiencesIcon = document.getElementById('toggle-experiences-icon');
+
+  if (toggleExperiencesBtn) {
+    toggleExperiencesBtn.addEventListener('click', () => {
+      experiencesExpanded = !experiencesExpanded;
+      
+      experienceItems.forEach((item, index) => {
+        if (index >= 2) {
+          item.classList.toggle('hidden');
+        }
+      });
+
+      if (experiencesExpanded) {
+        toggleExperiencesText!.textContent = 'Voir moins';
+        toggleExperiencesIcon!.style.transform = 'rotate(180deg)';
+      } else {
+        toggleExperiencesText!.textContent = 'Voir plus';
+        toggleExperiencesIcon!.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+
+  // Toggle education visibility
+  let educationExpanded = false;
+  const toggleEducationBtn = document.getElementById('toggle-education-btn');
+  const educationItems = document.querySelectorAll('.education-item');
+  const toggleEducationText = document.getElementById('toggle-education-text');
+  const toggleEducationIcon = document.getElementById('toggle-education-icon');
+
+  if (toggleEducationBtn) {
+    toggleEducationBtn.addEventListener('click', () => {
+      educationExpanded = !educationExpanded;
+      
+      educationItems.forEach((item, index) => {
+        if (index >= 2) {
+          item.classList.toggle('hidden');
+        }
+      });
+
+      if (educationExpanded) {
+        toggleEducationText!.textContent = 'Voir moins';
+        toggleEducationIcon!.style.transform = 'rotate(180deg)';
+      } else {
+        toggleEducationText!.textContent = 'Voir plus';
+        toggleEducationIcon!.style.transform = 'rotate(0deg)';
+      }
+    });
+  }
+</script>

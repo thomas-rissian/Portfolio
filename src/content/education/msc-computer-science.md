@@ -1,11 +1,11 @@
 ---
-degree: "Master en Informatique"
-school: "Université de Technologie"
-period: "2017 - 2019"
+degree: "BTS Services Informatiques aux Organisations"
+school: "Lycée Albert Londres, Cusset (03)"
+period: "2022 - 2024"
 achievements:
-  - "Spécialisation en Apprentissage Automatique et IA"
-  - "Publication d'un article de recherche sur les Réseaux de Neurones"
-  - "Moyenne: 3.9/4.0"
+  - "Option Solutions Logicielles et Applications Métiers (SLAM)"
+  - "Formation en développement d'applications"
+  - "Stages professionnels en entreprise"
 ---
 
-Spécialisation en Apprentissage Automatique et IA, publication d'un article de recherche sur les Réseaux de Neurones.
+Formation en développement d'applications, spécialisation SLAM (Solutions Logicielles et Applications Métiers), avec plusieurs stages professionnels.

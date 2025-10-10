@@ -1,7 +1,7 @@
 ---
 icon: "💼"
-number: "2"
+number: "0"
 label: "Expériences pro"
 ---
 
-Expériences professionnelles enrichissantes dans le développement web.
+Stages en développement web et support technique (calculé automatiquement).

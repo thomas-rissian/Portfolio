@@ -1,8 +1,9 @@
 ---
 name: "Node.js"
-level: "Advanced"
+level: "Avancé"
 icon: "🟢"
-category: "Backend"
+category: "Web"
+order: 4
 ---
 
-Advanced Node.js developer with Express, APIs, and server-side applications.
+**Runtime JavaScript serveur** : Développement d'API REST robustes avec Express.js, gestion asynchrone, middleware personnalisés. Intégration avec bases de données SQL et NoSQL via Prisma et Mongoose.
