@@ -2,6 +2,16 @@
 // PROJECT MODAL - Centralized Logic
 // ===================================
 
+// Helper to add base path to URLs
+const BASE_PATH = import.meta.env.BASE_URL || '/';
+
+function withBase(path: string): string {
+  if (!BASE_PATH || BASE_PATH === '/') return path;
+  const normalizedBase = BASE_PATH.endsWith('/') ? BASE_PATH.slice(0, -1) : BASE_PATH;
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${normalizedBase}${normalizedPath}`;
+}
+
 export interface ProjectData {
   data: {
     id: number;
@@ -38,7 +48,7 @@ export function openProjectModal(project: ProjectData): void {
     return;
   }
 
-  const images = project.data.images || [project.data.image];
+  const images = (project.data.images || [project.data.image]).map(img => withBase(img));
 
   // Build modal HTML with clean GitLab-style design
   content.innerHTML = `
@@ -221,7 +231,7 @@ function setupImageNavigation(images: string[]): void {
 function setupImageZoom(): void {
   if (!currentProject) return;
   
-  const images = currentProject.data.images || [currentProject.data.image];
+  const images = (currentProject.data.images || [currentProject.data.image]).map(img => withBase(img));
   const imageContainer = document.getElementById('image-container');
   const zoomModal = document.getElementById('image-zoom-modal');
   const zoomedImage = document.getElementById('zoomed-image') as HTMLImageElement;

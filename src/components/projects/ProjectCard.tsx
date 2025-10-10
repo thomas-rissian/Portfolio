@@ -3,15 +3,24 @@ import type { CollectionEntry } from 'astro:content';
 
 interface ProjectCardProps {
   project: CollectionEntry<'projects'>;
+  basePath?: string;
 }
 
-export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
+// Helper to add base path to URLs
+const withBase = (path: string, base: string = '') => {
+  if (!base || base === '/') return path;
+  const normalizedBase = base.endsWith('/') ? base.slice(0, -1) : base;
+  const normalizedPath = path.startsWith('/') ? path : `/${path}`;
+  return `${normalizedBase}${normalizedPath}`;
+};
+
+export const ProjectCard: React.FC<ProjectCardProps> = ({ project, basePath = '' }) => {
   return (
     <div className="bg-white/80 backdrop-blur-lg rounded-2xl overflow-hidden shadow-lg hover:shadow-xl transition-all duration-300">
       {/* Project Image */}
       <div className="relative h-48 overflow-hidden">
         <img
-          src={project.data.image}
+          src={withBase(project.data.image, basePath)}
           alt={project.data.title}
           className="w-full h-full object-cover"
         />
@@ -61,7 +70,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project }) => {
               } else {
                 // Navigate to projects page and open modal
                 sessionStorage.setItem('openProjectId', project.data.id.toString());
-                window.location.href = '/projects';
+                window.location.href = withBase('/projects', basePath);
               }
             }}
             className="flex-1 text-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium text-sm"

@@ -1,4 +1,5 @@
 ---
+import { routes } from '../../lib/utils';
 const currentYear = new Date().getFullYear();
 ---
 
@@ -19,17 +20,17 @@ const currentYear = new Date().getFullYear();
         <h3 class="text-xl font-semibold mb-4">Liens rapides</h3>
         <ul class="space-y-2 text-sm">
           <li>
-            <a href="/projects" class="text-gray-400 hover:text-white transition-colors">
+            <a href={routes.projects} class="text-gray-400 hover:text-white transition-colors">
               Projets
             </a>
           </li>
           <li>
-            <a href="/a-propos" class="text-gray-400 hover:text-white transition-colors">
+            <a href={routes.about} class="text-gray-400 hover:text-white transition-colors">
               À propos
             </a>
           </li>
           <li>
-            <a href="/#contact" class="text-gray-400 hover:text-white transition-colors">
+            <a href={routes.contact} class="text-gray-400 hover:text-white transition-colors">
               Contact
             </a>
           </li>
