@@ -105,6 +105,14 @@ const about = defineCollection({
   }),
 });
 
+const hero = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    role: z.string(),
+  }),
+});
+
 export const collections = {
   experiences,
   education,
@@ -113,4 +121,5 @@ export const collections = {
   projects,
   achievements,
   about,
+  hero,
 };

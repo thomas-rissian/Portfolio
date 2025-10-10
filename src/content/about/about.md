@@ -5,23 +5,22 @@ subtitle: "Technicien Supérieur en Informatique • BUT Informatique Graphique"
 
 ## Qui suis-je ?
 
-Je suis **Thomas Rissian**, technicien supérieur en informatique en **BUT Informatique parcours Graphique** au Puy-en-Velay.
+Je suis **Thomas Rissian**, technicien supérieur en informatique en 3ème année de **BUT Informatique Graphique** au Puy-en-Velay.
 
-Passionné par le développement logiciel depuis le collège, j'ai développé une expertise en développement full-stack avec une spécialisation en **React**, **Node.js** et **TypeScript**.
+Passionné par le développement logiciel depuis le collège, j'ai développé une expertise en développement web full-stack avec une spécialisation en **React**, **Node.js** et **TypeScript**.
 
 ## Mon Projet Professionnel
 
 ### Objectif de formation
 
-Obtenir mon **BUT Informatique parcours Graphique** et acquérir une expertise complète en développement d'applications modernes.
+Obtenir mon **BUT Informatique Graphique** et poursuivre vers un **Master Informatique Développement Logiciel**.
 
 ### Métier visé
 
-**Développeur Full-Stack** dans une entreprise innovante
+**Développeur Full-Stack** dans une petite ou moyenne entreprise
 
 - Applications performantes
 - Fort impact utilisateur
-- Équipes pluridisciplinaires
 
 ### Vision à long terme
 
@@ -33,7 +32,7 @@ Obtenir mon **BUT Informatique parcours Graphique** et acquérir une expertise c
 
 Expertise en applications web modernes avec **React + Node.js** et **PHP/Symfony**.
 
-**Projets :** SoundStage, Biblio (Michelin), ForeignGineer
+**Projets :** SoundStage, Biblio (Michelin)
 
 ### Bases de données
 
@@ -43,10 +42,17 @@ Expertise en applications web modernes avec **React + Node.js** et **PHP/Symfony
 - Optimisation SQL
 - Migration de schémas
 
+**Projets :** SoundStage, Biblio (Michelin)
+
 ### Système & DevOps
 
-**Linux** quotidien, **Docker**, scripts shell, CI/CD et déploiement continu
+Utilisateur de **Linux** au quotidien __#fedora__, maitrise et utilisation courrante de **Docker**,
+et utilisation de CI/CD et déploiement continu sur gitlab.
+
+**Expérience :** Michelin 
 
 ### Méthodologie
 
-Tests (**Jest, PHPUnit**), principes SOLID, Git en équipe, méthodes agiles (Scrum)
+mise en pratique de Tests (**Jest, PHPUnit**) unitaires et d'intégration, principes SOLID, Git en équipe, méthodes agiles (Scrum)
+
+**Projets :** SoundStage, Biblio (Michelin)

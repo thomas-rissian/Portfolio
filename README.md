@@ -1,121 +1,115 @@
-# Apple-Style Portfolio Template
+# Portfolio Thomas RISSIAN
 
-[English](README.md) | [简体中文](README.zh-CN.md)
+Portfolio personnel développé avec Astro et inspiré du design minimaliste d'Apple.
 
-A modern, minimalist portfolio template built with Astro and designed with Apple's design aesthetic in mind.
+Ce projet est basé sur le template [Apple-Style Portfolio](https://astro.build/themes/details/apple-inspired-portfolio/) créé par [larry-xue](https://github.com/larry-xue/apple-style-portfolio).
 
-live demo: [apple-style-portfolio](https://apple-style-portfolio.larryxue.dev/)
+## ✨ Fonctionnalités
 
-If you find this project helpful, please consider giving it a star ⭐️.
+- 🍎 Design inspiré d'Apple, minimaliste et élégant
+- ⚡️ Performances optimales avec Astro
+- 🎨 Styling avec Tailwind CSS
+- 📱 Design responsive
+- 🎬 Éléments 3D avec Three.js
+- 📝 Contenu éditable en Markdown
+- ⚛️ Composants React intégrés
 
-## Features
+## 📋 Table des matières
 
-- 🍎 Apple-style design aesthetic
-- ⚡️ Built with Astro for optimal performance
-- 🎨 Tailwind CSS for styling
-- 🌟 GSAP animations
-- 📱 Fully responsive design
-- 🎬 Three.js integration for 3D elements
-- ⚛️ React components integration
+- [Installation](#installation)
+- [Développement](#développement)
+- [Déploiement GitHub Pages](#déploiement-github-pages)
+- [Stack technique](#stack-technique)
 
-## Table of Contents
+## 🚀 Installation
 
-- [Getting Started](#getting-started)
-  - [Prerequisites](#prerequisites)
-  - [Installation](#installation)
-  - [Development](#development)
-  - [Building for Production](#building-for-production)
-- [Deployment](#deployment)
-  - [Deploy with Vercel](#deploy-with-vercel)
-  - [Deploy with Cloudflare Pages](#deploy-with-cloudflare-pages)
-- [Tech Stack](#tech-stack)
-- [License](#license)
+### Prérequis
 
-## Getting Started
+- Node.js (v20 ou supérieur)
+- npm ou yarn
 
-### Prerequisites
+### Installation locale
 
-- Node.js (v20 or higher)
-
-### Installation
-
-1. Clone the repository:
+1. Cloner le repository :
 
 ```bash
-# Clone the repository
-git clone https://github.com/larry-xue/apple-style-portfolio
-cd apple-style-portfolio
-
-# Or use astro create
-npm create astro@latest -- --template larry-xue/apple-style-portfolio
+git clone https://github.com/VOTRE-USERNAME/portfolio.git
+cd portfolio
 ```
 
-2. Install dependencies:
+2. Installer les dépendances :
 
 ```bash
 npm install
 ```
 
-### Development
+## 💻 Développement
 
-To start the development server:
+Pour démarrer le serveur de développement :
 
 ```bash
 npm run dev
 ```
 
-The site will be available at `http://localhost:4321`
+Le site sera accessible à l'adresse `http://localhost:4321`
 
-### Building for Production
-
-To create a production build:
+Pour créer un build de production :
 
 ```bash
 npm run build
 ```
 
-To preview the production build:
+Pour prévisualiser le build de production :
 
 ```bash
 npm run preview
 ```
 
-## Deployment
+## 🌐 Déploiement GitHub Pages
 
-### Deploy with Vercel
+Ce projet est configuré pour être déployé automatiquement sur GitHub Pages.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/larry-xue/apple-style-portfolio)
+### Configuration initiale
 
-1. Fork this repository
-2. Connect to Vercel using your GitHub account
-3. Select the forked repository
-4. Vercel will automatically detect Astro and configure the build settings
-5. Click "Deploy"
+1. Dans `astro.config.mjs`, remplacer `USERNAME` par votre nom d'utilisateur GitHub :
 
-### Deploy with Cloudflare Pages
+```javascript
+export default defineConfig({
+  site: 'https://USERNAME.github.io',
+  // Si le repo n'est pas USERNAME.github.io, décommenter et adapter :
+  // base: '/nom-du-repo',
+});
+```
 
-[![Deploy to Cloudflare Pages](https://img.shields.io/badge/Deploy%20to-Cloudflare%20Pages-orange.svg?logo=cloudflare)](https://dash.cloudflare.com/sign-up)
+2. Sur GitHub, aller dans **Settings** > **Pages** > **Source** et sélectionner **GitHub Actions**
 
-1. Fork this repository
-2. Log in to the Cloudflare dashboard
-3. Select "Pages" from the sidebar
-4. Create a new project and connect your GitHub repository
-5. Configure the build settings:
-   - Build command: `npm run build`
-   - Build output directory: `dist`
-   - Node.js version: 20.x
-6. Click "Save and Deploy"
+### Déploiement automatique
 
-## Tech Stack
+À chaque push sur la branche `main`, le workflow GitHub Actions :
+- ✅ Construit le projet Astro
+- ✅ Déploie automatiquement sur GitHub Pages
+- ✅ Rend le site accessible à l'URL configurée
 
-- [Astro](https://astro.build)
-- [React](https://reactjs.org)
-- [Tailwind CSS](https://tailwindcss.com)
-- [GSAP](https://greensock.com/gsap)
-- [Three.js](https://threejs.org)
-- [Inter Font](https://rsms.me/inter)
-- [Source Sans Pro](https://fonts.google.com/specimen/Source+Sans+Pro)
+Pour déployer manuellement, aller dans l'onglet **Actions** et lancer le workflow "Deploy to GitHub Pages".
 
-## License
+## 🛠️ Stack technique
 
-MIT License
+- [Astro](https://astro.build) - Framework web statique
+- [React](https://reactjs.org) - Composants interactifs
+- [Tailwind CSS](https://tailwindcss.com) - Framework CSS utilitaire
+- [Three.js](https://threejs.org) - Scènes 3D
+- [TypeScript](https://www.typescriptlang.org/) - Typage statique
+
+## 📝 Structure du contenu
+
+Les contenus éditables se trouvent dans `src/content/` :
+
+- `hero/` - Contenu de la page d'accueil
+- `about/` - Page À propos
+- `projects/` - Projets
+- `skills/` - Compétences
+- `experiences/` - Expériences professionnelles
+
+## 📄 Crédits
+
+Template original : [Apple-Style Portfolio](https://astro.build/themes/details/apple-inspired-portfolio/) par [larry-xue](https://github.com/larry-xue)

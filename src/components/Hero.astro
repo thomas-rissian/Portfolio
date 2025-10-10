@@ -1,6 +1,11 @@
 ---
 import Scene3D from './scene/Scene3D';
 import { personal } from '../config/personal';
+import { getCollection } from 'astro:content';
+
+const heroData = await getCollection('hero');
+const hero = heroData[0];
+const { Content } = await hero.render();
 ---
 
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -18,12 +23,12 @@ import { personal } from '../config/personal';
             class="w-full h-full object-cover"
           />
         </div>
-        <h1 class="text-5xl md:text-6xl font-bold mb-4">Bonjour, je suis <strong class="text-blue-600">Thomas RISSIAN</strong></h1>
-        <h2 class="text-2xl md:text-3xl text-apple-gray-400 mb-6">Technicien Supérieur en Informatique</h2>
+        <h1 class="text-5xl md:text-6xl font-bold mb-4" set:html={hero.data.title}></h1>
+        <h2 class="text-2xl md:text-3xl text-apple-gray-400 mb-6">{hero.data.role}</h2>
       </div>
-      <p class="text-lg md:text-xl text-apple-gray-500 mb-8 animate-slide-up max-w-3xl mx-auto">
-        Bienvenue sur mon portfolio ! Je suis passionné par le développement logiciel, la programmation, et les technologies web. Depuis mes débuts au collège, j'explore les possibilités infinies du code pour créer des projets concrets, utiles et élégants.
-      </p>
+      <div class="text-lg md:text-xl text-apple-gray-500 mb-8 animate-slide-up max-w-3xl mx-auto hero-content">
+        <Content />
+      </div>
       <div class="flex flex-wrap gap-4 justify-center animate-slide-up" style="animation-delay: 200ms;">
         <a href="/a-propos" class="border border-apple-gray-500 px-6 py-3 rounded-full hover:bg-apple-gray-100 transition-colors">
           À propos
@@ -99,3 +104,29 @@ import { personal } from '../config/personal';
     });
   }
 </script>
+
+<style>
+  /* Style pour le contenu markdown du hero */
+  .hero-content :global(p) {
+    margin: 0;
+  }
+  
+  .hero-content :global(strong) {
+    font-weight: 600;
+    color: #2563eb;
+  }
+
+  .hero-content :global(em) {
+    font-style: italic;
+  }
+
+  .hero-content :global(a) {
+    color: #2563eb;
+    text-decoration: underline;
+    transition: color 0.2s;
+  }
+
+  .hero-content :global(a:hover) {
+    color: #1d4ed8;
+  }
+</style>
