@@ -54,7 +54,7 @@ const allTags = [...new Set(projects.flatMap((project) => project.data.tags))].s
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="projectsGrid">
         {projects.map((project) => (
           <div class="project-wrapper">
-            <ProjectCard client:idle project={project} basePath={import.meta.env.BASE_URL} />
+            <ProjectCard client:load project={project} basePath={import.meta.env.BASE_URL} />
           </div>
         ))}
       </div>
@@ -106,20 +106,24 @@ const allTags = [...new Set(projects.flatMap((project) => project.data.tags))].s
     tags: string[]
   }
 
-  // Load and expose projects data
+  // Load and expose projects data IMMEDIATELY
   const projectsDataScript = document.getElementById('projects-data');
   let allProjectsData: any[] = [];
   
   try {
     allProjectsData = JSON.parse(projectsDataScript?.textContent || '[]');
     (window as any).allProjectsData = allProjectsData;
+    // Expose function IMMEDIATELY - not in DOMContentLoaded
     (window as any).openProjectModal = openProjectModal;
+    console.log('✅ openProjectModal available globally', typeof openProjectModal);
+    console.log('📍 Current path:', window.location.pathname);
   } catch (error) {
-    console.error('Error loading projects:', error);
+    console.error('❌ Error loading projects:', error);
   }
 
   // Filter functionality
   document.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 DOM Content Loaded - Setting up filters');
     const searchInput = document.getElementById('search') as HTMLInputElement;
     const tagCheckboxes = document.querySelectorAll('.tag-checkbox') as NodeListOf<HTMLInputElement>;
     const projectsGrid = document.getElementById('projectsGrid');
