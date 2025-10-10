@@ -1,20 +1,19 @@
 ---
-import '@fontsource-variable/inter';
-import '@fontsource/source-sans-pro';
+import { LanguageSwitcher } from '../i18n';
 
 interface Props {
   title: string;
   description?: string;
 }
 
-const { 
-  title, 
-  description = "A modern personal website template for software developers"
+const {
+  title,
+  description = "Portfolio moderne pour développeurs logiciels"
 } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="en">
+<html lang="fr">
   <head>
     <meta charset="UTF-8" />
     <meta name="description" content={description} />
@@ -33,7 +32,7 @@ const {
     --accent: rgb(0, 122, 255);
     --accent-dark: rgb(0, 64, 221);
   }
-  
+
   html {
     font-family: 'SF Pro Display', 'Inter Variable', system-ui, sans-serif;
     scroll-behavior: smooth;

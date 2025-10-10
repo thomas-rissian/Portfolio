@@ -1,41 +1,16 @@
 ---
-interface Achievement {
-  icon: string;
-  number: string;
-  label: string;
-}
+import { getCollection, type CollectionEntry } from 'astro:content';
 
-const achievements: Achievement[] = [
-  {
-    icon: "🚀",
-    number: "50+",
-    label: "Projects Completed"
-  },
-  {
-    icon: "👥",
-    number: "30+",
-    label: "Happy Clients"
-  },
-  {
-    icon: "⭐",
-    number: "100+",
-    label: "GitHub Stars"
-  },
-  {
-    icon: "📚",
-    number: "15+",
-    label: "Tech Articles"
-  }
-];
+const achievements: CollectionEntry<'achievements'>[] = await getCollection('achievements');
 ---
 
 <div class="bg-gradient-to-r from-blue-600 to-blue-800 rounded-3xl p-8 shadow-xl text-white">
   <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
     {achievements.map((achievement) => (
       <div class="text-center">
-        <span class="text-3xl mb-2 block">{achievement.icon}</span>
-        <p class="text-4xl font-bold mb-1">{achievement.number}</p>
-        <p class="text-blue-100 text-sm">{achievement.label}</p>
+        <span class="text-3xl mb-2 block">{achievement.data.icon}</span>
+        <p class="text-4xl font-bold mb-1">{achievement.data.number}</p>
+        <p class="text-blue-100 text-sm">{achievement.data.label}</p>
       </div>
     ))}
   </div>

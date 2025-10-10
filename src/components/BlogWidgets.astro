@@ -1,4 +1,6 @@
 ---
+import { getTranslation } from '../i18n';
+
 interface BlogPost {
   title: string;
   excerpt: string;
@@ -23,12 +25,14 @@ const recentPosts: BlogPost[] = [
     category: "AI"
   }
 ];
+
+const t = getTranslation();
 ---
 
 <div class="bg-white/80 backdrop-blur-lg rounded-3xl p-6 shadow-xl">
   <div class="md:flex justify-between items-center mb-6">
-    <h3 class="text-2xl font-semibold text-blue-900">Recent Blog Posts</h3>
-    <a href="/blog" class="text-blue-600 hover:text-blue-800 transition-colors text-sm">View all posts →</a>
+    <h3 class="text-2xl font-semibold text-blue-900">{t.blog.recentPosts}</h3>
+    <a href="/blog" class="text-blue-600 hover:text-blue-800 transition-colors text-sm">{t.blog.viewAllPosts} →</a>
   </div>
   <div class="space-y-6">
     {recentPosts.map((post) => (
@@ -41,7 +45,7 @@ const recentPosts: BlogPost[] = [
             <div class="flex items-center gap-2 text-blue-400 text-sm">
               <span>{post.date}</span>
               <span>•</span>
-              <span>{post.readTime} read</span>
+              <span>{post.readTime} {t.blog.read}</span>
             </div>
           </div>
           <h4 class="text-lg font-medium text-blue-900 mb-2 group-hover:text-blue-600 transition-colors">

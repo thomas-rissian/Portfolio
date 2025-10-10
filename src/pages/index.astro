@@ -6,9 +6,8 @@ import SkillsWidget from '../components/SkillsWidget.astro'
 import ProjectsWidget from '../components/ProjectsWidget.astro'
 import ExperienceWidget from '../components/ExperienceWidget.astro'
 import ContactSection from '../components/ContactSection.astro'
-import BlogWidgets from '../components/BlogWidgets.astro'
 import AchievementsWidget from '../components/AchievementsWidget.astro'
-import TestimonialsWidget from '../components/TestimonialsWidget.astro'
+import Footer from '../components/Footer.astro'
 ---
 
 <Layout title="Modern Developer Portfolio">
@@ -31,17 +30,13 @@ import TestimonialsWidget from '../components/TestimonialsWidget.astro'
           <ExperienceWidget />
         </div>
         <div class="space-y-8 mb-8">
-          <BlogWidgets />
-        </div>
-        <div class="space-y-8 mb-8">
-          <TestimonialsWidget />
-        </div>
-        <div class="space-y-8 mb-8">
           <ContactSection />
         </div>
       </div>
     </section>
   </main>
+  
+  <Footer />
 </Layout>
 
 <script>
