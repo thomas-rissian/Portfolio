@@ -1,5 +1,8 @@
 /**
  * Helper pour gérer les URLs avec le base path configuré dans astro.config.mjs
+ * 
+ * IMPORTANT : Astro NE préfixe PAS automatiquement les fichiers du dossier public/
+ * Il faut donc utiliser withBase() pour TOUTES les ressources (images, CV, favicon, etc.)
  */
 
 // Récupère le base path depuis import.meta.env
@@ -9,6 +12,10 @@ const base = import.meta.env.BASE_URL || '/';
  * Ajoute le base path à une URL
  * @param path - Le chemin relatif (doit commencer par /)
  * @returns Le chemin complet avec le base path
+ * 
+ * @example
+ * withBase('/profile.jpg') // => '/Portfolio/profile.jpg' en production
+ * withBase('/cv.pdf')      // => '/Portfolio/cv.pdf' en production
  */
 export function withBase(path: string): string {
   // Évite les doubles slashes
@@ -16,6 +23,13 @@ export function withBase(path: string): string {
   const normalizedPath = path.startsWith('/') ? path : `/${path}`;
   
   return `${normalizedBase}${normalizedPath}`;
+}
+
+/**
+ * Retourne le base path actuel
+ */
+export function getBasePath(): string {
+  return base;
 }
 
 /**

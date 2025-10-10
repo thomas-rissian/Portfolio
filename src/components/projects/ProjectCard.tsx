@@ -61,8 +61,11 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, basePath = ''
         {/* Action Buttons */}
         <div className="flex gap-3">
           <button
-            onClick={() => {
-              if (window.location.pathname === '/projects') {
+            onClick={(e) => {
+              e.preventDefault();
+              const projectsPath = withBase('/projects', basePath);
+              // Check if we're on the projects page (with or without base path)
+              if (window.location.pathname === projectsPath || window.location.pathname.endsWith('/projects')) {
                 // On projects page - open modal directly
                 if (typeof (window as any).openProjectModal === 'function') {
                   (window as any).openProjectModal(project);
@@ -70,7 +73,7 @@ export const ProjectCard: React.FC<ProjectCardProps> = ({ project, basePath = ''
               } else {
                 // Navigate to projects page and open modal
                 sessionStorage.setItem('openProjectId', project.data.id.toString());
-                window.location.href = withBase('/projects', basePath);
+                window.location.href = projectsPath;
               }
             }}
             className="flex-1 text-center px-4 py-2 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition-colors font-medium text-sm"

@@ -8,11 +8,17 @@
 
 ### 2. **Images non chargées**
 - **Problème** : Les images utilisaient des chemins absolus sans le base path
+- **Raison** : Astro NE préfixe PAS automatiquement les fichiers du dossier `public/`
 - **Solution** : Utilisation de `withBase()` pour toutes les images dans :
   - `ProjectCard.tsx`
   - `ProjectsWidget.astro`
   - `projectModal.ts`
   - `Layout.astro` (favicon)
+  - `personal.ts` (avatar)
+
+### 3. **Bouton "Voir détails" recharge la page**
+- **Problème** : Le test `pathname === '/projects'` ne fonctionnait pas avec le base path
+- **Solution** : Ajout de `e.preventDefault()` et test sur `pathname.endsWith('/projects')`
 
 ## 📁 Fichiers modifiés
 
@@ -24,12 +30,16 @@
 - ✅ `src/components/layout/Footer.astro`
 - ✅ `src/components/widgets/ProjectsWidget.astro`
 - ✅ `src/components/info/ProjectsWidget.astro`
-- ✅ `src/components/projects/ProjectCard.tsx`
+- ✅ `src/components/projects/ProjectCard.tsx` (+ fix bouton détails)
 - ✅ `src/layouts/Layout.astro`
 - ✅ `src/pages/index.astro`
 - ✅ `src/pages/a-propos.astro`
 - ✅ `src/pages/projects.astro`
 - ✅ `src/lib/projectModal.ts`
+- ✅ `src/config/personal.ts` (avatar)
+
+### Documentation créée
+- 📄 `ASTRO_BASE_PATH.md` - Explication complète du comportement d'Astro
 
 ## 🚀 Comment ça fonctionne
 
