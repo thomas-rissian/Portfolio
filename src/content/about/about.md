@@ -46,8 +46,8 @@ Expertise en applications web modernes avec **React + Node.js** et **PHP/Symfony
 
 ### Système & DevOps
 
-Utilisateur de **Linux** au quotidien __#fedora__, maitrise et utilisation courrante de **Docker**,
-et utilisation de CI/CD et déploiement continu sur gitlab.
+Utilisateur de **Linux** au quotidien __#fedora__, maitrise et utilisation courante de **Docker**,
+et utilisation de CI/CD sur gitlab.
 
 **Expérience :** Michelin 
 
