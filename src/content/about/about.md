@@ -5,21 +5,23 @@ subtitle: "Technicien Supérieur en Informatique • BUT Informatique Graphique"
 
 ## Qui suis-je ?
 
-Je suis **Thomas Rissian**, technicien supérieur en informatique en 3ème année de **BUT Informatique Graphique** au Puy-en-Velay.
+Je suis **Thomas Rissian**, technicien supérieur en informatique, en 3ème année de **BUT Informatique Graphique** au Puy-en-Velay.
 
 Passionné par le développement logiciel depuis le collège, j'ai développé une expertise en développement web full-stack avec une spécialisation en **React**, **Node.js** et **TypeScript**.
+
+Possédant une maitrise du .Net, j'aimerai m'orienté dans le développement applicatif / web dans ce domaine.
 
 ## Mon Projet Professionnel
 
 ### Objectif de formation
 
-Obtenir mon **BUT Informatique Graphique** et poursuivre vers un **Master Informatique Développement Logiciel**.
+Obtenir mon **BUT Informatique Graphique** et poursuivre vers un **Master en Génie Logiciel et Intégration d’Applications**.
 
 ### Métier visé
 
-**Développeur Full-Stack** dans une petite ou moyenne entreprise
+**Développeur Logiciel** dans une petite ou moyenne entreprise
 
-- Applications performantes
+- Applications performantes C#
 - Fort impact utilisateur
 
 ### Vision à long terme
