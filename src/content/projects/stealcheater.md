@@ -1,5 +1,5 @@
 ---
-id: 6
+id: 4
 title: "Stealth Cheater"
 description: "Jeu d’infiltration stratégique développé avec Unity où le joueur aide un étudiant à tricher grâce à un système de caméras de surveillance et une IA dynamique."
 image: "/projects/stealthcheater/start.png"
@@ -10,7 +10,7 @@ images:
   - "/projects/stealthcheater/skin.png"
 tags: ["Unity", "C#"]
 githubUrl: "https://github.com/thomas-rissian/StealthCheater"
-featured: true
+featured: false
 ---
 
 ## Contexte

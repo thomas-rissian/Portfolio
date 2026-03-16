@@ -1,5 +1,5 @@
 ---
-id: 4
+id: 2
 title: "TaskMongo"
 description: "Application web de gestion de tâches basée sur MongoDB, avec une API Express et un frontend Angular."
 image: "/projects/taskmongo/board.png"
@@ -9,7 +9,7 @@ images:
   - "/projects/taskmongo/filters.png"
 tags: ["Angular", "Node.js", "Express", "MongoDB", "Mongoose"]
 githubUrl: "https://github.com/thomas-rissian/TaskMongo"
-featured: true
+featured: false
 ---
 
 ## Contexte

@@ -9,7 +9,7 @@ images:
   - "/projects/flashandfriends/quest.png"
 tags: ["Unity", "C#", "Game Development", "AI", "Simulation", "Procedural Systems"]
 githubUrl: "https://github.com/thomas-rissian/FlashAndFriends"
-featured: true
+featured: false
 ---
 
 ## Contexte
