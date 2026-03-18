@@ -35,7 +35,6 @@ let currentImageIndex = 0;
  * Open project modal with clean, GitLab-style layout
  */
 export function openProjectModal(project: ProjectData): void {
-  console.log('🎯 Opening modal for:', project.data.title);
   
   currentProject = project;
   currentImageIndex = 0;
