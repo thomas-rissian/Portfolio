@@ -9,7 +9,7 @@ images:
   - "/projects/stealthcheater/cameras.png"
   - "/projects/stealthcheater/skin.png"
 tags: ["Unity", "C#"]
-githubUrl: "https://github.com/thomas-rissian/StealthCheater"
+githubUrl: "https://gitlab.com/th0th0_0/stealth-cheater"
 featured: false
 ---
 

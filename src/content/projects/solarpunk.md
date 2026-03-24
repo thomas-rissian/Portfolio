@@ -9,7 +9,7 @@ images:
   - "/projects/potagersolarpunk/shop.png"
   - "/projects/potagersolarpunk/water.png"
 tags: ["Unity", "C#"]
-githubUrl: "https://github.com/thomas-rissian/PotagerSolarpunk"
+githubUrl: "https://gitlab.com/th0th0_0/le-potager-solarpunk"
 featured: false
 ---
 
