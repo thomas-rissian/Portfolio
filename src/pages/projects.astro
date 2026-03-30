@@ -4,6 +4,8 @@ import { ProjectCard } from '../components/projects/ProjectCard'
 import { getCollection, type CollectionEntry } from 'astro:content'
 import { routes } from '../lib/utils'
 import '../styles/projects.css'
+import Footer from '../components/layout/Footer.astro'
+
 
 const projects: CollectionEntry<'projects'>[] = (await getCollection('projects')).sort((a, b) => a.data.id - b.data.id)
 const allTags = [...new Set(projects.flatMap((project) => project.data.tags))].sort()
