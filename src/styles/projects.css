@@ -105,7 +105,10 @@
 
 .project-description pre code {
   background-color: transparent;
+  color: #1f2937;
   padding: 0;
+  border: 0;
+  display: block;
 }
 
 /* Strong text */
