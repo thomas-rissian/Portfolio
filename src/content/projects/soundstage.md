@@ -1,73 +1,101 @@
 ---
 id: 3
 title: "SoundStage"
-description: "Plateforme d'événements musicaux, divisée en deux applications indépendantes : une API en Symfony, et une interface utilisateur en React."
+description: "Plateforme web dédiée aux événements musicaux, permettant aux utilisateurs de consulter et gérer des événements. Le projet repose sur une API Symfony et une interface React."
 image: "/projects/soundstage/accueilSoundStage.png"
 images:
   - "/projects/soundstage/accueilSoundStage.png"
-  - "/projects/soundstage/apiSoundStage.png"
-  - "/projects/soundstage/authSoundStage.png"
   - "/projects/soundstage/evenement.png"
   - "/projects/soundstage/formulaire.png"
+  - "/projects/soundstage/authSoundStage.png"
+  - "/projects/soundstage/apiSoundStage.png"
   - "/projects/soundstage/reactAriste.png"
-tags: ["Symfony", "React", "PHP", "TypeScript", "Sqlite", "Jest"]
+tags: ["Symfony", "React", "PHP", "TypeScript", "SQLite", "Jest"]
 githubUrl: "https://github.com/thomas-rissian/SoundStage"
 featured: false
 ---
 
 ## Contexte
 
-Projet universitaire mené dans le cadre du **BUT Informatique**. L'objectif était de construire une plateforme d'événements musicaux avec une **architecture moderne découplée**, permettant de différencier les responsabilités entre le backend et le frontend.
+SoundStage est un projet universitaire réalisé dans le cadre du **BUT Informatique**.
 
----
+L'objectif était de développer une plateforme consacrée aux événements musicaux, en séparant clairement l'interface utilisateur et le serveur. Cette organisation permet à chaque partie de l'application d'évoluer indépendamment.
+
+## Problématique
+
+Comment construire une plateforme d'événements musicaux avec une interface agréable à utiliser, tout en conservant une séparation claire entre le frontend et le backend ?
+
+## Objectifs
+
+- Concevoir une API REST avec Symfony et PHP.
+- Développer une interface utilisateur avec React et TypeScript.
+- Faire communiquer le frontend et le backend de manière fiable.
+- Organiser les données dans une base SQLite.
+- Ajouter des tests unitaires pour vérifier le fonctionnement de l'application.
 
 ## Architecture
 
-SoundStage est divisé en deux parties indépendantes :
+SoundStage est composé de deux applications indépendantes :
 
-### 🎛️ API Symfony (backend)
-- Fournit des données d'événements via des routes REST (`GET`).
-- Base de données SQLite.
-- Tests unitaires écrits avec **PHPUnit**.
-- Documentation accessible via Postman / Swagger.
+```text
+Interface React (frontend)
+        |
+      API REST
+        |
+API Symfony (backend)
+        |
+   Base de données SQLite
+```
 
-### 🎧 Interface React (frontend)
-- Récupération dynamique des données depuis l'API Symfony.
-- Affichage des événements avec tri, filtres, pagination.
-- Développement en TypeScript.
-- Tests unitaires avec **Jest**.
+### Backend : API Symfony
 
----
+L'API Symfony fournit les données nécessaires à l'interface grâce à des routes REST. Elle s'appuie sur une base de données SQLite et comprend des tests unitaires réalisés avec PHPUnit. La documentation de l'API est accessible avec Postman et Swagger.
 
-## Objectifs du projet
+### Frontend : React
 
-- Concevoir une API REST sécurisée et maintenable avec Symfony.
-- Développer une interface utilisateur réactive avec React.
-- Assurer une séparation claire entre les deux couches applicatives.
-- Implémenter des tests unitaires pour fiabiliser le développement.
+L'interface React récupère les données depuis l'API Symfony et les affiche de manière dynamique. Les événements peuvent être consultés avec un tri, des filtres et une pagination. Le frontend est développé en TypeScript et testé avec Jest.
 
 ---
 
-## Réalisations clés
+## Étapes de réalisation
 
-- 🔗 Mise en place d'une communication fiable entre les deux applications.
-- 🧪 Couverture de tests significative sur l'API.
-- 🧩 Modularisation du frontend avec composants React.
-- 🚀 Livraison dans un délai court avec une organisation efficace.
+1. Définition de la structure de l'application et des données nécessaires.
+2. Développement de l'API Symfony et mise en place de la base SQLite.
+3. Développement de l'interface React.
+4. Connexion du frontend à l'API REST.
+5. Ajout des tests et vérification du fonctionnement de l'ensemble.
 
----
+## Fonctionnalités principales
 
-## Bilan
+- Consultation des événements musicaux.
+- Tri et filtrage des événements.
+- Pagination des résultats.
+- Communication entre l'interface React et l'API Symfony.
+- Documentation et tests de l'API.
 
-### ✅ Acquis techniques
+## Technologies utilisées
 
-- Bonne maîtrise de l'**écosystème Symfony** et de l'architecture MVC.
-- Solide expérience avec **React** moderne et appels API.
-- Utilisation concrète de **tests unitaires** (PHPUnit & Jest).
-- Prise en main de projets **multi-repos** dans un contexte réaliste.
+- **Backend :** PHP, Symfony et API REST.
+- **Frontend :** React et TypeScript.
+- **Base de données :** SQLite.
+- **Tests :** PHPUnit et Jest.
+- **Outils :** Git, GitHub, Postman et Swagger.
 
-### 🔧 Améliorations envisagées
+## Compétences acquises
 
-- Ajouter un système d'authentification JWT pour sécuriser les routes.
-- Mise en production avec Docker / CI.
+- Compréhension de l'architecture MVC avec Symfony.
+- Développement d'une API REST.
+- Développement d'une interface React avec TypeScript.
+- Gestion des échanges entre un frontend et un backend.
+- Écriture de tests unitaires avec PHPUnit et Jest.
+- Organisation d'un projet composé de plusieurs applications et utilisation de GitHub pour le suivi du code.
+
+## Bilan et perspectives
+
+SoundStage m'a permis de mieux comprendre la construction d'une application web complète et la séparation des responsabilités entre le frontend et le backend. Le projet correspond à mon objectif de progresser dans le développement web fullstack.
+
+Plusieurs évolutions pourraient être ajoutées :
+
+- Mettre en place une authentification JWT pour sécuriser les routes.
+- Préparer le déploiement avec Docker et une chaîne d'intégration continue.
 - Étendre les filtres d'événements côté client.
